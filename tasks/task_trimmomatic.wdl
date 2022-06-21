@@ -6,7 +6,7 @@ task trimmomatic_pe {
     File read2
     String samplename
     String docker = "quay.io/staphb/trimmomatic:0.39"
-    File adapters = "adapters.fa"
+    File adapters
     Int? trimmommatic_leading = 3
     Int? trimmomatic_trailing = 3
     Int? trimmomatic_minlen = 36

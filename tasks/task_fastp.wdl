@@ -14,6 +14,7 @@ task fastp_pe {
     Int? minlen = 36
     Int? window_size = 4
     Int? right_mean_quality = 15
+    Int? thread = 4
 
     }
 
@@ -31,7 +32,8 @@ command <<<
     -r \
     --cut_right_window_size ~{window_size} \
     --cut_right_mean_quality ~{right_mean_quality} \
-    --length_required ~{minlen}
+    --length_required ~{minlen} \
+    --thread ~{thread}
 >>>
 
 output {

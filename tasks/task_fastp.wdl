@@ -8,9 +8,9 @@ task fastp_pe {
     String docker = "quay.io/biocontainers/fastp:0.20.1--h8b12597_0"
     String samplename
     Int? leading = 1
-    Int? front_mean_quality = 10
+    Int? front_mean_quality = 3
     Int? trailing = 1
-    Int? tail_mean_quality = 10
+    Int? tail_mean_quality = 3
     Int? minlen = 36
     Int? window_size = 4
     Int? right_mean_quality = 15

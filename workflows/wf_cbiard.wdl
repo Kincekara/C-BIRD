@@ -4,6 +4,7 @@ import "../tasks/task_fastqc.wdl" as fastqc
 import "../tasks/task_trimmomatic.wdl" as trimmomatic
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_kraken2.wdl" as kraken
+import "../tasks/task_spades.wdl" as spades
    
 workflow cbiard_workflow {
   
@@ -55,6 +56,13 @@ workflow cbiard_workflow {
     kraken2_db = kraken2_db
   }
 
+  call spades.spades_pe as assembly {
+    input:
+    samplename = samplename,
+    read1 = fastp_trim.read1_trimmed,
+    read2 = fastp_trim.read2_trimmed,    
+  }
+
   output {
     File fastqc1_html = fastqc_raw.fastqc1_html
     File fastqc1_zip = fastqc_raw.fastqc1_zip
@@ -86,5 +94,9 @@ workflow cbiard_workflow {
     # File kraken2_unclassified_read2 = taxon.kraken2_unclassified_read2
     # File kraken2_classified_read1 = taxon.kraken2_classified_read1
     # File kraken2_classified_read2 = taxon.kraken2_classified_read2
+    String spades_version = assembly.spades_version
+    File scaffolds = assembly.scaffolds
+    File contigs = assembly.contigs
+
     }
 }

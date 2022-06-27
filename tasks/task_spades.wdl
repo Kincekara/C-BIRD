@@ -11,16 +11,19 @@ task spades_pe {
   command <<<
     # date and version control
     date | tee DATE
-    spades.py -v > VERSION && sed -i -e 's/^/SPAdes /' VERSION
+    spades.py -v > VERSION 
 
     spades.py -o out \
-    --only-assembler \
-    --careful
+    --careful \
     --pe1-1 ~{read1} --pe1-2 ~{read2}
+ 
+    cp ./out/scaffolds.fasta ~{samplename}_scaffolds.fasta
+    cp ./out/contigs.fasta ~{samplename}_contigs.fasta
+
   >>>
   output {
-	File scaffolds = "out/~{samplename}_scaffols.fasta"
-	File contigs = "out/~{samplename}_contigs.fasta"
+	  File scaffolds = "~{samplename}_scaffolds.fasta"
+	  File contigs = "~{samplename}_contigs.fasta"
     String spades_version = read_string("VERSION")
   }
 

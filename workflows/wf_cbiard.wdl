@@ -5,6 +5,7 @@ import "../tasks/task_trimmomatic.wdl" as trimmomatic
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_kraken2.wdl" as kraken
 import "../tasks/task_spades.wdl" as spades
+import "../tasks/task_quast.wdl" as quast
    
 workflow cbiard_workflow {
   
@@ -60,7 +61,13 @@ workflow cbiard_workflow {
     input:
     samplename = samplename,
     read1 = fastp_trim.read1_trimmed,
-    read2 = fastp_trim.read2_trimmed,    
+    read2 = fastp_trim.read2_trimmed    
+  }
+
+  call quast.quast {
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds  
   }
 
   output {
@@ -97,6 +104,11 @@ workflow cbiard_workflow {
     String spades_version = assembly.spades_version
     File scaffolds = assembly.scaffolds
     File contigs = assembly.contigs
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? genome_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
 
     }
 }

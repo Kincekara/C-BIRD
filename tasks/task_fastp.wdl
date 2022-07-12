@@ -11,9 +11,9 @@ task fastp_pe {
     Int? front_mean_quality = 10
     Int? trailing = 1
     Int? tail_mean_quality = 10
-    Int? minlen = 100
+    Int? minlen = 36
     Int? window_size = 4
-    Int? right_mean_quality = 15
+    Int? right_mean_quality = 20
     Int? thread = 4
 
     }

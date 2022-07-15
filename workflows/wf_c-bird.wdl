@@ -8,6 +8,7 @@ import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
 import "../tasks/task_bracken.wdl" as bracken
 import "../tasks/task_mlst.wdl" as mlst
+import "../tasks/task_resfinder.wdl" as amr
    
 workflow cbiard_workflow {
   
@@ -21,6 +22,7 @@ workflow cbiard_workflow {
     File adapters
     String samplename
     File kraken2_db
+    File db_resfinder
   }
 
   call fastqc.fastqc_pe as fastqc_raw {
@@ -101,6 +103,12 @@ call mlst.ts_mlst {
     assembly = assembly.scaffolds_trim
   }
 
+call amr.resfinder {
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds_trim,
+    db_resfinder = db_resfinder
+}
   output {
     File fastqc1_html = fastqc_raw.fastqc1_html
     File fastqc1_zip = fastqc_raw.fastqc1_zip
@@ -147,5 +155,6 @@ call mlst.ts_mlst {
     File bracken_txn_report = bracken_taxon.bracken_report
     File braken_rekraken_report = bracken_rekraken.bracken_report
     File mlst = ts_mlst.ts_mlst_results
+    File amr = resfinder.resfinder_report
     }
 }

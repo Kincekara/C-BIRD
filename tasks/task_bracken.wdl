@@ -5,6 +5,7 @@ task bracken {
     File kraken_report
     File kraken2_db
     String samplename
+    String? level = "S"
     String docker = "quay.io/biocontainers/bracken:2.7--py39hc16433a_0"
     Int? read_len = 75
     Int? threshold = 10
@@ -21,7 +22,7 @@ task bracken {
     -i ~{kraken_report} \
     -o ~{samplename}.bracken.txt \
     -r ~{read_len} \
-    -l S \
+    -l ~{level} \
     -t ~{threshold}
   >>>
 

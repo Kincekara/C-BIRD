@@ -9,8 +9,9 @@ import "../tasks/task_quast.wdl" as quast
 import "../tasks/task_bracken.wdl" as bracken
 import "../tasks/task_mlst.wdl" as mlst
 import "../tasks/task_resfinder.wdl" as amr
+import "../tasks/task_plasmidfinder.wdl" as plasmid
    
-workflow cbiard_workflow {
+workflow cbird_workflow {
   
   meta {
   description: "Runs basic QC (FastQC)"
@@ -23,6 +24,7 @@ workflow cbiard_workflow {
     String samplename
     File kraken2_db
     File db_resfinder
+    File plasmidfinder_db
   }
 
   call fastqc.fastqc_pe as fastqc_raw {
@@ -109,6 +111,13 @@ call amr.resfinder {
     assembly = assembly.scaffolds_trim,
     db_resfinder = db_resfinder
 }
+
+call plasmid.plasmidfinder {
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds_trim,
+    plasmidfinder_db = plasmidfinder_db 
+}
   output {
     File fastqc1_html = fastqc_raw.fastqc1_html
     File fastqc1_zip = fastqc_raw.fastqc1_zip
@@ -156,5 +165,6 @@ call amr.resfinder {
     File braken_rekraken_report = bracken_rekraken.bracken_report
     File mlst = ts_mlst.ts_mlst_results
     File amr = resfinder.resfinder_report
+    File plasmid = plasmidfinder.plasmid_report
     }
 }

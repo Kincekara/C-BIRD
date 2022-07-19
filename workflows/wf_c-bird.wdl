@@ -162,6 +162,7 @@ call plasmid.plasmidfinder {
     String rekraken_docker = rekraken.kraken2_docker
     File rekraken_report = rekraken.kraken2_report
     File bracken_txn_report = bracken_taxon.bracken_report
+    File bracken_txn = bracken_taxon.top_taxon
     File braken_rekraken_report = bracken_rekraken.bracken_report
     File mlst = ts_mlst.ts_mlst_results
     File amr = resfinder.resfinder_report

@@ -15,7 +15,6 @@ task fastp_pe {
     Int? window_size = 4
     Int? right_mean_quality = 20
     Int? thread = 4
-
     }
 
 command <<<
@@ -24,6 +23,7 @@ command <<<
     -I ~{read2} \
     -o ~{samplename}_R1_trim.fastq.gz \
     -O ~{samplename}_R2_trim.fastq.gz \
+    --adapter_fasta ~{adapters} \
     --cut_front_window_size ~{leading} \
     --cut_front_mean_quality ~{front_mean_quality} \
     -3 \
@@ -33,7 +33,7 @@ command <<<
     --cut_right_window_size ~{window_size} \
     --cut_right_mean_quality ~{right_mean_quality} \
     --length_required ~{minlen} \
-    --thread ~{thread}
+    --thread ~{thread} \
 >>>
 
 output {

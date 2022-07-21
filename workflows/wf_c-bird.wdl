@@ -10,6 +10,7 @@ import "../tasks/task_bracken.wdl" as bracken
 import "../tasks/task_mlst.wdl" as mlst
 import "../tasks/task_resfinder.wdl" as amr
 import "../tasks/task_plasmidfinder.wdl" as plasmid
+import "../tasks/task_busco.wdl" as busco
    
 workflow cbird_workflow {
   
@@ -25,6 +26,7 @@ workflow cbird_workflow {
     File kraken2_db
     File db_resfinder
     File plasmidfinder_db
+    File busco_db
   }
 
   call fastqc.fastqc_pe as fastqc_raw {
@@ -84,20 +86,27 @@ workflow cbird_workflow {
     assembly = assembly.scaffolds_trim  
   }
 
-call kraken.rekraken as rekraken {
+  call busco.busco {
     input:
     samplename = samplename,
-    seqs = assembly.scaffolds_trim,
-    kraken2_db = kraken2_db
+    assembly = assembly.scaffolds_trim,
+    busco_db = busco_db
   }
 
-call bracken.bracken as bracken_rekraken{
-    input:
-    samplename = samplename,
-    kraken_report = rekraken.kraken2_report,
-    kraken2_db = kraken2_db,
-    threshold = 1
-  }
+# call kraken.rekraken as rekraken {
+#     input:
+#     samplename = samplename,
+#     seqs = assembly.scaffolds_trim,
+#     kraken2_db = kraken2_db
+#   }
+
+# call bracken.bracken as bracken_rekraken{
+#     input:
+#     samplename = samplename,
+#     kraken_report = rekraken.kraken2_report,
+#     kraken2_db = kraken2_db,
+#     threshold = 1
+#   }
 
 call mlst.ts_mlst {
     input:
@@ -158,14 +167,16 @@ call plasmid.plasmidfinder {
     Int? genome_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
-    String rekraken_version = rekraken.kraken2_version
-    String rekraken_docker = rekraken.kraken2_docker
-    File rekraken_report = rekraken.kraken2_report
+    # String rekraken_version = rekraken.kraken2_version
+    # String rekraken_docker = rekraken.kraken2_docker
+    # File rekraken_report = rekraken.kraken2_report
     File bracken_txn_report = bracken_taxon.bracken_report
     File bracken_txn = bracken_taxon.top_taxon
-    File braken_rekraken_report = bracken_rekraken.bracken_report
+    # File braken_rekraken_report = bracken_rekraken.bracken_report
     File mlst = ts_mlst.ts_mlst_results
     File amr = resfinder.resfinder_report
     File plasmid = plasmidfinder.plasmid_report
+    File busco_results = busco.busco_report
+    String busco_version = busco.busco_version
     }
 }

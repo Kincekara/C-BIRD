@@ -6,7 +6,7 @@ task resfinder {
     File db_resfinder
     String samplename
     String docker = "kincekara/resfinder:latest"
-    Float? min_coverage = 0.6
+    Float? min_coverage = 0.7
     Float? threshold = 0.9
   }
 

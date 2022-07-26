@@ -5,13 +5,13 @@ task fastp_pe {
     File read1
     File read2
     File adapters
-    String docker = "quay.io/biocontainers/fastp:0.20.1--h8b12597_0"
+    String docker = "kincekara/fastp:0.23.2"
     String samplename
     Int? leading = 1
     Int? front_mean_quality = 10
     Int? trailing = 1
     Int? tail_mean_quality = 10
-    Int? minlen = 36
+    Int? minlen = 50
     Int? window_size = 4
     Int? right_mean_quality = 20
     Int? thread = 4
@@ -34,13 +34,21 @@ command <<<
     --cut_right_mean_quality ~{right_mean_quality} \
     --length_required ~{minlen} \
     --thread ~{thread} \
+    -h ~{samplename}_fastp.html
+
+    # parse output
+    jq '.summary.fastp_version' fastp.json > VERSION
+    jq '.summary.before_filtering.q30_rate' fastp.json > Q30_RAW
+    jq '.summary.after_filtering.q30_rate' fastp.json > Q30_TRIM
 >>>
 
 output {
     File read1_trimmed = "~{samplename}_R1_trim.fastq.gz"
     File read2_trimmed = "~{samplename}_R2_trim.fastq.gz"
-    File fastp_report = "fastp.html"
-    File fastp_json = "fastp.json"
+    File fastp_report = "~{samplename}_fastp.html"
+    String fastp_version = "VERSION"
+    Float q30_raw = read_float("Q30_RAW")
+    Float q30_trim = read_float("Q30_TRIM")
     }
 
 runtime {

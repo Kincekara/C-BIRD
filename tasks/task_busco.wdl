@@ -5,7 +5,7 @@ task busco {
     File assembly   
     File busco_db
     String samplename
-    String docker = "ezlabgva/busco:v5.3.2_cv1"
+    String docker = "kincekara/busco:v5.3.2"
     Int? memory = 16
     Int? cpu = 4
   }
@@ -29,7 +29,7 @@ task busco {
     # parse results
     cp ./out/short_summary.specific.bacteria_odb10.out.txt ./~{samplename}_busco_results.txt
 
-    python <<CODE
+    python3 <<CODE
     import json
     with open("./out/short_summary.specific.bacteria_odb10.out.json") as input:
       data = json.load(input)

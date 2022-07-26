@@ -1,5 +1,5 @@
 version 1.0
-
+import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastqc.wdl" as fastqc
 import "../tasks/task_trimmomatic.wdl" as trimmomatic
 import "../tasks/task_fastp.wdl" as fastp
@@ -15,7 +15,7 @@ import "../tasks/task_busco.wdl" as busco
 workflow cbird_workflow {
   
   meta {
-  description: "Runs basic QC (FastQC)"
+  description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
   }
 
   input {
@@ -27,6 +27,10 @@ workflow cbird_workflow {
     File db_resfinder
     File plasmidfinder_db
     File busco_db
+  }
+ 
+  call version.version_capture {
+    input:
   }
 
   call fastqc.fastqc_pe as fastqc_raw {
@@ -128,6 +132,10 @@ call plasmid.plasmidfinder {
     plasmidfinder_db = plasmidfinder_db 
 }
   output {
+    # Version 
+    String cbird_version = version_capture.cbird_version
+    String cbird_analysis_date = version_capture.date
+    # FastQC
     File fastqc1_html = fastqc_raw.fastqc1_html
     File fastqc1_zip = fastqc_raw.fastqc1_zip
     File fastqc2_html = fastqc_raw.fastqc2_html
@@ -142,13 +150,16 @@ call plasmid.plasmidfinder {
     File fastqc1_trimmed_html = fastqc_trim.fastqc1_html
     File fastqc1_trimmed_zip = fastqc_trim.fastqc1_zip
     File fastqc2_trimmed_html = fastqc_trim.fastqc2_html
-    File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip
+    File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
     Int read1_trimmed_seq = fastqc_trim.read1_seq
     Int read2_trimmed_seq = fastqc_trim.read2_seq
-    File read1_ftrimmed = fastp_trim.read1_trimmed
-    File read2_ftrimmed = fastp_trim.read2_trimmed
+    # FastP
+    File read1_trimmed = fastp_trim.read1_trimmed
+    File read2_trimmed = fastp_trim.read2_trimmed
     File fastp_report = fastp_trim.fastp_report
-    File fastp_json = fastp_trim.fastp_json
+    String fastp_version = fastp_trim.fastp_version
+    Float q30_raw = fastp_trim.q30_raw
+    Float q30_trimmed = fastp_trim.q30_trim
     # Kraken2
     String kraken2_version = taxon.kraken2_version
     String kraken2_docker = taxon.kraken2_docker

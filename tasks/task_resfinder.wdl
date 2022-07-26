@@ -5,7 +5,7 @@ task resfinder {
     File assembly
     File db_resfinder
     String samplename
-    String docker = "kincekara/resfinder:latest"
+    String docker = "kincekara/resfinder:4.1.11"
     Float? min_coverage = 0.7
     Float? threshold = 0.9
   }

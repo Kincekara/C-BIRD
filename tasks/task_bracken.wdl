@@ -6,7 +6,7 @@ task bracken {
     File kraken2_db
     String samplename
     String? level = "S"
-    String docker = "quay.io/biocontainers/bracken:2.7--py39hc16433a_0"
+    String docker = "kincekara/bracken:2.7"
     Int? read_len = 75
     Int? threshold = 10
   }

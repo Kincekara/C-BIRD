@@ -1,6 +1,6 @@
 version: 1.2
 workflows:
- - name: C_BIRD
+ - name: c-bird
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_c-bird.wdl
    testParameterFiles:

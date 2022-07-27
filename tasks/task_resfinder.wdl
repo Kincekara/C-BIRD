@@ -25,9 +25,13 @@ task resfinder {
     --acquired
     # rename results
     mv out/ResFinder_results_tab.txt ~{samplename}.amr.tsv
+    # version
+    run_resfinder.py -v > VERSION
   >>>
 
   output {
+    String resfinder_version = read_string("VERSION")
+    String resfinder_docker = docker
     File resfinder_report = "~{samplename}.amr.tsv"
   }
   runtime {

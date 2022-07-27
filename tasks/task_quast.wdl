@@ -29,10 +29,12 @@ task quast {
           if "N50" in line[0]:
             with open("N50_VALUE", 'wt') as n50_value:
               n50_value.write(line[1])
-
+          if "GC (%)" in line[0]:
+            with open("GC_CONTENT", 'wt') as gc_content:
+              gc_content.write(line[1])
     CODE
-
   >>>
+
   output {
     File quast_report = "${samplename}_report.tsv"
     String version = read_string("VERSION")
@@ -40,6 +42,8 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
+    String quast_docker = docker
+    Float gc_content = read_float("GC_CONTENT")
   }
   runtime {
     docker:  "~{docker}"

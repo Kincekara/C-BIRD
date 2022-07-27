@@ -44,6 +44,7 @@ task spades_pe {
 	  File contigs = "~{samplename}_contigs.fasta"
     File scaffolds_trim  = "~{samplename}_scaffolds_trim.fasta"
     String spades_version = read_string("VERSION")
+    String spades_docker = docker
   }
 
   runtime {

@@ -50,7 +50,7 @@ task busco {
     String busco_db_name = read_string("BUSCO_DB")
     String busco_db_date = read_string("BUSCO_DB_DATE")
     File busco_report = "~{samplename}_busco_results.txt"
-
+    
   }
   runtime {
       docker: "~{docker}"

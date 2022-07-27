@@ -46,9 +46,10 @@ output {
     File read1_trimmed = "~{samplename}_R1_trim.fastq.gz"
     File read2_trimmed = "~{samplename}_R2_trim.fastq.gz"
     File fastp_report = "~{samplename}_fastp.html"
-    String fastp_version = "VERSION"
+    String fastp_version = read_string("VERSION")
     Float q30_raw = read_float("Q30_RAW")
     Float q30_trim = read_float("Q30_TRIM")
+    String fastp_docker = docker
     }
 
 runtime {

@@ -62,6 +62,7 @@ task ts_mlst {
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
     String ts_mlst_version = read_string("VERSION")
+    String ts_mlst_docker = docker
   }
   runtime {
     docker: "~{docker}"

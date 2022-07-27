@@ -1,7 +1,7 @@
 version 1.0
 import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastqc.wdl" as fastqc
-import "../tasks/task_trimmomatic.wdl" as trimmomatic
+# import "../tasks/task_trimmomatic.wdl" as trimmomatic
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_kraken2.wdl" as kraken
 import "../tasks/task_spades.wdl" as spades
@@ -70,7 +70,7 @@ workflow cbird_workflow {
     kraken2_args ="--confidence 0.05"
   }
 
-  call bracken.bracken as bracken_taxon{
+  call bracken.bracken {
     input:
     samplename = samplename,
     kraken_report = taxon.kraken2_report,
@@ -134,7 +134,72 @@ call plasmid.plasmidfinder {
   output {
     # Version 
     String cbird_version = version_capture.cbird_version
-    String cbird_analysis_date = version_capture.date
+    String cbird_analysis_date = version_capture.date    
+    # FastP
+    String fastp_version = fastp_trim.fastp_version
+    String fastp_docker = fastp_trim.fastp_docker
+    File read1_trimmed = fastp_trim.read1_trimmed
+    File read2_trimmed = fastp_trim.read2_trimmed
+    File fastp_report = fastp_trim.fastp_report    
+    Float q30_raw = fastp_trim.q30_raw
+    Float q30_trimmed = fastp_trim.q30_trim
+    # Kraken2
+    String kraken2_version = taxon.kraken2_version
+    String kraken2_docker = taxon.kraken2_docker
+    File kraken2_report = taxon.kraken2_report
+    # Bracken
+    String bracken_version = bracken.bracken_version
+    String bracken_docker = bracken.bracken_docker
+    File bracken_report = bracken.bracken_report
+    String bracken_taxon = bracken.bracken_taxon
+    # Spades
+    String spades_version = assembly.spades_version
+    String spades_docker = assembly.spades_docker
+    File scaffolds = assembly.scaffolds
+    File contigs = assembly.contigs
+    File scaffolds_trimmed = assembly.scaffolds_trim
+    # Quast 
+    String quast_version = quast.version
+    String quast_docker = quast.quast_docker
+    File quast_report = quast.quast_report    
+    Int genome_length = quast.genome_length
+    Int number_contigs = quast.number_contigs
+    Int n50_value = quast.n50_value
+    Float gc_content = quast.gc_content
+    # BUSCO
+    String busco_version = busco.busco_version
+    String busco_docker = busco.busco_docker
+    File busco_results = busco.busco_report 
+    String busco_summary = busco.busco_summary
+    String busco_lineage = busco.busco_db_name
+    String busco_db_date = busco.busco_db_date
+    # MLST
+    String mlst_version = ts_mlst.ts_mlst_version
+    String mlst_docker = ts_mlst.ts_mlst_docker
+    String mlst = ts_mlst.ts_mlst_predicted_st
+    String pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    File mlst_results = ts_mlst.ts_mlst_results
+    # ResFinder
+    String resfinder_version = resfinder.resfinder_version
+    String resfinder_docker = resfinder.resfinder_docker
+    File amr = resfinder.resfinder_report
+    # PlasmidFinder
+    String plasmidfinder_version = plasmidfinder.plasmidfinder_version
+    String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
+    File plasmids = plasmidfinder.plasmid_report
+
+    # File kraken2_classified_report = taxon.kraken2_classified_report
+    # File kraken2_unclassified_read1 = taxon.kraken2_unclassified_read1
+    # File kraken2_unclassified_read2 = taxon.kraken2_unclassified_read2
+    # File kraken2_classified_read1 = taxon.kraken2_classified_read1
+    # File kraken2_classified_read2 = taxon.kraken2_classified_read2
+
+    # String rekraken_version = rekraken.kraken2_version
+    # String rekraken_docker = rekraken.kraken2_docker
+    # File rekraken_report = rekraken.kraken2_report
+
+    # File braken_rekraken_report = bracken_rekraken.bracken_report
+
     # FastQC
     File fastqc1_html = fastqc_raw.fastqc1_html
     File fastqc1_zip = fastqc_raw.fastqc1_zip
@@ -153,41 +218,5 @@ call plasmid.plasmidfinder {
     File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
     Int read1_trimmed_seq = fastqc_trim.read1_seq
     Int read2_trimmed_seq = fastqc_trim.read2_seq
-    # FastP
-    File read1_trimmed = fastp_trim.read1_trimmed
-    File read2_trimmed = fastp_trim.read2_trimmed
-    File fastp_report = fastp_trim.fastp_report
-    String fastp_version = fastp_trim.fastp_version
-    Float q30_raw = fastp_trim.q30_raw
-    Float q30_trimmed = fastp_trim.q30_trim
-    # Kraken2
-    String kraken2_version = taxon.kraken2_version
-    String kraken2_docker = taxon.kraken2_docker
-    File kraken2_report = taxon.kraken2_report
-    # File kraken2_classified_report = taxon.kraken2_classified_report
-    # File kraken2_unclassified_read1 = taxon.kraken2_unclassified_read1
-    # File kraken2_unclassified_read2 = taxon.kraken2_unclassified_read2
-    # File kraken2_classified_read1 = taxon.kraken2_classified_read1
-    # File kraken2_classified_read2 = taxon.kraken2_classified_read2
-    String spades_version = assembly.spades_version
-    File scaffolds = assembly.scaffolds
-    File contigs = assembly.contigs
-    File scaffolds_trim = assembly.scaffolds_trim
-    File? quast_report = quast.quast_report
-    String? quast_version = quast.version
-    Int? genome_length = quast.genome_length
-    Int? number_contigs = quast.number_contigs
-    Int? n50_value = quast.n50_value
-    # String rekraken_version = rekraken.kraken2_version
-    # String rekraken_docker = rekraken.kraken2_docker
-    # File rekraken_report = rekraken.kraken2_report
-    File bracken_txn_report = bracken_taxon.bracken_report
-    File bracken_txn = bracken_taxon.top_taxon
-    # File braken_rekraken_report = bracken_rekraken.bracken_report
-    File mlst = ts_mlst.ts_mlst_results
-    File amr = resfinder.resfinder_report
-    File plasmid = plasmidfinder.plasmid_report
-    File busco_results = busco.busco_report
-    String busco_version = busco.busco_version
     }
 }

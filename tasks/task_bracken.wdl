@@ -9,9 +9,13 @@ task bracken {
     String docker = "kincekara/bracken:2.7"
     Int? read_len = 75
     Int? threshold = 10
+    String? version = "Bracken 2.7"
   }
 
   command <<<
+  # version
+    echo ~{version} > VERSION
+
   # Decompress the Kraken2 database
     mkdir db
     tar -C ./db/ -xzvf ~{kraken2_db} 
@@ -27,12 +31,14 @@ task bracken {
 
   # filter report
     awk 'NR==1; NR>1 {if ($NF >= 0.01){print}}' ~{samplename}.bracken.txt > ~{samplename}.bracken.filtered.txt
-    awk 'NR==1; NR>1 {print $0 | "sort -k 7nr"}' ~{samplename}.bracken.txt | awk 'NR==2 {print $1,$2}' > ~{samplename}.taxon.txt
+    awk 'NR==1; NR>1 {print $0 | "sort -k 7nr"}' ~{samplename}.bracken.txt | awk 'NR==2 {print $1,$2}' > TAXON
   >>>
 
   output {
     File bracken_report = "~{samplename}.bracken.filtered.txt"
-    File top_taxon = "~{samplename}.taxon.txt"
+    String bracken_taxon = read_string("TAXON")
+    String bracken_version = read_string("VERSION")
+    String bracken_docker = docker
   }
 
   runtime {

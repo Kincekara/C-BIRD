@@ -19,7 +19,7 @@ task resfinder {
     run_resfinder.py \
     --inputfasta ~{assembly} \
     -db_res ./db/ \
-    -o out \
+    -o ./out \
     -l ~{min_coverage} \
     -t ~{threshold} \
     --acquired

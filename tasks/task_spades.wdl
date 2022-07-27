@@ -14,7 +14,8 @@ task spades_pe {
     date | tee DATE
     spades.py -v > VERSION 
 
-    spades.py -o out \
+    spades.py \
+    -o ./out \
     --only-assembler \
     --careful \
     --pe1-1 ~{read1} --pe1-2 ~{read2}

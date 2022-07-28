@@ -6,7 +6,9 @@ task spades_pe {
     File read2
     Int? contig_threshold = 500
     String samplename
-    String docker = "quay.io/biocontainers/spades:3.15.4--h95f258a_0"
+    String docker = "kincekara/spades:3.15.5"
+    Int? memory = 32
+    Int? cpu = 4
 
   }
   command <<<
@@ -18,7 +20,9 @@ task spades_pe {
     -o ./out \
     --only-assembler \
     --careful \
-    --pe1-1 ~{read1} --pe1-2 ~{read2}
+    --pe1-1 ~{read1} --pe1-2 ~{read2} \
+    --threads ~{cpu} \
+    --memory ~{memory}
  
     cp ./out/scaffolds.fasta ~{samplename}_scaffolds.fasta
     cp ./out/contigs.fasta ~{samplename}_contigs.fasta
@@ -50,8 +54,8 @@ task spades_pe {
 
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 4
+    memory: "~{memory} GB"
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible:  0
   }

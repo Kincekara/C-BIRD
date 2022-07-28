@@ -21,8 +21,8 @@ task spades_pe {
     --only-assembler \
     --careful \
     --pe1-1 ~{read1} --pe1-2 ~{read2} \
-    #--threads ~{cpu} \
-    #--memory ~{memory}
+    --threads ~{cpu} \
+    --memory ~{memory}
  
     mv scaffolds.fasta ~{samplename}_scaffolds.fasta
     mv contigs.fasta ~{samplename}_contigs.fasta
@@ -45,6 +45,8 @@ task spades_pe {
   >>>
 
   output {
+    File tmp_scaffolds = "scaffolds.fasta"
+    File tmp_contigs = "contigs.fasta"
 	  File scaffolds = "~{samplename}_scaffolds.fasta"
 	  File contigs = "~{samplename}_contigs.fasta"
     File scaffolds_trim  = "~{samplename}_scaffolds_trim.fasta"

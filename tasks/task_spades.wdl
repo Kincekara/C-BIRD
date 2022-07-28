@@ -17,15 +17,15 @@ task spades_pe {
     spades.py -v > VERSION 
 
     spades.py \
-    -o $PWD \
+    -o out \
     --only-assembler \
     --careful \
     --pe1-1 ~{read1} --pe1-2 ~{read2} \
     --threads ~{cpu} \
     --memory ~{memory}
  
-    cp scaffolds.fasta ~{samplename}_scaffolds.fasta
-    cp contigs.fasta ~{samplename}_contigs.fasta
+    cp out/scaffolds.fasta ~{samplename}_scaffolds.fasta
+    cp out/contigs.fasta ~{samplename}_contigs.fasta
 
     # remove short contigs
     python <<CODE
@@ -45,8 +45,8 @@ task spades_pe {
   >>>
 
   output {
-    File tmp_scaffolds = "scaffolds.fasta"
-    File tmp_contigs = "contigs.fasta"
+    File tmp_scaffolds = "out/scaffolds.fasta"
+    File tmp_contigs = "out/contigs.fasta"
 	  File scaffolds = "~{samplename}_scaffolds.fasta"
 	  File contigs = "~{samplename}_contigs.fasta"
     File scaffolds_trim  = "~{samplename}_scaffolds_trim.fasta"

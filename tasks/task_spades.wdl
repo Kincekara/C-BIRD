@@ -17,20 +17,20 @@ task spades_pe {
     spades.py -v > VERSION 
 
     spades.py \
-    -o ./out \
+    -o $PWD \
     --only-assembler \
     --careful \
     --pe1-1 ~{read1} --pe1-2 ~{read2} \
-    --threads ~{cpu} \
-    --memory ~{memory}
+    #--threads ~{cpu} \
+    #--memory ~{memory}
  
-    cp ./out/scaffolds.fasta ~{samplename}_scaffolds.fasta
-    cp ./out/contigs.fasta ~{samplename}_contigs.fasta
+    mv scaffolds.fasta ~{samplename}_scaffolds.fasta
+    mv contigs.fasta ~{samplename}_contigs.fasta
 
     # remove short contigs
     python <<CODE
     import re
-    with open("./out/scaffolds.fasta", "r") as input:
+    with open("~{samplename}_scaffolds.fasta", "r") as input:
         with open("~{samplename}_scaffolds_trim.fasta", "w") as output:
             for line in input:
                 if line.startswith('>'):

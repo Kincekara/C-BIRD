@@ -24,8 +24,8 @@ task spades_pe {
     --threads ~{cpu} \
     --memory ~{memory}
  
-    cp out/scaffolds.fasta ~{samplename}_scaffolds.fasta
-    cp out/contigs.fasta ~{samplename}_contigs.fasta
+    cp scaffolds.fasta ~{samplename}_scaffolds.fasta
+    cp contigs.fasta ~{samplename}_contigs.fasta
 
     # remove short contigs
     python <<CODE

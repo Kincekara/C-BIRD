@@ -3,14 +3,15 @@ import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastqc.wdl" as fastqc
 # import "../tasks/task_trimmomatic.wdl" as trimmomatic
 import "../tasks/task_fastp.wdl" as fastp
-import "../tasks/task_kraken2.wdl" as kraken
+# import "../tasks/task_kraken2.wdl" as kraken
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
-import "../tasks/task_bracken.wdl" as bracken
+# import "../tasks/task_bracken.wdl" as bracken
 import "../tasks/task_mlst.wdl" as mlst
 import "../tasks/task_resfinder.wdl" as amr
 import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_busco.wdl" as busco
+import "../tasks/task_taxonomy.wdl" as taxon
    
 workflow cbird_workflow {
   
@@ -61,21 +62,30 @@ workflow cbird_workflow {
       read2 = fastp_trim.read2_trimmed
   }
 
-  call kraken.kraken2_pe as taxon {
+  call taxon.taxon {
     input:
     samplename = samplename,
     read1 = fastp_trim.read1_trimmed,
     read2 = fastp_trim.read2_trimmed,    
-    kraken2_db = kraken2_db,
-    kraken2_args ="--confidence 0.05"
-  }
-
-  call bracken.bracken {
-    input:
-    samplename = samplename,
-    kraken_report = taxon.kraken2_report,
     kraken2_db = kraken2_db
   }
+
+  # }
+  # call kraken.kraken2_pe as taxon {
+  #   input:
+  #   samplename = samplename,
+  #   read1 = fastp_trim.read1_trimmed,
+  #   read2 = fastp_trim.read2_trimmed,    
+  #   kraken2_db = kraken2_db,
+  #   kraken2_args ="--confidence 0.05"
+  # }
+
+  # call bracken.bracken {
+  #   input:
+  #   samplename = samplename,
+  #   kraken_report = taxon.kraken2_report,
+  #   kraken2_db = kraken2_db
+  # }
 
   call spades.spades_pe as assembly {
     input:
@@ -148,10 +158,15 @@ call plasmid.plasmidfinder {
     String kraken2_docker = taxon.kraken2_docker
     File kraken2_report = taxon.kraken2_report
     # Bracken
-    String bracken_version = bracken.bracken_version
-    String bracken_docker = bracken.bracken_docker
-    File bracken_report = bracken.bracken_report
-    String bracken_taxon = bracken.bracken_taxon
+    String bracken_version = taxon.bracken_version
+    String bracken_docker = taxon.bracken_docker
+    File bracken_report = taxon.bracken_report
+    String bracken_taxon = taxon.bracken_taxon
+    # # Bracken
+    # String bracken_version = bracken.bracken_version
+    # String bracken_docker = bracken.bracken_docker
+    # File bracken_report = bracken.bracken_report
+    # String bracken_taxon = bracken.bracken_taxon
     # Spades
     String spades_version = assembly.spades_version
     String spades_docker = assembly.spades_docker

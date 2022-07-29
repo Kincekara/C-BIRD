@@ -170,7 +170,7 @@ call plasmid.plasmidfinder {
     # Spades
     String spades_version = assembly.spades_version
     String spades_docker = assembly.spades_docker
-    File scaffolds = assembly.scaffolds
+    #File scaffolds = assembly.scaffolds
     File contigs = assembly.contigs
     File scaffolds_trimmed = assembly.scaffolds_trim
     # Quast 

@@ -26,14 +26,13 @@ task spades_pe {
     #--threads ~{cpu} \
     #--memory ~{memory}
    
-    mv out/scaffolds.fasta out/~{samplename}_scaffolds.fasta
     mv out/contigs.fasta out/~{samplename}_contigs.fasta
 
     # remove short contigs
     python <<CODE
     import re
-    with open("out/~{samplename}_scaffolds.fasta", "r") as input:
-        with open("out/~{samplename}_scaffolds_trim.fasta", "w") as output:
+    with open("out/~{samplename}_contigs.fasta", "r") as input:
+        with open("out/~{samplename}_contigs_trim.fasta", "w") as output:
             for line in input:
                 if line.startswith('>'):
                     num = re.findall('[0-9]+', line)[1]
@@ -47,9 +46,9 @@ task spades_pe {
   >>>
 
   output {
-	  File scaffolds = "out/~{samplename}_scaffolds.fasta"
+	  #File scaffolds = "out/~{samplename}_scaffolds.fasta"
 	  File contigs = "out/~{samplename}_contigs.fasta"
-    File scaffolds_trim  = "out/~{samplename}_scaffolds_trim.fasta"
+    File scaffolds_trim  = "out/~{samplename}_contigs_trim.fasta"
     String spades_version = read_string("VERSION")
     String spades_docker = docker
   }

@@ -14,9 +14,9 @@ task spades_pe {
   command <<<
     # date and version control
     date | tee DATE
-    python spades.py -v > VERSION 
+    spades.py -v > VERSION 
 
-    python spades.py \
+    spades.py \
     -o out \
     --only-assembler \
     --careful \

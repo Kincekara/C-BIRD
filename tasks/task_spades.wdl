@@ -16,15 +16,16 @@ task spades_pe {
     date | tee DATE
     spades.py -v > VERSION 
 
+    mkdir out
+
     spades.py \
-    -o out \
+    -o $PWD/out \
     --only-assembler \
     --careful \
-    --pe1-1 ~{read1} --pe1-2 ~{read2} \
-    --threads ~{cpu} \
-    --memory ~{memory}
+    --pe1-1 ~{read1} --pe1-2 ~{read2} 
+    #--threads ~{cpu} \
+    #--memory ~{memory}
    
-
     mv out/scaffolds.fasta out/~{samplename}_scaffolds.fasta
     mv out/contigs.fasta out/~{samplename}_contigs.fasta
 

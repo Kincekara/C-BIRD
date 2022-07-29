@@ -14,9 +14,9 @@ task spades_pe {
   command <<<
     # date and version control
     date | tee DATE
-    spades.py -v > VERSION 
+    python spades.py -v > VERSION 
 
-    spades.py \
+    python spades.py \
     -o out \
     --only-assembler \
     --careful \
@@ -25,8 +25,8 @@ task spades_pe {
     --memory ~{memory}
    
 
-    cp out/scaffolds.fasta out/~{samplename}_scaffolds.fasta
-    cp out/contigs.fasta out/~{samplename}_contigs.fasta
+    mv out/scaffolds.fasta out/~{samplename}_scaffolds.fasta
+    mv out/contigs.fasta out/~{samplename}_contigs.fasta
 
     # remove short contigs
     python <<CODE
@@ -46,8 +46,6 @@ task spades_pe {
   >>>
 
   output {
-    File tmp_scaffolds = "out/scaffolds.fasta"
-    File tmp_contigs = "out/contigs.fasta"
 	  File scaffolds = "out/~{samplename}_scaffolds.fasta"
 	  File contigs = "out/~{samplename}_contigs.fasta"
     File scaffolds_trim  = "out/~{samplename}_scaffolds_trim.fasta"

@@ -6,7 +6,7 @@ workflows:
    testParameterFiles:
     - empty.json
  - name: spades-test
-  subclass: WDL
-  primaryDescriptorPath: /workflows/spades_wf.wdl
-  testParameterFiles:
+   subclass: WDL
+   primaryDescriptorPath: /workflows/spades_wf.wdl
+   testParameterFiles:
     - empty.json

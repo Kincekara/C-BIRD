@@ -1,12 +1,9 @@
 version 1.0
 import "../tasks/task_version.wdl" as version
-import "../tasks/task_fastqc.wdl" as fastqc
-# import "../tasks/task_trimmomatic.wdl" as trimmomatic
+# import "../tasks/task_fastqc.wdl" as fastqc
 import "../tasks/task_fastp.wdl" as fastp
-# import "../tasks/task_kraken2.wdl" as kraken
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
-# import "../tasks/task_bracken.wdl" as bracken
 import "../tasks/task_mlst.wdl" as mlst
 import "../tasks/task_resfinder.wdl" as amr
 import "../tasks/task_plasmidfinder.wdl" as plasmid
@@ -34,20 +31,12 @@ workflow cbird_workflow {
     input:
   }
 
-  call fastqc.fastqc_pe as fastqc_raw {
-    input:
-      read1 = read1,
-      read2 = read2
-  }
-  
-  # call trimmomatic.trimmomatic_pe as trim {
+  # call fastqc.fastqc_pe as fastqc_raw {
   #   input:
-  #   read1 = read1,
-  #   read2 = read2,
-  #   samplename = samplename,
-  #   adapters = adapters
+  #     read1 = read1,
+  #     read2 = read2
   # }
-
+  
   call fastp.fastp_pe as fastp_trim {
     input:
       read1 = read1,
@@ -56,11 +45,11 @@ workflow cbird_workflow {
       adapters = adapters
   }
 
-  call fastqc.fastqc_pe as fastqc_trim {
-    input:
-      read1 = fastp_trim.read1_trimmed,
-      read2 = fastp_trim.read2_trimmed
-  }
+  # call fastqc.fastqc_pe as fastqc_trim {
+  #   input:
+  #     read1 = fastp_trim.read1_trimmed,
+  #     read2 = fastp_trim.read2_trimmed
+  # }
 
   call taxon.taxon {
     input:
@@ -69,23 +58,6 @@ workflow cbird_workflow {
     read2 = fastp_trim.read2_trimmed,    
     kraken2_db = kraken2_db
   }
-
-  # }
-  # call kraken.kraken2_pe as taxon {
-  #   input:
-  #   samplename = samplename,
-  #   read1 = fastp_trim.read1_trimmed,
-  #   read2 = fastp_trim.read2_trimmed,    
-  #   kraken2_db = kraken2_db,
-  #   kraken2_args ="--confidence 0.05"
-  # }
-
-  # call bracken.bracken {
-  #   input:
-  #   samplename = samplename,
-  #   kraken_report = taxon.kraken2_report,
-  #   kraken2_db = kraken2_db
-  # }
 
   call spades.spades_pe as assembly {
     input:
@@ -107,40 +79,26 @@ workflow cbird_workflow {
     busco_db = busco_db
   }
 
-# call kraken.rekraken as rekraken {
-#     input:
-#     samplename = samplename,
-#     seqs = assembly.scaffolds_trim,
-#     kraken2_db = kraken2_db
-#   }
+  call mlst.ts_mlst {
+      input:
+      samplename = samplename,
+      assembly = assembly.scaffolds_trim
+    }
 
-# call bracken.bracken as bracken_rekraken{
-#     input:
-#     samplename = samplename,
-#     kraken_report = rekraken.kraken2_report,
-#     kraken2_db = kraken2_db,
-#     threshold = 1
-#   }
-
-call mlst.ts_mlst {
-    input:
-    samplename = samplename,
-    assembly = assembly.scaffolds_trim
+  call amr.resfinder {
+      input:
+      samplename = samplename,
+      assembly = assembly.scaffolds_trim,
+      db_resfinder = db_resfinder
   }
 
-call amr.resfinder {
-    input:
-    samplename = samplename,
-    assembly = assembly.scaffolds_trim,
-    db_resfinder = db_resfinder
-}
+  call plasmid.plasmidfinder {
+      input:
+      samplename = samplename,
+      assembly = assembly.scaffolds_trim,
+      plasmidfinder_db = plasmidfinder_db 
+  }
 
-call plasmid.plasmidfinder {
-    input:
-    samplename = samplename,
-    assembly = assembly.scaffolds_trim,
-    plasmidfinder_db = plasmidfinder_db 
-}
   output {
     # Version 
     String cbird_version = version_capture.cbird_version
@@ -162,11 +120,6 @@ call plasmid.plasmidfinder {
     String bracken_docker = taxon.bracken_docker
     File bracken_report = taxon.bracken_report
     String bracken_taxon = taxon.bracken_taxon
-    # # Bracken
-    # String bracken_version = bracken.bracken_version
-    # String bracken_docker = bracken.bracken_docker
-    # File bracken_report = bracken.bracken_report
-    # String bracken_taxon = bracken.bracken_taxon
     # Spades
     String spades_version = assembly.spades_version
     String spades_docker = assembly.spades_docker
@@ -202,36 +155,19 @@ call plasmid.plasmidfinder {
     String plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File plasmids = plasmidfinder.plasmid_report
-
-    # File kraken2_classified_report = taxon.kraken2_classified_report
-    # File kraken2_unclassified_read1 = taxon.kraken2_unclassified_read1
-    # File kraken2_unclassified_read2 = taxon.kraken2_unclassified_read2
-    # File kraken2_classified_read1 = taxon.kraken2_classified_read1
-    # File kraken2_classified_read2 = taxon.kraken2_classified_read2
-
-    # String rekraken_version = rekraken.kraken2_version
-    # String rekraken_docker = rekraken.kraken2_docker
-    # File rekraken_report = rekraken.kraken2_report
-
-    # File braken_rekraken_report = bracken_rekraken.bracken_report
-
-    # FastQC
-    File fastqc1_html = fastqc_raw.fastqc1_html
-    File fastqc1_zip = fastqc_raw.fastqc1_zip
-    File fastqc2_html = fastqc_raw.fastqc2_html
-    File fastqc2_zip = fastqc_raw.fastqc2_zip
-    Int read1_seq = fastqc_raw.read1_seq
-    Int read2_seq = fastqc_raw.read2_seq
-    String read_pairs = fastqc_raw.read_pairs
-    # String version = read_string("VERSION")
-    # String pipeline_date = read_string("DATE")
-    # File read1_trimmed = trim.read1_trimmed
-    # File read2_trimmed = trim.read2_trimmed
-    File fastqc1_trimmed_html = fastqc_trim.fastqc1_html
-    File fastqc1_trimmed_zip = fastqc_trim.fastqc1_zip
-    File fastqc2_trimmed_html = fastqc_trim.fastqc2_html
-    File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
-    Int read1_trimmed_seq = fastqc_trim.read1_seq
-    Int read2_trimmed_seq = fastqc_trim.read2_seq
+    # # FastQC
+    # File fastqc1_html = fastqc_raw.fastqc1_html
+    # File fastqc1_zip = fastqc_raw.fastqc1_zip
+    # File fastqc2_html = fastqc_raw.fastqc2_html
+    # File fastqc2_zip = fastqc_raw.fastqc2_zip
+    # Int read1_seq = fastqc_raw.read1_seq
+    # Int read2_seq = fastqc_raw.read2_seq
+    # String read_pairs = fastqc_raw.read_pairs
+    # File fastqc1_trimmed_html = fastqc_trim.fastqc1_html
+    # File fastqc1_trimmed_zip = fastqc_trim.fastqc1_zip
+    # File fastqc2_trimmed_html = fastqc_trim.fastqc2_html
+    # File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
+    # Int read1_trimmed_seq = fastqc_trim.read1_seq
+    # Int read2_trimmed_seq = fastqc_trim.read2_seq
     }
 }

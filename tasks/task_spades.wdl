@@ -18,10 +18,7 @@ task spades_pe {
 
     mkdir out
 
-    spades.py -o out --only-assembler --careful --pe1-1 ~{read1} --pe1-2 ~{read2}
-   
-    #--threads ~{cpu} \
-    #--memory ~{memory}
+    spades.py -o out --only-assembler --careful --pe1-1 ~{read1} --pe1-2 ~{read2} --threads ~{cpu} --memory ~{memory}
    
     mv out/contigs.fasta ~{samplename}_contigs.fasta
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta

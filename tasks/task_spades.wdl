@@ -6,7 +6,7 @@ task spades_pe {
     File read2
     Int? contig_threshold = 500
     String samplename
-    String docker = "kincekara/spades:3.15.5"
+    String docker = "staphb/spades:3.15.4"
 
   }
   command <<<

@@ -7,8 +7,6 @@ task spades_pe {
     Int? contig_threshold = 500
     String samplename
     String docker = "kincekara/spades:3.15.5"
-    Int? memory = 32
-    Int? cpu = 4
 
   }
   command <<<
@@ -18,7 +16,7 @@ task spades_pe {
 
     mkdir out
 
-    spades.py -o out --only-assembler --careful --pe1-1 ~{read1} --pe1-2 ~{read2} --threads ~{cpu} --memory ~{memory}
+    spades.py -o out --only-assembler --careful --pe1-1 ~{read1} --pe1-2 ~{read2}
    
     mv out/contigs.fasta ~{samplename}_contigs.fasta
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
@@ -50,8 +48,8 @@ task spades_pe {
 
   runtime {
     docker: "~{docker}"
-    memory: "~{memory} GB"
-    cpu: cpu
+    memory: "32 GB"
+    cpu: 4
     disks: "local-disk 100 SSD"
     preemptible:  0
   }

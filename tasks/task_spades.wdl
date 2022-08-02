@@ -14,12 +14,14 @@ task spades_pe {
     date | tee DATE
     spades.py -v > VERSION 
 
-    # assembly
-    spades.py -k 21,33,55,77 --careful --only-assembler --pe1-1 ~{read1} --pe1-2 ~{read2} -o spades_out
+    out_dir="$(mktemp -d ./spades.XXXXXXXXX)"
 
-    # rename output   
-    mv spades_out/contigs.fasta ~{samplename}_contigs.fasta
-    mv spades_out/scaffolds.fasta ~{samplename}_scaffolds.fasta
+    # assembly
+    spades.py --careful --only-assembler --pe1-1 ~{read1} --pe1-2 ~{read2} -o $out_dir
+
+    # get & rename output   
+    cp "$out_dir"/contigs.fasta ~{samplename}_contigs.fasta
+    cp "$out_dir"/scaffolds.fasta ~{samplename}_scaffolds.fasta
 
     # remove short contigs
     python <<CODE

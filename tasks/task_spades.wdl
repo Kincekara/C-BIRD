@@ -17,7 +17,8 @@ task spades_pe {
     mkdir out
 
     spades.py -o out --only-assembler --careful --pe1-1 ~{read1} --pe1-2 ~{read2}
-   
+
+    # rename output   
     mv out/contigs.fasta ~{samplename}_contigs.fasta
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
 

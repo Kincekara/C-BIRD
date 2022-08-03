@@ -7,8 +7,7 @@ task quast {
     String docker="quay.io/staphb/quast:5.0.2"
   }
   command <<<
-    # capture date and version
-    date | tee DATE
+    # version
     quast.py --version | grep QUAST | tee VERSION
 
     quast.py ~{assembly} -o .
@@ -38,13 +37,13 @@ task quast {
   output {
     File quast_report = "${samplename}_report.tsv"
     String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
     String quast_docker = docker
     Float gc_content = read_float("GC_CONTENT")
   }
+  
   runtime {
     docker:  "~{docker}"
     memory:  "2 GB"

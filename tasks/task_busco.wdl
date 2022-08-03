@@ -12,7 +12,6 @@ task busco {
 
   command <<<
     busco -v > VERSION
-    date | tee DATE
 
     # Decompress the busco database
     mkdir db
@@ -45,7 +44,6 @@ task busco {
   output {
     String busco_version = read_string("VERSION")
     String busco_docker = docker
-    String analysis_date = read_string("DATE")
     String busco_summary = read_string("BUSCO_SUM")
     String busco_db_name = read_string("BUSCO_DB")
     String busco_db_date = read_string("BUSCO_DB_DATE")

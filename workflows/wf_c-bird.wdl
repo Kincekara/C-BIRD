@@ -116,7 +116,7 @@ workflow cbird_workflow {
     String kraken2_docker = taxon.kraken2_docker
     File kraken2_report = taxon.kraken2_report
     # Bracken
-    String bracken_version = taxon.bracken_version
+    # String bracken_version = taxon.bracken_version
     String bracken_docker = taxon.bracken_docker
     File bracken_report = taxon.bracken_report
     String bracken_taxon = taxon.bracken_taxon

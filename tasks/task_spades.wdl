@@ -18,8 +18,8 @@ task spades_pe {
     spades.py --careful --only-assembler --pe1-1 ~{read1} --pe1-2 ~{read2} -o out
 
     # get & rename output   
-    cp out/contigs.fasta ~{samplename}_contigs.fasta
-    cp out/scaffolds.fasta ~{samplename}_scaffolds.fasta
+    mv out/contigs.fasta ~{samplename}_contigs.fasta
+    mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
 
     # remove short contigs
     python <<CODE

@@ -14,8 +14,9 @@ task spades_pe {
     date | tee DATE
     spades.py -v > VERSION 
 
+    tmp_dir="$(mktemp -d spades.XXXXXXXXX)"
     # assembly
-    spades.py --careful --only-assembler --pe1-1 ~{read1} --pe1-2 ~{read2} -o out
+    spades.py --careful --only-assembler -o out --tmp-dir $tmp_dir -1 ~{read1} -2 ~{read2} 
 
     # get & rename output   
     mv out/contigs.fasta ~{samplename}_contigs.fasta

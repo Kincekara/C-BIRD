@@ -40,6 +40,7 @@ command <<<
     jq '.summary.fastp_version' fastp.json > VERSION
     jq '.summary.before_filtering.q30_rate' fastp.json > Q30_RAW
     jq '.summary.after_filtering.q30_rate' fastp.json > Q30_TRIM
+    jq '.summary.after_filtering.q30_bases' fastp.json > q30_bases.txt
 >>>
 
 output {
@@ -49,6 +50,7 @@ output {
     String fastp_version = read_string("VERSION")
     Float q30_raw = read_float("Q30_RAW")
     Float q30_trim = read_float("Q30_TRIM")
+    File q30_bases = "q30_bases.txt"
     String fastp_docker = docker
     }
 

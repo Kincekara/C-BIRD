@@ -56,7 +56,7 @@ task taxon {
     File kraken2_report = "~{samplename}.report.txt"
     File bracken_report = "~{samplename}.bracken.filtered.txt"
     String bracken_taxon = read_string("TAXON")
-    # String bracken_version = read_string("BVERSION")
+    String bracken_version = read_string("BVERSION")
     String bracken_docker = docker
   }
   

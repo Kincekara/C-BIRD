@@ -9,6 +9,7 @@ import "../tasks/task_resfinder.wdl" as amr
 import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_busco.wdl" as busco
 import "../tasks/task_taxonomy.wdl" as taxon
+import "../tasks/task_report.wdl" as report
    
 workflow cbird_workflow {
   
@@ -25,6 +26,7 @@ workflow cbird_workflow {
     File db_resfinder
     File plasmidfinder_db
     File busco_db
+    File genome_stats
   }
  
   call version.version_capture {
@@ -80,23 +82,34 @@ workflow cbird_workflow {
   }
 
   call mlst.ts_mlst {
-      input:
-      samplename = samplename,
-      assembly = assembly.scaffolds_trim
-    }
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds_trim
+  }
 
   call amr.resfinder {
-      input:
-      samplename = samplename,
-      assembly = assembly.scaffolds_trim,
-      db_resfinder = db_resfinder
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds_trim,
+    db_resfinder = db_resfinder
   }
 
   call plasmid.plasmidfinder {
-      input:
-      samplename = samplename,
-      assembly = assembly.scaffolds_trim,
-      plasmidfinder_db = plasmidfinder_db 
+    input:
+    samplename = samplename,
+    assembly = assembly.scaffolds_trim,
+    plasmidfinder_db = plasmidfinder_db 
+  }
+
+  call report.generate_report {
+    input:
+    samplename = samplename,
+    genome_stats = genome_stats,
+    q30_bases = fastp_trim.q30_bases,
+    taxon_report = taxon.bracken_report,
+    mlst_report = ts_mlst.ts_mlst_results,
+    amr_report = resfinder.resfinder_report,
+    plasmid_report = plasmidfinder.plasmid_report
   }
 
   output {
@@ -155,6 +168,9 @@ workflow cbird_workflow {
     String plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File plasmids = plasmidfinder.plasmid_report
+    # Report
+    File estimated_coverage = report.final_report
+    String estimated_coverage = report.sequencing_coverage
     # # FastQC
     # File fastqc1_html = fastqc_raw.fastqc1_html
     # File fastqc1_zip = fastqc_raw.fastqc1_zip

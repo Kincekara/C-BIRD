@@ -1,4 +1,5 @@
 version 1.0
+
 import "../tasks/task_version.wdl" as version
 # import "../tasks/task_fastqc.wdl" as fastqc
 import "../tasks/task_fastp.wdl" as fastp
@@ -10,7 +11,7 @@ import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_busco.wdl" as busco
 import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_report.wdl" as report
-   
+
 workflow cbird_workflow {
   
   meta {
@@ -169,8 +170,8 @@ workflow cbird_workflow {
     String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File plasmids = plasmidfinder.plasmid_report
     # Report
-    File estimated_coverage = report.final_report
-    String estimated_coverage = report.sequencing_coverage
+    File final_report = generate_report.final_report
+    String estimated_coverage = generate_report.sequencing_coverage
     # # FastQC
     # File fastqc1_html = fastqc_raw.fastqc1_html
     # File fastqc1_zip = fastqc_raw.fastqc1_zip

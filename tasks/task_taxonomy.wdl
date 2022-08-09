@@ -28,7 +28,7 @@ task taxon {
     kraken2 \
     --db ./db/ \
     --threads ~{cpu} \
-    --report ~{samplename}.report.txt \
+    --report ~{samplename}.kraken.report.txt \
     --gzip-compressed \
     --paired \
     --confidence ~{kraken_confidence} \
@@ -39,7 +39,7 @@ task taxon {
 
     bracken \
     -d ./db/ \
-    -i ~{samplename}.report.txt \
+    -i ~{samplename}.kraken.report.txt \
     -o ~{samplename}.bracken.txt \
     -r ~{bracken_read_len} \
     -l ~{level} \
@@ -53,7 +53,7 @@ task taxon {
   output {
     String kraken2_version = read_string("KVERSION")
     String kraken2_docker = docker
-    File kraken2_report = "~{samplename}.report.txt"
+    File kraken2_report = "~{samplename}.kraken.report.txt"
     File bracken_report = "~{samplename}.bracken.filtered.txt"
     String bracken_taxon = read_string("TAXON")
     String bracken_version = read_string("BVERSION")

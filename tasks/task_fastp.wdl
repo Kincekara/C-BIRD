@@ -40,7 +40,7 @@ command <<<
     jq '.summary.fastp_version' fastp.json > VERSION
     jq '.summary.before_filtering.q30_rate' fastp.json > Q30_RAW
     jq '.summary.after_filtering.q30_rate' fastp.json > Q30_TRIM
-    jq '.summary.after_filtering.q30_bases' fastp.json > q30_bases.txt
+    jq '.summary.before_filtering.q30_bases' fastp.json > q30_bases.txt
 >>>
 
 output {

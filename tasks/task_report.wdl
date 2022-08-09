@@ -13,6 +13,11 @@ task generate_report {
   }
 
   command <<<
+    #alternative genome size
+    taxid = $(awk 'NR==1; NR>1 {print $0 | "sort -k 7nr"}' ~{taxon_report} | awk 'NR==2 {print $3}')
+    datasets summary genome taxon $taxid > gs.json
+    jq '.assemblies[0].assembly.seq_length' gs.json > alt_gs.txt
+
     report_gen.py \
     ~{samplename} \
     ~{genome_stats} \
@@ -21,6 +26,7 @@ task generate_report {
     ~{mlst_report} \
     ~{amr_report} \
     ~{plasmid_report} \
+    alt_gs.txt \
     > ~{samplename}_final_report.txt
   >>>
 

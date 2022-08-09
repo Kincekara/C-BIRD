@@ -1,7 +1,7 @@
 version 1.0
 
 import "../tasks/task_version.wdl" as version
-# import "../tasks/task_fastqc.wdl" as fastqc
+import "../tasks/task_fastqc.wdl" as fastqc
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
@@ -34,11 +34,11 @@ workflow cbird_workflow {
     input:
   }
 
-  # call fastqc.fastqc_pe as fastqc_raw {
-  #   input:
-  #     read1 = read1,
-  #     read2 = read2
-  # }
+  call fastqc.fastqc_pe as fastqc_raw {
+    input:
+      read1 = read1,
+      read2 = read2
+  }
   
   call fastp.fastp_pe as fastp_trim {
     input:
@@ -48,11 +48,11 @@ workflow cbird_workflow {
       adapters = adapters
   }
 
-  # call fastqc.fastqc_pe as fastqc_trim {
-  #   input:
-  #     read1 = fastp_trim.read1_trimmed,
-  #     read2 = fastp_trim.read2_trimmed
-  # }
+  call fastqc.fastqc_pe as fastqc_trim {
+    input:
+      read1 = fastp_trim.read1_trimmed,
+      read2 = fastp_trim.read2_trimmed
+  }
 
   call taxon.taxon {
     input:
@@ -172,19 +172,19 @@ workflow cbird_workflow {
     # Report
     File final_report = generate_report.final_report
     String estimated_coverage = generate_report.sequencing_coverage
-    # # FastQC
-    # File fastqc1_html = fastqc_raw.fastqc1_html
-    # File fastqc1_zip = fastqc_raw.fastqc1_zip
-    # File fastqc2_html = fastqc_raw.fastqc2_html
-    # File fastqc2_zip = fastqc_raw.fastqc2_zip
-    # Int read1_seq = fastqc_raw.read1_seq
-    # Int read2_seq = fastqc_raw.read2_seq
-    # String read_pairs = fastqc_raw.read_pairs
-    # File fastqc1_trimmed_html = fastqc_trim.fastqc1_html
-    # File fastqc1_trimmed_zip = fastqc_trim.fastqc1_zip
-    # File fastqc2_trimmed_html = fastqc_trim.fastqc2_html
-    # File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
-    # Int read1_trimmed_seq = fastqc_trim.read1_seq
-    # Int read2_trimmed_seq = fastqc_trim.read2_seq
+    # FastQC
+    File fastqc1_html = fastqc_raw.fastqc1_html
+    File fastqc1_zip = fastqc_raw.fastqc1_zip
+    File fastqc2_html = fastqc_raw.fastqc2_html
+    File fastqc2_zip = fastqc_raw.fastqc2_zip
+    Int read1_seq = fastqc_raw.read1_seq
+    Int read2_seq = fastqc_raw.read2_seq
+    String read_pairs = fastqc_raw.read_pairs
+    File fastqc1_trimmed_html = fastqc_trim.fastqc1_html
+    File fastqc1_trimmed_zip = fastqc_trim.fastqc1_zip
+    File fastqc2_trimmed_html = fastqc_trim.fastqc2_html
+    File fastqc2_trimmed_zip = fastqc_trim.fastqc2_zip    
+    Int read1_trimmed_seq = fastqc_trim.read1_seq
+    Int read2_trimmed_seq = fastqc_trim.read2_seq
     }
 }

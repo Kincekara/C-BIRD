@@ -110,7 +110,8 @@ workflow cbird_workflow {
     taxon_report = taxon.bracken_report,
     mlst_report = ts_mlst.ts_mlst_results,
     amr_report = resfinder.resfinder_report,
-    plasmid_report = plasmidfinder.plasmid_report
+    plasmid_report = plasmidfinder.plasmid_report,
+    taxid = taxon.taxid
   }
 
   output {

@@ -48,6 +48,7 @@ task taxon {
     # filter report
     awk 'NR==1; NR>1 {if ($NF >= 0.01){print}}' ~{samplename}.bracken.txt > ~{samplename}.bracken.filtered.txt
     awk 'NR==1; NR>1 {print $0 | "sort -k 7nr"}' ~{samplename}.bracken.txt | awk 'NR==2 {print $1,$2}' > TAXON
+    awk 'NR==1; NR>1 {print $0 | "sort -k 7nr"}' ~{samplename}.bracken.txt | awk 'NR==2 {print $3}' > ~{samplename}.taxid.txt
   >>>
 
   output {
@@ -55,6 +56,7 @@ task taxon {
     String kraken2_docker = docker
     File kraken2_report = "~{samplename}.kraken.report.txt"
     File bracken_report = "~{samplename}.bracken.filtered.txt"
+    File taxid = "~{samplename}.taxid.txt"
     String bracken_taxon = read_string("TAXON")
     String bracken_version = read_string("BVERSION")
     String bracken_docker = docker

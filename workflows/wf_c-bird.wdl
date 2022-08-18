@@ -116,10 +116,10 @@ workflow cbird_workflow {
     Int total_reads = fastp_trim.total_reads    
     Int r1_reads =  fastp_trim.r1_reads
     Int r2_reads = fastp_trim.r2_reads
-    Float r1_q30_raw = fastp_trim.r1_q30_raw
-    Float r2_q30_raw = fastp_trim.r2_q30_raw
-    Float r1_q30_trim = fastp_trim.r1_q30_trim
-    Float r2_q30_trim = fastp_trim.r2_q30_trim
+    Float? r1_q30_raw = fastp_trim.r1_q30_raw
+    Float? r2_q30_raw = fastp_trim.r2_q30_raw
+    Float? r1_q30_trim = fastp_trim.r1_q30_trim
+    Float? r2_q30_trim = fastp_trim.r2_q30_trim
     # Kraken2
     String? kraken2_version = taxon.kraken2_version
     String? kraken2_docker = taxon.kraken2_docker

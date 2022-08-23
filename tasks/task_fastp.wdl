@@ -40,26 +40,32 @@ command <<<
     jq '.summary.before_filtering.q30_bases' fastp.json > q30_bases.txt
     jq '.read1_before_filtering.total_reads' fastp.json > R1_READS    
     jq '.read2_before_filtering.total_reads' fastp.json > R2_READS
-    reads=$(jq '.summary.before_filtering.total_reads' fastp.json)
-    echo $reads > TOTAL_READS
-    if [ "$reads" -gt 7472 ]
+    jq '.summary.before_filtering.total_reads' fastp.json > TOTAL_READS
+    
+    r1_q30=$(jq '.read1_before_filtering.q30_bases' fastp.json)
+    r1_total=$(jq '.read1_before_filtering.total_bases' fastp.json)
+    r2_q30=$(jq '.read2_before_filtering.q30_bases' fastp.json)
+    r2_total=$(jq '.read2_before_filtering.total_bases' fastp.json)
+    r1_q30_trim=$(jq '.read1_after_filtering.q30_bases' fastp.json)
+    r1_total_trim=$(jq '.read1_after_filtering.total_bases' fastp.json)
+    r2_q30_trim=$(jq '.read2_after_filtering.q30_bases' fastp.json)
+    r2_total_trim=$(jq '.read2_after_filtering.total_bases' fastp.json)
+    
+    if [ "$r1_total_trim" -gt 0 ]
     then
-        r1_q30=$(jq '.read1_before_filtering.q30_bases' fastp.json)
-        r1_total=$(jq '.read1_before_filtering.total_bases' fastp.json)
-        echo "$r1_q30 $r1_total" | awk '{printf "%.6f", $1/$2 }' > R1_Q30_RAW
-        r2_q30=$(jq '.read2_before_filtering.q30_bases' fastp.json)
-        r2_total=$(jq '.read2_before_filtering.total_bases' fastp.json)
-        echo "$r2_q30 $r2_total" | awk '{printf "%.6f", $1/$2 }' > R2_Q30_RAW
-        r1_q30_trim=$(jq '.read1_after_filtering.q30_bases' fastp.json)
-        r1_total_trim=$(jq '.read1_after_filtering.total_bases' fastp.json)
-        echo "$r1_q30_trim $r1_total_trim" | awk '{printf "%.6f", $1/$2 }' > R1_Q30_TRIM
-        r2_q30_trim=$(jq '.read2_after_filtering.q30_bases' fastp.json)
-        r2_total_trim=$(jq '.read2_after_filtering.total_bases' fastp.json)
-        echo "$r2_q30_trim $r2_total_trim" | awk '{printf "%.6f", $1/$2 }' > R2_Q30_TRIM
+        echo "$r1_q30 $r1_total" | awk '{printf "%.2f", ($1/$2)*100 }' > R1_Q30_RAW
+        echo "$r1_q30_trim $r1_total_trim" | awk '{printf "%.2f", ($1/$2)*100 }' > R1_Q30_TRIM
     else
         echo 0 > R1_Q30_RAW
-        echo 0 > R2_Q30_RAW
         echo 0 > R1_Q30_TRIM
+    fi
+
+    if [ "$r2_total_trim" -gt 0 ]
+    then
+        echo "$r2_q30 $r2_total" | awk '{printf "%.2f", ($1/$2)*100 }' > R2_Q30_RAW
+        echo "$r2_q30_trim $r2_total_trim" | awk '{printf "%.2f", ($1/$2)*100 }' > R2_Q30_TRIM
+    else
+        echo 0 > R2_Q30_RAW
         echo 0 > R2_Q30_TRIM
     fi
 >>>

@@ -8,7 +8,7 @@ task version_capture {
     volatile: true
   }
   command {
-    cbird_version="C-BIRD v0.9.3.0"
+    cbird_version="C-BIRD v0.9.3.1"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$cbird_version" > CBIRD_VERSION

@@ -11,7 +11,7 @@ task resfinder {
   }
 
   command <<<
-    # Decompress the Kraken2 database
+    # Decompress the resfinder database
     mkdir db
     tar -C ./db/ -xzvf ~{db_resfinder} 
 

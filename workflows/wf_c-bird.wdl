@@ -99,7 +99,8 @@ workflow cbird_workflow {
       mlst_report = ts_mlst.ts_mlst_results,
       amr_report = amr.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
-      taxid = taxon.taxid
+      taxid = taxon.taxid,
+      version = version_capture.cbird_version
     }
   }
 
@@ -168,7 +169,8 @@ workflow cbird_workflow {
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File? plasmids = plasmidfinder.plasmid_report
     # Report
-    File? final_report = generate_report.final_report
+    File? summary_txt_report = generate_report.txt_report
+    File? summary_html_report = generate_report.html_report
     String? estimated_coverage = generate_report.sequencing_coverage
     }
 }

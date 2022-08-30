@@ -9,8 +9,8 @@ task amrfinderplus_nuc {
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism # make optional?
-    Int? minid
-    Int? mincov
+    Float? minid
+    Float? mincov
     Int cpu = 4
     String docker = "kincekara/amrfinder:3.10.40"
   }

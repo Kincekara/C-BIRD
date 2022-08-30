@@ -10,7 +10,8 @@ task generate_report {
     File amr_report
     File plasmid_report
     File taxid
-    String docker = "kincekara/cbird-util:alpine"    
+    String version
+    String docker = "kincekara/cbird-util:alpine-v0.2"    
   }
 
   command <<<
@@ -21,11 +22,11 @@ task generate_report {
     ~{mlst_report} \
     ~{amr_report} \
     ~{plasmid_report} \
-    > ~{samplename}_summary_report.txt
-
+    "~{version}"
+    
     #alternative genome size
     taxid=$(<"~{taxid}")
-    datasets summary genome taxon $taxid > gs.json
+    datasets summary genome taxon $taxid --reference > gs.json
     jq -r '.assemblies[0].assembly.seq_length' gs.json > alt_gs.txt
     
     # calculate esimated coverage
@@ -38,7 +39,8 @@ task generate_report {
   >>>
 
   output {
-    File final_report = "~{samplename}_summary_report.txt"
+    File txt_report = "~{samplename}_txt_report.txt"
+    File html_report = "~{samplename}_html_report.html"
     String sequencing_coverage = read_string("COVERAGE")
   }
 

@@ -35,7 +35,7 @@ task busco {
     with open("BUSCO_SUM", "w") as summary:
       summary.write(data["one_line_summary"])
     with open("BUSCO_DB", "w") as db:
-      db.write(data["dataset"])
+      db.write(data["dataset"][5:])
     with open("BUSCO_DB_DATE", "w") as date:
       date.write(data["dataset_creation_date"])
     CODE

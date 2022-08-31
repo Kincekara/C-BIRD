@@ -22,6 +22,7 @@ workflow cbird_workflow {
     File read1
     File read2
     String samplename
+    File adapters
     File kraken2_db
     File plasmidfinder_db
     File busco_db
@@ -38,7 +39,8 @@ workflow cbird_workflow {
     input:
       read1 = read1,
       read2 = read2,
-      samplename = samplename      
+      samplename = samplename,
+      adapters = adapters      
   }
 
   if ( fastp_trim.total_reads > min_reads) {

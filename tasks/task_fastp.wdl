@@ -4,6 +4,7 @@ task fastp_pe {
   input {
     File read1
     File read2
+    File adapters
     String docker = "kincekara/fastp:0.23.2"
     String samplename
     Int? leading = 1
@@ -14,6 +15,7 @@ task fastp_pe {
     Int? window_size = 4
     Int? right_mean_quality = 20
     Int? thread = 4
+    Int? read_quality = 30
     }
 
 command <<<
@@ -22,7 +24,8 @@ command <<<
     -I ~{read2} \
     -o ~{samplename}_R1_trim.fastq.gz \
     -O ~{samplename}_R2_trim.fastq.gz \
-    --detect_adapter_for_pe \
+    --length_required ~{minlen} \
+    --average_qual ~{read_quality} \
     --cut_front_window_size ~{leading} \
     --cut_front_mean_quality ~{front_mean_quality} \
     -3 \
@@ -31,7 +34,7 @@ command <<<
     -r \
     --cut_right_window_size ~{window_size} \
     --cut_right_mean_quality ~{right_mean_quality} \
-    --length_required ~{minlen} \
+    --adapter_fasta ~{adapters} \
     --thread ~{thread} \
     -h ~{samplename}_fastp.html
 

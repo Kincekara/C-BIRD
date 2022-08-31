@@ -10,6 +10,7 @@ task generate_report {
     File amr_report
     File plasmid_report
     File taxid
+    Int genome_length
     String version
     String docker = "kincekara/cbird-util:alpine-v0.2"    
   }
@@ -29,19 +30,20 @@ task generate_report {
     datasets summary genome taxon $taxid --reference > gs.json
     jq -r '.assemblies[0].assembly.seq_length' gs.json > alt_gs.txt
     
-    # calculate esimated coverage
+    # calculate esimated coverage & genome ratio
     est_coverage.py \
     ~{genome_stats} \
     ~{q30_bases} \
     ~{taxid} \
-    alt_gs.txt
-
+    alt_gs.txt \
+    "~{genome_length}"    
   >>>
 
   output {
     File txt_report = "~{samplename}_txt_report.txt"
     File html_report = "~{samplename}_html_report.html"
     String sequencing_coverage = read_string("COVERAGE")
+    Float genome_ratio = read_float("GENOME_RATIO")
   }
 
   runtime {

@@ -2,6 +2,7 @@ version 1.0
 
 import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastp.wdl" as fastp
+import "../tasks/task_bbduk.wdl" as bbduk
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
 import "../tasks/task_mlst.wdl" as mlst
@@ -41,19 +42,27 @@ workflow cbird_workflow {
   }
 
   if ( fastp_trim.total_reads > min_reads) {
+    
+    call bbduk.bbduk_pe {
+      input:
+      read1_trimmed = fastp_trim.read1_trimmed,
+      read2_trimmed = fastp_trim.read2_trimmed,
+      samplename =samplename
+    }
+
     call taxon.taxon {
       input:
       samplename = samplename,
-      read1 = fastp_trim.read1_trimmed,
-      read2 = fastp_trim.read2_trimmed,    
+      read1 = bbduk_pe.read1_clean,
+      read2 = bbduk_pe.read2_clean,    
       kraken2_db = kraken2_db
     }
 
     call spades.spades_pe as assembly {
       input:
       samplename = samplename,
-      read1 = fastp_trim.read1_trimmed,
-      read2 = fastp_trim.read2_trimmed        
+      read1 = bbduk_pe.read1_clean,
+      read2 = bbduk_pe.read2_clean        
     }
 
     call quast.quast {
@@ -100,7 +109,8 @@ workflow cbird_workflow {
       amr_report = amr.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
       taxid = taxon.taxid,
-      version = version_capture.cbird_version
+      version = version_capture.cbird_version,
+      genome_length = quast.genome_length
     }
   }
 
@@ -121,6 +131,13 @@ workflow cbird_workflow {
     Float? r2_q30_raw = fastp_trim.r2_q30_raw
     Float? r1_q30_trim = fastp_trim.r1_q30_trim
     Float? r2_q30_trim = fastp_trim.r2_q30_trim
+    # BBduk
+    File? read1_clean = bbduk_pe.read1_clean
+    File? read2_clean = bbduk_pe.read2_clean
+    File? phiX_stats = bbduk_pe.phiX_stats
+    String? bbduk_docker = bbduk_pe.bbduk_docker
+    String? bbduk_version = bbduk_pe.bbduk_version
+    String? phiX_ratio = bbduk_pe.phix_ratio
     # Kraken2
     String? kraken2_version = taxon.kraken2_version
     String? kraken2_docker = taxon.kraken2_docker
@@ -172,5 +189,6 @@ workflow cbird_workflow {
     File? summary_txt_report = generate_report.txt_report
     File? summary_html_report = generate_report.html_report
     String? estimated_coverage = generate_report.sequencing_coverage
+    Float? est_genome_ratio = generate_report.genome_ratio
     }
 }

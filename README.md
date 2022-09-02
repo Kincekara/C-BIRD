@@ -51,7 +51,7 @@ The following programs and tools are used in C-BIRD pipeline.
 ## Results ##
 In addition to reports generated in each step by the specific programs, C-CIRD creates additional summary reports in Html and text format for each sample. 
 
-Example report
+[Example report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/example_report.html)
 
 ## Known issues ##
 SPAdes may fail if an authorization domain is defined for the workspace on Terra.

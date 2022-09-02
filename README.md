@@ -44,12 +44,14 @@ The following programs and tools are used in C-BIRD pipeline.
 | Bracken | 2.7 | Abundance estimation |
 | SPAdes | 3.15.5 | *De novo* assembly |
 | QUAST | 5.0.2 | Genome assembly evaluation |
+| BUSCO | 5.3.2 | Genomic data quality assesment |
 | mlst | 2.22.0 | MLST typing |
 | AMRFinderPlus | 3.10.40 | AMR gene identification |
+| PlasmidFinder | 2.1.6 | Plasmid detection |
 | Cbird-Util | 0.2 | Individual summary report generation |
 
-## Results ##
-In addition to reports generated in each step by the specific programs, C-CIRD creates additional summary reports in Html and text format for each sample. 
+## Outputs ##
+In addition to outputs generated in each step by the specific programs, C-CIRD creates additional summary reports in html and text format for each sample. 
 
 [Example report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/example_report.html)
 

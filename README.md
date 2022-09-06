@@ -38,16 +38,16 @@ The following programs and tools are used in C-BIRD pipeline.
 
 | Tools | Version | Comments |
 | --- | --- | --- |
-| FastP | 0.23.2 | QC, adapter removal, quality filtering and trimming |
-| BBDuk | 38.98 | phiX removal |
-| Kraken2 | 2.1.2 | Species identification |
-| Bracken | 2.7 | Abundance estimation |
-| SPAdes | 3.15.5 | *De novo* assembly |
-| QUAST | 5.0.2 | Genome assembly evaluation |
-| BUSCO | 5.3.2 | Genomic data quality assesment |
-| mlst | 2.22.0 | MLST typing |
-| AMRFinderPlus | 3.10.40 | AMR gene identification |
-| PlasmidFinder | 2.1.6 | Plasmid detection |
+| [FastP](https://github.com/OpenGene/fastp) | 0.23.2 | QC, adapter removal, quality filtering and trimming |
+| [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 38.98 | phiX removal |
+| [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.2 | Species identification |
+| [Bracken](https://github.com/jenniferlu717/Bracken) | 2.7 | Abundance estimation |
+| [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
+| [QUAST](https://github.com/ablab/quast) | 5.0.2 | Genome assembly evaluation |
+| [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.3.2 | Genomic data quality assesment |
+| [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
+| [AMRFinderPlus](https://github.com/ncbi/amr) | 3.10.40 | AMR gene identification |
+| [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
 | Cbird-Util | 0.2 | Individual summary report generation |
 
 ## Outputs ##

@@ -106,7 +106,7 @@ workflow cbird_workflow {
       samplename = samplename,
       genome_stats = genome_stats,
       q30_bases = fastp_trim.q30_bases,
-      taxon_report = taxon.bracken_report,
+      taxon_report = taxon.bracken_report_filter,
       mlst_report = ts_mlst.ts_mlst_results,
       amr_report = amr.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
@@ -190,7 +190,7 @@ workflow cbird_workflow {
     # Report
     File? summary_txt_report = generate_report.txt_report
     File? summary_html_report = generate_report.html_report
-    String? estimated_coverage = generate_report.sequencing_coverage
+    Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_genome_ratio = generate_report.genome_ratio
     }
 }

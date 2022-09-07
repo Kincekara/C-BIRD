@@ -42,7 +42,7 @@ task generate_report {
   output {
     File txt_report = "~{samplename}_txt_report.txt"
     File html_report = "~{samplename}_html_report.html"
-    String sequencing_coverage = read_string("COVERAGE")
+    Float sequencing_depth = read_float("COVERAGE")
     Float genome_ratio = read_float("GENOME_RATIO")
   }
 

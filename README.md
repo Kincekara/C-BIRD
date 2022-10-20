@@ -1,9 +1,7 @@
 # <img src="/c-bird.png" width=80>   C-BIRD  
 **CT-PHL Bacterial Identification and Resistance Detection**
 
-:construction: This workflow is currently in the active development and testing stage.:hatching_chick: 
-
-:rotating_light: It has not been validated for any species yet. Please use it with caution! :rotating_light:
+:construction: This workflow is currently in the active development and testing stage. Please use it with caution! :hatching_chick:
 
 ## Overview ##
 C-BIRD is an agnostic pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where is available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 

@@ -110,9 +110,13 @@ workflow cbird_workflow {
       mlst_report = ts_mlst.ts_mlst_results,
       amr_report = amr.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
+      fastp_report = fastp_trim.fastp_report,
       taxid = taxon.taxid,
       version = version_capture.cbird_version,
-      genome_length = quast.genome_length
+      phix_ratio = bbduk_pe.phix_ratio,
+      genome_length = quast.genome_length,
+      quast_report = quast.quast_report,
+      busco_report = busco.busco_json
     }
   }
 
@@ -191,6 +195,7 @@ workflow cbird_workflow {
     # Report
     File? summary_txt_report = generate_report.txt_report
     File? summary_html_report = generate_report.html_report
+    File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_genome_ratio = generate_report.genome_ratio
     }

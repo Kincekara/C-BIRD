@@ -9,10 +9,14 @@ task generate_report {
     File mlst_report
     File amr_report
     File plasmid_report
+    File fastp_report
+    File busco_report
+    File quast_report
     File taxid
     Int genome_length
     String version
-    String docker = "kincekara/cbird-util:alpine-v0.2"    
+    String phix_ratio
+    String docker = "kincekara/cbird-util:alpine-v0.3"    
   }
 
   command <<<
@@ -25,7 +29,7 @@ task generate_report {
     ~{plasmid_report} \
     "~{version}"
     
-    #alternative genome size
+    # alternative genome size
     taxid=$(<"~{taxid}")
     datasets summary genome taxon $taxid --reference > gs.json
     jq -r '.assemblies[0].assembly.seq_length' gs.json > alt_gs.txt
@@ -37,11 +41,24 @@ task generate_report {
     ~{taxid} \
     alt_gs.txt \
     "~{genome_length}"    
+
+    # create QC summary
+    qc_report.py \
+    ~{samplename} \
+    ~{fastp_report} \
+    ~{taxon_report} \
+    ~{quast_report} \
+    ~{busco_report} \
+    "~{version}" \
+    "~{phix_ratio}" \
+    "COVERAGE" \
+    "GENOME_RATIO"
   >>>
 
   output {
     File txt_report = "~{samplename}_txt_report.txt"
     File html_report = "~{samplename}_html_report.html"
+    File qc_report = "~{samplename}_QC_summary.html"
     Float sequencing_depth = read_float("COVERAGE")
     Float genome_ratio = read_float("GENOME_RATIO")
   }

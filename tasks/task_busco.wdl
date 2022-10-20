@@ -5,7 +5,7 @@ task busco {
     File assembly   
     File busco_db
     String samplename
-    String docker = "kincekara/busco:v5.3.2"
+    String docker = "kincekara/busco:5.4.3"
     Int? memory = 16
     Int? cpu = 4
   }
@@ -27,17 +27,18 @@ task busco {
 
     # parse results
     cp ./out/short_summary.specific.bacteria_odb10.out.txt ./~{samplename}_busco_results.txt
+    cp ./out/short_summary.specific.bacteria_odb10.out.json ./~{samplename}_busco.json
 
     python3 <<CODE
     import json
     with open("./out/short_summary.specific.bacteria_odb10.out.json") as input:
       data = json.load(input)
     with open("BUSCO_SUM", "w") as summary:
-      summary.write(data["one_line_summary"])
+      summary.write(data["results"]["one_line_summary"])
     with open("BUSCO_DB", "w") as db:
-      db.write(data["dataset"][5:])
+      db.write(data["lineage_dataset"]["name"])
     with open("BUSCO_DB_DATE", "w") as date:
-      date.write(data["dataset_creation_date"])
+      date.write(data["lineage_dataset"]["creation_date"])
     CODE
     >>>
 
@@ -48,6 +49,7 @@ task busco {
     String busco_db_name = read_string("BUSCO_DB")
     String busco_db_date = read_string("BUSCO_DB_DATE")
     File busco_report = "~{samplename}_busco_results.txt"
+    File busco_json = "~{samplename}_busco.json"
     
   }
   runtime {

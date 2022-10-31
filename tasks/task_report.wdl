@@ -16,7 +16,7 @@ task generate_report {
     Int genome_length
     String version
     String phix_ratio
-    String docker = "kincekara/cbird-util:alpine-v0.3"    
+    String docker = "kincekara/cbird-util:alpine-v0.4"    
   }
 
   command <<<
@@ -38,7 +38,7 @@ task generate_report {
     est_coverage.py \
     ~{genome_stats} \
     ~{q30_bases} \
-    ~{taxid} \
+    $taxid \
     alt_gs.txt \
     "~{genome_length}"    
 

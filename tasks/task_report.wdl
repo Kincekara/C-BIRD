@@ -16,7 +16,7 @@ task generate_report {
     Int genome_length
     String version
     String phix_ratio
-    String docker = "kincekara/cbird-util:alpine-v0.4"    
+    String docker = "kincekara/cbird-util:alpine-v0.5"    
   }
 
   command <<<
@@ -59,8 +59,8 @@ task generate_report {
     File txt_report = "~{samplename}_txt_report.txt"
     File html_report = "~{samplename}_html_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
-    Float sequencing_depth = read_float("COVERAGE")
-    Float genome_ratio = read_float("GENOME_RATIO")
+    Float? sequencing_depth = read_float("COVERAGE")
+    Float? genome_ratio = read_float("GENOME_RATIO")
   }
 
   runtime {

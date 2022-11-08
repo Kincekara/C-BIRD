@@ -5,7 +5,7 @@ task bbduk_pe {
     File read1_trimmed
     File read2_trimmed
     String samplename
-    Int mem_size_gb=8
+    Int memory = 8
     String docker = "kincekara/bbduk:38.98"
   }
 
@@ -31,7 +31,7 @@ task bbduk_pe {
 
   runtime {
     docker: "~{docker}"
-    memory: "~{mem_size_gb} GB"
+    memory: "~{memory} GB"
     cpu: 4
     disks: "local-disk 100 SSD"
     preemptible: 0

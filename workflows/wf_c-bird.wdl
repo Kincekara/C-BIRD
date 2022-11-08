@@ -23,12 +23,12 @@ workflow cbird_workflow {
     File read2
     String samplename
     File adapters
-    File kraken2_db
-    File plasmidfinder_db
-    File busco_db
-    File genome_stats
-    File amr_db
-    Int min_reads = 7472
+    File kraken2_database
+    File plasmidfinder_database
+    File busco_database
+    File genome_stats_file
+    File amrfinder_database
+    Int minimum_total_reads = 7472
   }
  
   call version.version_capture {
@@ -43,7 +43,7 @@ workflow cbird_workflow {
       adapters = adapters      
   }
 
-  if ( fastp_trim.total_reads > min_reads) {
+  if ( fastp_trim.total_reads > minimum_total_reads) {
     
     call bbduk.bbduk_pe {
       input:
@@ -57,7 +57,7 @@ workflow cbird_workflow {
       samplename = samplename,
       read1 = bbduk_pe.read1_clean,
       read2 = bbduk_pe.read2_clean,    
-      kraken2_db = kraken2_db
+      kraken2_db = kraken2_database
     }
 
     call spades.spades_pe as assembly {
@@ -77,7 +77,7 @@ workflow cbird_workflow {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
-      busco_db = busco_db
+      busco_db = busco_database
     }
 
     call mlst.ts_mlst {
@@ -86,11 +86,11 @@ workflow cbird_workflow {
       assembly = assembly.scaffolds_trim
     }
 
-    call amrplus.amrfinderplus_nuc as amr {
+    call amrplus.amrfinderplus_nuc as amrfinder {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
-      amr_db = amr_db,
+      amr_db = amrfinder_database,
       organism = taxon.bracken_taxon
     }
 
@@ -98,17 +98,17 @@ workflow cbird_workflow {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
-      plasmidfinder_db = plasmidfinder_db 
+      plasmidfinder_db = plasmidfinder_database
     }
 
     call report.generate_report {
       input:
       samplename = samplename,
-      genome_stats = genome_stats,
+      genome_stats = genome_stats_file,
       q30_bases = fastp_trim.q30_bases,
       taxon_report = taxon.bracken_report_filter,
       mlst_report = ts_mlst.ts_mlst_results,
-      amr_report = amr.amrfinderplus_all_report,
+      amr_report = amrfinder.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
       fastp_report = fastp_trim.fastp_report,
       taxid = taxon.taxid,
@@ -182,12 +182,12 @@ workflow cbird_workflow {
     String? pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     File? mlst_results = ts_mlst.ts_mlst_results
     # AMRFinderPlus
-    File? amr_report = amr.amrfinderplus_all_report
-    String? amr_genes = amr.amrfinderplus_amr_genes
-    String? amr_stress_genes = amr.amrfinderplus_stress_genes
-    String? amr_virulance_genes = amr.amrfinderplus_virulence_genes
-    String? amrfinderplus_version = amr.amrfinderplus_version
-    String? amrfinderplus_db_version = amr.amrfinderplus_db_version
+    File? amr_report = amrfinder.amrfinderplus_all_report
+    String? amr_genes = amrfinder.amrfinderplus_amr_genes
+    String? amr_stress_genes = amrfinder.amrfinderplus_stress_genes
+    String? amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes
+    String? amrfinderplus_version = amrfinder.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version

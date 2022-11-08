@@ -190,6 +190,7 @@ workflow cbird_workflow {
     String? amrfinderplus_db_version = amr.amrfinderplus_db_version
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
+    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File? plasmids = plasmidfinder.plasmid_report
     # Report

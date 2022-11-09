@@ -146,6 +146,7 @@ workflow cbird_workflow {
     String? phiX_ratio = bbduk_pe.phix_ratio
     # Kraken2
     String? kraken2_version = taxon.kraken2_version
+    String? kraken2_db_version = taxon.kraken2_db_version
     String? kraken2_docker = taxon.kraken2_docker
     File? kraken2_report = taxon.kraken2_report
     # Bracken
@@ -190,7 +191,7 @@ workflow cbird_workflow {
     String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
-    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    String? plasmidfinder_db_date = plasmidfinder.plasmidfinder_db_date
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     File? plasmids = plasmidfinder.plasmid_report
     # Report

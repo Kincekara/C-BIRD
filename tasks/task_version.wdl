@@ -8,7 +8,7 @@ task version_capture {
     volatile: true
   }
   command {
-    cbird_version="C-BIRD v0.9.6.1"
+    cbird_version="C-BIRD v0.9.6.2"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$cbird_version" > CBIRD_VERSION
@@ -18,7 +18,7 @@ task version_capture {
     String cbird_version = read_string("CBIRD_VERSION")
   }
   runtime {
-    memory: "128 MB"
+    memory: "1 GB"
     cpu: 1
     docker: "kincekara/bash:alpine"
     disks: "local-disk 10 HDD"

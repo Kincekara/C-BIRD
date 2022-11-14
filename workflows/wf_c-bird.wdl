@@ -193,7 +193,8 @@ workflow cbird_workflow {
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String? plasmidfinder_db_date = plasmidfinder.plasmidfinder_db_date
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
-    File? plasmids = plasmidfinder.plasmid_report
+    String? plasmidfinder_plasmids = plasmidfinder.plasmids
+    File? plasmidfinder_report = plasmidfinder.plasmid_report
     # Report
     File? summary_txt_report = generate_report.txt_report
     File? summary_html_report = generate_report.html_report

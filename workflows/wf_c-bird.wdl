@@ -189,6 +189,7 @@ workflow cbird_workflow {
     String? amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes
     String? amrfinderplus_version = amrfinder.amrfinderplus_version
     String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
+    String? amr_subclass = amrfinder.amrfinderplus_amr_subclass
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String? plasmidfinder_db_date = plasmidfinder.plasmidfinder_db_date

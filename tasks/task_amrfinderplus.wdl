@@ -111,6 +111,7 @@ task amrfinderplus_nuc {
     amr_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    amr_subclass=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | awk '!seen[$0]++' | tr '\n' ', ' | sed 's/.$//')
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_genes}" ]; then
@@ -121,12 +122,16 @@ task amrfinderplus_nuc {
     fi 
     if [ -z "${virulence_genes}" ]; then
        virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
+    if [ -z "${amr_subclass}" ]; then
+       amr_subclass="No AMR detected by NCBI-AMRFinderPlus"
+    fi
 
     # create final output strings
     echo "${amr_genes}" > AMR_GENES
     echo "${stress_genes}" > STRESS_GENES
     echo "${virulence_genes}" > VIRULENCE_GENES
+    echo "${amr_subclass}" > AMR_SUBCLASS
   >>>
   output {
     File amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
@@ -138,6 +143,7 @@ task amrfinderplus_nuc {
     String amrfinderplus_virulence_genes = read_string("VIRULENCE_GENES")
     String amrfinderplus_version = read_string("AMRFINDER_VERSION")
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
+    String amrfinderplus_amr_subclass = read_string("AMR_SUBCLASS")
   }
   runtime {
     memory: "8 GB"

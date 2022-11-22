@@ -4,7 +4,7 @@ task generate_report {
   input {
     String samplename
     File genome_stats
-    File q30_bases
+    File total_bases
     File taxon_report
     File mlst_report
     File amr_report
@@ -16,7 +16,8 @@ task generate_report {
     Int genome_length
     String version
     String phix_ratio
-    String docker = "kincekara/cbird-util:alpine-v0.5"    
+    String footer_note = ""
+    String docker = "kincekara/cbird-util:alpine-v0.6"    
   }
 
   command <<<
@@ -27,7 +28,8 @@ task generate_report {
     ~{mlst_report} \
     ~{amr_report} \
     ~{plasmid_report} \
-    "~{version}"
+    "~{version}" \
+    "~{footer_note}"
     
     # alternative genome size
     taxid=$(<"~{taxid}")
@@ -37,7 +39,7 @@ task generate_report {
     # calculate esimated coverage & genome ratio
     est_coverage.py \
     ~{genome_stats} \
-    ~{q30_bases} \
+    ~{total_bases} \
     $taxid \
     alt_gs.txt \
     "~{genome_length}"    

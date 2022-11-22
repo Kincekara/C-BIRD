@@ -105,7 +105,7 @@ workflow cbird_workflow {
       input:
       samplename = samplename,
       genome_stats = genome_stats_file,
-      q30_bases = fastp_trim.q30_bases,
+      total_bases = fastp_trim.total_bases,
       taxon_report = taxon.bracken_report_filter,
       mlst_report = ts_mlst.ts_mlst_results,
       amr_report = amrfinder.amrfinderplus_all_report,
@@ -116,7 +116,7 @@ workflow cbird_workflow {
       phix_ratio = bbduk_pe.phix_ratio,
       genome_length = quast.genome_length,
       quast_report = quast.quast_report,
-      busco_report = busco.busco_json
+      busco_report = busco.busco_json      
     }
   }
 

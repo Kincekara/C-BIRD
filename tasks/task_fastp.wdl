@@ -40,7 +40,7 @@ command <<<
 
     # parse output
     jq -r '.summary.fastp_version' fastp.json > VERSION
-    jq '.summary.before_filtering.q30_bases' fastp.json > q30_bases.txt
+    jq '.summary.before_filtering.total_bases' fastp.json > total_bases.txt
     jq '.read1_before_filtering.total_reads' fastp.json > R1_READS    
     jq '.read2_before_filtering.total_reads' fastp.json > R2_READS
     jq '.summary.before_filtering.total_reads' fastp.json > TOTAL_READS
@@ -78,7 +78,7 @@ output {
     File read2_trimmed = "~{samplename}_R2_trim.fastq.gz"
     File fastp_report = "~{samplename}_fastp.html"
     String fastp_version = read_string("VERSION")
-    File q30_bases = "q30_bases.txt"
+    File total_bases = "total_bases.txt"
     Int total_reads = read_int("TOTAL_READS")
     Int r1_reads = read_int("R1_READS")
     Int r2_reads = read_int("R2_READS")

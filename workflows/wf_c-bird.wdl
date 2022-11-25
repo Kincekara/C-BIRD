@@ -2,7 +2,7 @@ version 1.0
 
 import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastp.wdl" as fastp
-import "../tasks/task_bbduk.wdl" as bbduk
+import "../tasks/task_bbtools.wdl" as bbtools
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast
 import "../tasks/task_mlst.wdl" as mlst
@@ -45,26 +45,27 @@ workflow cbird_workflow {
 
   if ( fastp_trim.total_reads > minimum_total_reads) {
     
-    call bbduk.bbduk_pe {
+    call bbtools.assembly_prep {
       input:
       read1_trimmed = fastp_trim.read1_trimmed,
       read2_trimmed = fastp_trim.read2_trimmed,
+      total_reads = fastp_trim.total_reads,   
       samplename =samplename
     }
 
     call taxon.taxon {
       input:
       samplename = samplename,
-      read1 = bbduk_pe.read1_clean,
-      read2 = bbduk_pe.read2_clean,    
+      read1 = assembly_prep.read1_clean_norm,
+      read2 = assembly_prep.read2_clean_norm,    
       kraken2_db = kraken2_database
     }
 
     call spades.spades_pe as assembly {
       input:
       samplename = samplename,
-      read1 = bbduk_pe.read1_clean,
-      read2 = bbduk_pe.read2_clean        
+      read1 = assembly_prep.read1_clean_norm,
+      read2 = assembly_prep.read2_clean_norm       
     }
 
     call quast.quast {
@@ -113,7 +114,7 @@ workflow cbird_workflow {
       fastp_report = fastp_trim.fastp_report,
       taxid = taxon.taxid,
       version = version_capture.cbird_version,
-      phix_ratio = bbduk_pe.phix_ratio,
+      phix_ratio = assembly_prep.phix_ratio,
       genome_length = quast.genome_length,
       quast_report = quast.quast_report,
       busco_report = busco.busco_json      
@@ -137,13 +138,13 @@ workflow cbird_workflow {
     Float? r2_q30_raw = fastp_trim.r2_q30_raw
     Float? r1_q30_trim = fastp_trim.r1_q30_trim
     Float? r2_q30_trim = fastp_trim.r2_q30_trim
-    # BBduk
-    File? read1_clean = bbduk_pe.read1_clean
-    File? read2_clean = bbduk_pe.read2_clean
-    File? phiX_stats = bbduk_pe.phiX_stats
-    String? bbduk_docker = bbduk_pe.bbduk_docker
-    String? bbduk_version = bbduk_pe.bbduk_version
-    String? phiX_ratio = bbduk_pe.phix_ratio
+    # BBtools
+    File? read1_clean_norm = assembly_prep.read1_clean_norm
+    File? read2_clean_norm = assembly_prep.read2_clean_norm
+    File? phiX_stats = assembly_prep.phiX_stats
+    String? bbtools_docker = assembly_prep.bbtools_docker
+    String? bbtools_version = assembly_prep.bbmap_version
+    String? phiX_ratio = assembly_prep.phix_ratio
     # Kraken2
     String? kraken2_version = taxon.kraken2_version
     String? kraken2_db_version = taxon.kraken2_db_version

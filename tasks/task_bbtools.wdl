@@ -5,12 +5,12 @@ task assembly_prep {
     File read1_trimmed
     File read2_trimmed
     String samplename
-    Boolean normalization = true
+    Boolean normalization = false
     Int total_reads
     Int norm_target = 100
     Int min_depth = 5
     Int read_threshold = 8000000
-    Int memory = 32
+    Int memory = 8
     String docker = "kincekara/bbduk:38.98"
   }
 

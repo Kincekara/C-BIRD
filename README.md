@@ -24,7 +24,7 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 | [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 |
 | [BUSCO database](https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2020-03-06.tar.gz)| bacteria_odb10 |
 | [NCBI’s AmrFinderPlus database](https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/) | It should be compressed as tar.gz. Alternatively, it can be obtained via AmrFinderPlus |
-| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz |
+| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexing|
 | [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
 
 ## Workflow ##
@@ -37,7 +37,7 @@ The following programs and tools are used in C-BIRD pipeline.
 | Tools | Version | Comments |
 | --- | --- | --- |
 | [FastP](https://github.com/OpenGene/fastp) | 0.23.2 | QC, adapter removal, quality filtering and trimming |
-| [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 38.98 | phiX removal |
+| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 38.98 | phiX removal |
 | [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.2 | Species identification |
 | [Bracken](https://github.com/jenniferlu717/Bracken) | 2.7 | Abundance estimation |
 | [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
@@ -46,7 +46,7 @@ The following programs and tools are used in C-BIRD pipeline.
 | [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.10.40 | AMR gene identification |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| Cbird-Util | 0.4 | Individual summary report generation |
+| Cbird-Util | 0.6 | Individual summary report generation |
 
 ## Outputs ##
 In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in html and text format for each sample. 

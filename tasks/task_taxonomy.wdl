@@ -6,14 +6,13 @@ task taxon {
     File read2
     File kraken2_db
     String samplename
-    String docker = "kincekara/kraken-bracken:k2.1.2-b2.7"
-    String? level = "S"
-    Int? bracken_read_len = 75
+    String docker = "kincekara/kraken-bracken:k2.1.2-b2.8"
+    Int? bracken_read_len = 100
     Int? bracken_threshold = 10
-    String? kraken_confidence = "0.05"
+    String? min_hit_groups = 3
     Int? memory = 32
     Int? cpu = 4
-    String? bracken_version = "Bracken 2.7"
+    String? bracken_version = "Bracken 2.8"
     String? kraken2_db_version = "Standard-8 2022-09-26"
   }
   
@@ -33,7 +32,8 @@ task taxon {
     --report ~{samplename}.kraken.report.txt \
     --gzip-compressed \
     --paired \
-    --confidence ~{kraken_confidence} \
+    --minimum-hit-groups ~{min_hit_groups} \
+    --report-minimizer-data \
     ~{read1} ~{read2}
     
     # run bracken
@@ -44,7 +44,7 @@ task taxon {
     -i ~{samplename}.kraken.report.txt \
     -o ~{samplename}.bracken.txt \
     -r ~{bracken_read_len} \
-    -l ~{level} \
+    -l S \
     -t ~{bracken_threshold}
 
     # filter report

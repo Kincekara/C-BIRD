@@ -62,7 +62,7 @@ task amrfinderplus_nuc {
     elif [[ "~{organism}" == *"Vibrio"*"cholerae"* ]]; then 
       amrfinder_organism="Vibrio_cholerae"
     else 
-      echo "Either Gambit predicted taxon is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
+      echo "Either Bracken predicted taxon is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
     fi
 

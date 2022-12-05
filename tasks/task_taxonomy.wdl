@@ -10,6 +10,7 @@ task taxon {
     Int? bracken_read_len = 100
     Int? bracken_threshold = 10
     String? min_hit_groups = 3
+    Float? confidence = 0.05
     Int? memory = 32
     Int? cpu = 4
     String? bracken_version = "Bracken 2.8"
@@ -33,6 +34,7 @@ task taxon {
     --gzip-compressed \
     --paired \
     --minimum-hit-groups ~{min_hit_groups} \
+    --confidence ~{confidence} \
     --report-minimizer-data \
     ~{read1} ~{read2}
     

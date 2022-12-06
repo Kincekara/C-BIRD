@@ -6,3 +6,8 @@ workflows:
    testParameterFiles:
     - empty.json
 
+ - name: cbird-insert_size_dist
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_insert_size.wdl
+   testParameterFiles:
+    - empty.json

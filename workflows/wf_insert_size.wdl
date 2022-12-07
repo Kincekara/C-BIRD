@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_fetch_reference.wdl" as fetch_reference
-import "../tasks/task_plot_ihist.wdl" as ihist
+import "../tasks/task_ncbi_datasets.wdl" as datasets
+import "../tasks/task_bbtools.wdl" as bbtools
 
 workflow estimate_inserts {
 
@@ -12,19 +12,17 @@ workflow estimate_inserts {
   input {
     File read1
     File read2
-    String samplename
-    #File taxid
+    String samplename    
     String taxon
   }
 
-  call fetch_reference.fetch_reference {
+  call datasets.fetch_reference {
     input:
-      samplename = samplename,
-      #taxid = taxid
+      samplename = samplename,      
       taxon = taxon
   }
 
-  call ihist.insert_size_dist {
+  call bbtools.insert_size_dist {
     input:
       read1 = read1,
       read2 = read2,

@@ -113,7 +113,7 @@ task insert_size_dist {
   output {
     String bbmap_version = read_string("VERSION")
     String bbtools_docker = docker
-    File insert_size_hist = "~{samplename}.hist.txt"
+    File insert_size_hist = "~{samplename}.ihist.txt"
     File insert_size_plot = "~{samplename}.hist.html"
     Int median_insert_size = read_int("MEDIAN")
   }

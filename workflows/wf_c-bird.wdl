@@ -24,6 +24,8 @@ workflow cbird_workflow {
     String samplename
     File adapters
     File kraken2_database
+    File? kraken2_enterobacter_database
+    File? kraken2_citrobacter_database
     File plasmidfinder_database
     File busco_database
     File genome_stats_file
@@ -58,7 +60,10 @@ workflow cbird_workflow {
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm,    
-      kraken2_db = kraken2_database
+      kraken2_db = kraken2_database,
+      enterobacter_db = kraken2_enterobacter_database,
+      citrobacter_db = kraken2_citrobacter_database
+
     }
 
     call spades.spades_pe as assembly {

@@ -58,6 +58,9 @@ task taxon {
     db="./db_std/"
     run_taxon
 
+    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {print $1}' > TAXON_STD
+    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {printf "%.2f\n", $NF*100}' > RATIO_STD
+
     # backup results with standard database
     cp ~{samplename}.kraken.report.txt ~{samplename}.kraken.report.std.txt
     cp ~{samplename}.bracken.txt ~{samplename}.bracken.std.txt
@@ -81,8 +84,8 @@ task taxon {
     
     # filter report
     awk 'NR==1; NR>1 {if ($NF >= 0.01){print}}' ~{samplename}.bracken.txt > ~{samplename}.bracken.filtered.txt
-    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {print $1}' > TAXON
-    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {printf "%.2f\n", $NF*100}' > RATIO
+    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {print $1}' > TAXON_CX
+    awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {printf "%.2f\n", $NF*100}' > RATIO_CX
     awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {print $2}' > ~{samplename}.taxid.txt 
 
   >>>
@@ -91,12 +94,16 @@ task taxon {
     String kraken2_version = read_string("KVERSION")
     String kraken2_db_version = read_string("KDBVERSION")
     String kraken2_docker = docker
-    File kraken2_report = "~{samplename}.kraken.report.txt"
-    File bracken_report = "~{samplename}.bracken.txt"
+    File kraken2_report = "~{samplename}.kraken.report.std.txt"
+    File bracken_report = "~{samplename}.bracken.std.txt"
+    File? kraken2_cx_report = "~{samplename}.kraken.report.std.txt"
+    File? bracken_cx_report = "~{samplename}.bracken.std.txt"
     File bracken_report_filter = "~{samplename}.bracken.filtered.txt"
     File taxid = "~{samplename}.taxid.txt"
-    Float top_taxon_ratio = read_float("RATIO")
-    String bracken_taxon = read_string("TAXON")
+    Float top_taxon_ratio = read_float("RATIO_STD")
+    String bracken_taxon = read_string("TAXON_STD")
+    Float? top_taxon_cx_ratio = read_float("RATIO_CX")
+    String? bracken_cx_taxon = read_string("TAXON_CX")
     String bracken_version = read_string("BVERSION")
     String bracken_docker = docker
   }

@@ -161,6 +161,8 @@ workflow cbird_workflow {
     File? bracken_report = taxon.bracken_report_filter
     String? bracken_taxon = taxon.bracken_taxon
     Float? bracken_taxon_ratio = taxon.top_taxon_ratio
+    Float? top_taxon_cx_ratio = taxon.top_taxon_cx_ratio
+    String? bracken_cx_taxon = taxon.bracken_cx_taxon
     # Spades
     String? spades_version = assembly.spades_version
     String? spades_docker = assembly.spades_docker

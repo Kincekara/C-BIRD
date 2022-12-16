@@ -10,6 +10,7 @@ import "../tasks/task_amrfinderplus.wdl" as amrplus
 import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_busco.wdl" as busco
 import "../tasks/task_taxonomy.wdl" as taxon
+import "../tasks/task_mash.wdl" as mash
 import "../tasks/task_report.wdl" as report
 
 workflow cbird_workflow {
@@ -24,8 +25,7 @@ workflow cbird_workflow {
     String samplename
     File adapters
     File kraken2_database
-    File? kraken2_enterobacter_database
-    File? kraken2_citrobacter_database
+    File mash_reference   
     File plasmidfinder_database
     File busco_database
     File genome_stats_file
@@ -55,22 +55,32 @@ workflow cbird_workflow {
       samplename =samplename
     }
 
-    call taxon.taxon {
+    call taxon.profile {
       input:
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm,    
-      kraken2_db = kraken2_database,
-      enterobacter_db = kraken2_enterobacter_database,
-      citrobacter_db = kraken2_citrobacter_database
-
+      kraken2_db = kraken2_database
     }
-
+    
     call spades.spades_pe as assembly {
       input:
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm       
+    }
+
+    if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Citrobacter" || profile.bracken_genus == "Enterobacter" ||
+    profile.bracken_genus == "Escherichia" || profile.bracken_genus == "Klebsiella" || profile.bracken_genus == "Morganella" ||
+    profile.bracken_genus == "Proteus" || profile.bracken_genus == "Providencia" || profile.bracken_genus == "Pseudomonas" ||
+    profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Serratia" ) {
+
+      call mash.predict_taxon {
+        input:
+        samplename = samplename,
+        assembly = assembly.scaffolds_trim,
+        reference = mash_reference        
+      }
     }
 
     call quast.quast {
@@ -97,7 +107,7 @@ workflow cbird_workflow {
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
       amr_db = amrfinder_database,
-      organism = taxon.bracken_taxon
+      organism = profile.bracken_taxon
     }
 
     call plasmid.plasmidfinder {
@@ -112,17 +122,18 @@ workflow cbird_workflow {
       samplename = samplename,
       genome_stats = genome_stats_file,
       total_bases = fastp_trim.total_bases,
-      taxon_report = taxon.bracken_report_filter,
+      taxon_report = profile.bracken_report_filter,
       mlst_report = ts_mlst.ts_mlst_results,
       amr_report = amrfinder.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
       fastp_report = fastp_trim.fastp_report,
-      taxid = taxon.taxid,
+      taxid = profile.taxid,
       version = version_capture.cbird_version,
       phix_ratio = assembly_prep.phix_ratio,
       genome_length = quast.genome_length,
       quast_report = quast.quast_report,
-      busco_report = busco.busco_json      
+      busco_report = busco.busco_json,
+      mash_result = predict_taxon.top_taxon   
     }
   }
 
@@ -151,24 +162,27 @@ workflow cbird_workflow {
     String? bbtools_version = assembly_prep.bbmap_version
     String? phiX_ratio = assembly_prep.phix_ratio
     # Kraken2
-    String? kraken2_version = taxon.kraken2_version
-    String? kraken2_db_version = taxon.kraken2_db_version
-    String? kraken2_docker = taxon.kraken2_docker
-    File? kraken2_report = taxon.kraken2_report
+    String? kraken2_version = profile.kraken2_version
+    String? kraken2_db_version = profile.kraken2_db_version
+    String? kraken2_docker = profile.kraken2_docker
+    File? kraken2_report = profile.kraken2_report
     # Bracken
-    String? bracken_version = taxon.bracken_version
-    String? bracken_docker = taxon.bracken_docker
-    File? bracken_report = taxon.bracken_report_filter
-    String? bracken_taxon = taxon.bracken_taxon
-    Float? bracken_taxon_ratio = taxon.top_taxon_ratio
-    Float? top_taxon_cx_ratio = taxon.top_taxon_cx_ratio
-    String? bracken_cx_taxon = taxon.bracken_cx_taxon
+    String? bracken_version = profile.bracken_version
+    String? bracken_docker = profile.bracken_docker
+    File? bracken_report = profile.bracken_report_filter
+    String? bracken_taxon = profile.bracken_taxon
+    Float? bracken_taxon_ratio = profile.top_taxon_ratio
     # Spades
     String? spades_version = assembly.spades_version
     String? spades_docker = assembly.spades_docker
     File? scaffolds = assembly.scaffolds
     File? contigs = assembly.contigs
     File? scaffolds_trimmed = assembly.scaffolds_trim
+    # Mash
+    String? mash_version = predict_taxon.version
+    File? mash_results = predict_taxon.screen
+    String? predicted_organism = predict_taxon.taxon
+    Float? percent_identity = predict_taxon.ratio
     # Quast 
     String? quast_version = quast.version
     String? quast_docker = quast.quast_docker

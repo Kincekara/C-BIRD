@@ -10,9 +10,12 @@ task fetch_reference {
   command <<<    
     datasets summary genome taxon "~{taxon}" --reference > ref.json
     acc_id=$(jq -r '.assemblies[0].assembly.assembly_accession' ref.json)
-    datasets download genome accession $acc_id
-    unzip ncbi_dataset.zip
-    mv $(find ncbi_dataset/data -name "$acc_id*_genomic.fna") ~{samplename}_ref.fa
+    if [ ! -z "$acc_id" ]
+    then
+      datasets download genome accession $acc_id
+      unzip ncbi_dataset.zip
+      mv $(find ncbi_dataset/data -name "$acc_id*_genomic.fna") ~{samplename}_ref.fa
+    fi
   >>>
 
   output {

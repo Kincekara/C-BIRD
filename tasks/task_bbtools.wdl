@@ -78,7 +78,7 @@ task insert_size_dist {
     x=$(awk -vORS=, 'NR>1 {print $1}' "~{samplename}.hist.txt" | sed 's/,$/\n/')
     y=$(awk -vORS=, 'NR>1 {print $2}' "~{samplename}.hist.txt" | sed 's/,$/\n/')
 
-    cat > ~{samplename}.hist.html << EOF
+    cat > ~{samplename}.hist.html <<EOF
     <!DOCTYPE html>
     <html lang="en-us">
     <html>

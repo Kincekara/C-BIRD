@@ -12,24 +12,38 @@ task generate_report {
     File fastp_report
     File busco_report
     File quast_report
-    File taxid
+    File taxid 
+    File? mash_result
     Int genome_length
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v0.6"    
+    String docker = "kincekara/cbird-util:alpine-v0.7"    
   }
 
   command <<<
     # create summary report
-    report_gen.py \
-    ~{samplename} \
-    ~{taxon_report} \
-    ~{mlst_report} \
-    ~{amr_report} \
-    ~{plasmid_report} \
-    "~{version}" \
-    "~{footer_note}"
+    if [ ! -f "~{mash_result}" ]
+    then
+      report_gen.py \
+      ~{samplename} \
+      ~{taxon_report} \
+      ~{mlst_report} \
+      ~{amr_report} \
+      ~{plasmid_report} \
+      "~{version}" \
+      "~{footer_note}"
+    else
+      report_gen_m.py \
+      ~{samplename} \
+      ~{taxon_report} \
+      ~{mlst_report} \
+      ~{amr_report} \
+      ~{plasmid_report} \
+      ~{mash_result} \
+      "~{version}" \
+      "~{footer_note}"
+    fi
     
     # alternative genome size
     taxid=$(<"~{taxid}")

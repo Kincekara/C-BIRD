@@ -71,8 +71,12 @@ task insert_size_dist {
     # map reads and create histogram
     bbmap.sh ref=~{reference} in1=~{read1} in2=~{read2} ihist=~{samplename}.ihist.txt reads=~{max_reads} maxindel=~{max_indel} fast
     #parse histogram file
-    awk -F "\t" 'NR==2 {print $2}' ~{samplename}.ihist.txt > MEDIAN
     cat ~{samplename}.ihist.txt | sed '6,1006!d' > ~{samplename}.hist.txt
+    mean=$(awk -F "\t" 'NR==1 {print $2}' ~{samplename}.ihist.txt)
+    median=$(awk -F "\t" 'NR==2 {print $2}' ~{samplename}.ihist.txt)
+    mode=$(awk -F "\t" 'NR==3 {print $2}' ~{samplename}.ihist.txt)
+    stdev=$(awk -F "\t" 'NR==4 {print $2}' ~{samplename}.ihist.txt)
+    echo $median > MEDIAN
     # create a html plot
     touch ~{samplename}.hist.html
     x=$(awk -vORS=, 'NR>1 {print $1}' "~{samplename}.hist.txt" | sed 's/,$/\n/')
@@ -92,6 +96,26 @@ task insert_size_dist {
                   text-align: center;
                   color: #1e5c85
                 }
+                table {
+                  border-collapse: collapse;
+                  border: none;
+                  margin-left: 80px;
+                }                
+                th, td {
+                  text-align: left;
+                  padding-left: 10px;
+                  padding-right: 10px;
+                  padding-top: 2px;
+                  padding-bottom: 2px;
+                  border: none;
+                }
+                tr:nth-child(even) {
+                  background-color: #f2f2f2;
+                }        
+                th {
+                  background-color: #1e5c85;
+                  color: white;                
+                }
             </style>
             <script src="https://cdn.plot.ly/plotly-2.16.3.min.js" charset="utf-8"></script>
         </head>
@@ -101,9 +125,22 @@ task insert_size_dist {
             <script>
             Plotly.newPlot("gd", /* JSON object */ {
                 "data": [{x:[$x],y:[$y]}],
-                "layout": { "width": 800, "height": 600}
+                "layout": {xaxis:{title: "Insert Size"}, yaxis:{title: "Number of Pairs"}, "width": 1000, "height": 600}
             })
             </script>
+            <p></p>
+            <table>
+                <th></th><th></th>
+                <tr>
+                  <td>Mean</td><td>$mean</td>
+                </tr><tr>
+                  <td>Median</td><td>$median</td>
+                </tr><tr>
+                  <td>Mode</td><td>$mode</td>
+                </tr><tr>
+                  <td>STDev</td><td>$stdev</td>
+                </tr>
+            </table>          
         </body>
         </html>
     EOF

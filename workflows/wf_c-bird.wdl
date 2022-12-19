@@ -31,6 +31,7 @@ workflow cbird_workflow {
     File genome_stats_file
     File amrfinder_database
     Int minimum_total_reads = 7472
+    Boolean html_report = true
   }
  
   call version.version_capture {
@@ -73,7 +74,7 @@ workflow cbird_workflow {
     if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Citrobacter" || profile.bracken_genus == "Enterobacter" ||
     profile.bracken_genus == "Escherichia" || profile.bracken_genus == "Klebsiella" || profile.bracken_genus == "Morganella" ||
     profile.bracken_genus == "Proteus" || profile.bracken_genus == "Providencia" || profile.bracken_genus == "Pseudomonas" ||
-    profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Serratia" ) {
+    profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Serratia" || profile.bracken_genus == "Salmonella" || profile.bracken_genus == "Kluyvera") {
 
       call mash.predict_taxon {
         input:
@@ -117,23 +118,25 @@ workflow cbird_workflow {
       plasmidfinder_db = plasmidfinder_database
     }
 
-    call report.generate_report {
-      input:
-      samplename = samplename,
-      genome_stats = genome_stats_file,
-      total_bases = fastp_trim.total_bases,
-      taxon_report = profile.bracken_report_filter,
-      mlst_report = ts_mlst.ts_mlst_results,
-      amr_report = amrfinder.amrfinderplus_all_report,
-      plasmid_report = plasmidfinder.plasmid_report,
-      fastp_report = fastp_trim.fastp_report,
-      taxid = profile.taxid,
-      version = version_capture.cbird_version,
-      phix_ratio = assembly_prep.phix_ratio,
-      genome_length = quast.genome_length,
-      quast_report = quast.quast_report,
-      busco_report = busco.busco_json,
-      mash_result = predict_taxon.top_taxon   
+    if (html_report) {
+      call report.generate_report {
+        input:
+        samplename = samplename,
+        genome_stats = genome_stats_file,
+        total_bases = fastp_trim.total_bases,
+        taxon_report = profile.bracken_report_filter,
+        mlst_report = ts_mlst.ts_mlst_results,
+        amr_report = amrfinder.amrfinderplus_all_report,
+        plasmid_report = plasmidfinder.plasmid_report,
+        fastp_report = fastp_trim.fastp_report,
+        taxid = profile.taxid,
+        version = version_capture.cbird_version,
+        phix_ratio = assembly_prep.phix_ratio,
+        genome_length = quast.genome_length,
+        quast_report = quast.quast_report,
+        busco_report = busco.busco_json,
+        mash_result = predict_taxon.top_taxon   
+      }
     }
   }
 

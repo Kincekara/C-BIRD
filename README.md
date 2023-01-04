@@ -25,7 +25,7 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 | [BUSCO database](https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2020-03-06.tar.gz)| bacteria_odb10 |
 | [Mash sketch](https://github.com/Kincekara/cbird_mash_sketch) | custom mash sketch |
 | [NCBI’s AmrFinderPlus database](https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/) | It should be compressed as tar.gz. Alternatively, it can be obtained via AmrFinderPlus |
-| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexing |
+| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexed db |
 | [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
 
 ## Workflow ##

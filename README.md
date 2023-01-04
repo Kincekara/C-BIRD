@@ -23,12 +23,15 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 | Adapters fasta | Your sequencing adapters' list as a fasta file |
 | [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 |
 | [BUSCO database](https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2020-03-06.tar.gz)| bacteria_odb10 |
+| [Mash sketch](https://github.com/Kincekara/cbird_mash_sketch) | custom mash sketch |
 | [NCBI’s AmrFinderPlus database](https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/) | It should be compressed as tar.gz. Alternatively, it can be obtained via AmrFinderPlus |
-| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexing|
+| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexing |
 | [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
 
 ## Workflow ##
-C-BIRD relies on Kraken2 and Braken for microorganism identification and contamination check. It can be expected to get over 99% abundance estimation from pure isolates in general. However, there are some exceptions due to the restrictions of databases and k-mer based approaches. Results should be interpreted considering these factors. 
+C-BIRD uses Kraken2 and Braken for taxonomic profiling of reads which serves a contamination check. It can be expected to high abundance estimation from pure isolates in general. However, there are some exceptions due to the restrictions of databases, k-mer based approaches and highly similar organisms. Results should be interpreted considering these factors. 
+
+Mash is used to determine the identity of bacteria for selected genus with a custom mash sketch (Acinetobacter, Citrobacter, Enterobacter, Escherichia, Klebsiella, Kluyvera, Morganella, Proteus, Providencia, Pseudomonas, Raoultella, Salmonella, Serratia).
 
 Detection of AMR genes depends on NCBI’s AMRFinderPlus program and its database. 
 
@@ -38,9 +41,10 @@ The following programs and tools are used in C-BIRD pipeline.
 | --- | --- | --- |
 | [FastP](https://github.com/OpenGene/fastp) | 0.23.2 | QC, adapter removal, quality filtering and trimming |
 | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 38.98 | phiX removal & optional normalization |
-| [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.2 | Species identification |
-| [Bracken](https://github.com/jenniferlu717/Bracken) | 2.7 | Abundance estimation |
+| [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.2 | Taxonomic profiling & contamination check |
+| [Bracken](https://github.com/jenniferlu717/Bracken) | 2.8 | Abundance estimation |
 | [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
+| [Mash](https://github.com/marbl/Mash) | 2.3 | Bacterial identification |
 | [QUAST](https://github.com/ablab/quast) | 5.0.2 | Genome assembly evaluation |
 | [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.4.3 | Genomic data quality assesment |
 | [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |

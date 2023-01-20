@@ -21,7 +21,7 @@ task plasmidfinder {
     mkdir db
     tar -C ./db/ -xzvf ~{plasmidfinder_db} 
 
-    # Run resfinder
+    # Run plasmidfinder
     plasmidfinder.py \
     -i ~{assembly} \
     -p ./db/ \

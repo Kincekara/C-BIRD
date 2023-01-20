@@ -4,7 +4,7 @@ task fetch_reference {
   input {
     String samplename
     String taxon
-    String docker = "kincekara/cbird-util:alpine-v0.6"
+    String docker = "kincekara/cbird-util:alpine-v0.7"
   }
 
   command <<<    

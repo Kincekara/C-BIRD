@@ -30,6 +30,7 @@ task predict_taxon {
     File top_taxon = "~{samplename}.top_taxon.tsv"
     String taxon = read_string("TAXON")
     Float ratio = read_float("RATIO")
+    String mash_docker = docker
   }
 
   runtime {

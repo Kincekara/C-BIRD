@@ -144,6 +144,7 @@ task amrfinderplus_nuc {
     String amrfinderplus_version = read_string("AMRFINDER_VERSION")
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
     String amrfinderplus_amr_subclass = read_string("AMR_SUBCLASS")
+    String amrfinderplus_docker = docker
   }
   runtime {
     memory: "8 GB"

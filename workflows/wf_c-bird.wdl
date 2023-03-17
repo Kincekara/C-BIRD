@@ -186,6 +186,7 @@ workflow cbird_workflow {
     File? mash_results = predict_taxon.screen
     String? predicted_organism = predict_taxon.taxon
     Float? percent_identity = predict_taxon.ratio
+    String? mash_docker = predict_taxon.mash_docker
     # Quast 
     String? quast_version = quast.version
     String? quast_docker = quast.quast_docker
@@ -215,6 +216,7 @@ workflow cbird_workflow {
     String? amrfinderplus_version = amrfinder.amrfinderplus_version
     String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
     String? amr_subclass = amrfinder.amrfinderplus_amr_subclass
+    String? amrfinderplus_docker = amrfinder.amrfinderplus_docker
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
     String? plasmidfinder_db_date = plasmidfinder.plasmidfinder_db_date
@@ -227,5 +229,6 @@ workflow cbird_workflow {
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_genome_ratio = generate_report.genome_ratio
+    String? cbird_util_dcoker = generate_report.cbird_util_docker
     }
 }

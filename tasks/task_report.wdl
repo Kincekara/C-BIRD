@@ -77,6 +77,7 @@ task generate_report {
     File qc_report = "~{samplename}_QC_summary.html"
     Float? sequencing_depth = read_float("COVERAGE")
     Float? genome_ratio = read_float("GENOME_RATIO")
+    String cbird_util_docker = docker
   }
 
   runtime {

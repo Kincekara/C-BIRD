@@ -13,6 +13,7 @@ workflow multibird {
     File busco_database
     File genome_stats_file
     File amrfinder_database
+    File? target_genes_fasta
     Int minimum_total_reads = 7472
     Boolean html_report = true
     }
@@ -31,6 +32,7 @@ workflow multibird {
             genome_stats_file = genome_stats_file,
             amrfinder_database = amrfinder_database,
             minimum_total_reads = minimum_total_reads,
+            target_genes_fasta = target_genes_fasta,
             html_report = html_report
         }
     }

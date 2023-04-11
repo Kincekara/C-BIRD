@@ -11,6 +11,7 @@ import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_busco.wdl" as busco
 import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_mash.wdl" as mash
+import "../tasks/task_blast.wdl" as blast
 import "../tasks/task_report.wdl" as report
 
 workflow cbird_workflow {
@@ -30,6 +31,7 @@ workflow cbird_workflow {
     File busco_database
     File genome_stats_file
     File amrfinder_database
+    File? target_genes_fasta = ""
     Int minimum_total_reads = 7472
     Boolean html_report = true
   }
@@ -69,6 +71,15 @@ workflow cbird_workflow {
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm       
+    }
+
+    if ( target_genes_fasta != "" ) {
+      call blast.tblastn {
+        input:
+        samplename = samplename,
+        query = target_genes_fasta,
+        subject = assembly.scaffolds_trim
+      }
     }
 
     if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Citrobacter" || profile.bracken_genus == "Enterobacter" ||
@@ -223,6 +234,11 @@ workflow cbird_workflow {
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_plasmids = plasmidfinder.plasmids
     File? plasmidfinder_report = plasmidfinder.plasmid_report
+    # Blast
+    File? blast_results = tblastn.blast_results
+    String? blast_genes = tblastn.genes
+    String? blast_docker = tblastn.blast_docker
+    String? blast_version = tblastn.blast_version
     # Report
     File? summary_txt_report = generate_report.txt_report
     File? summary_html_report = generate_report.html_report

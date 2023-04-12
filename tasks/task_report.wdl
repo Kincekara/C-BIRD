@@ -14,37 +14,69 @@ task generate_report {
     File quast_report
     File taxid 
     File? mash_result
+    File? blast_result
     Int genome_length
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v0.7"    
+    String docker = "kincekara/cbird-util:alpine-v0.8"    
   }
 
   command <<<
     # create summary report
-    if [ ! -f "~{mash_result}" ]
+    if [ -f "~{mash_result}" ]
     then
-      report_gen.py \
-      ~{samplename} \
-      ~{taxon_report} \
-      ~{mlst_report} \
-      ~{amr_report} \
-      ~{plasmid_report} \
-      "~{version}" \
-      "~{footer_note}"
+      # mash + blast
+      if [ -f "~{blast_result}" ]
+      then
+        report_gen.py \
+        -s ~{samplename} \
+        -t ~{taxon_report} \
+        -st ~{mlst_report} \
+        -a ~{amr_report} \
+        -p ~{plasmid_report} \
+        -c "~{version}" \
+        -m ~{mash_result} \
+        -b ~{blast_result} \
+        -f "~{footer_note}"
+      # mash only
+      else
+        report_gen.py \
+        -s ~{samplename} \
+        -t ~{taxon_report} \
+        -st ~{mlst_report} \
+        -a ~{amr_report} \
+        -p ~{plasmid_report} \
+        -c "~{version}" \
+        -m ~{mash_result} \
+        -f "~{footer_note}"
+      fi
     else
-      report_gen_m.py \
-      ~{samplename} \
-      ~{taxon_report} \
-      ~{mlst_report} \
-      ~{amr_report} \
-      ~{plasmid_report} \
-      ~{mash_result} \
-      "~{version}" \
-      "~{footer_note}"
+      # blast only
+      if [ -f "~{blast_result}" ]
+      then
+        report_gen.py \
+        -s ~{samplename} \
+        -t ~{taxon_report} \
+        -st ~{mlst_report} \
+        -a ~{amr_report} \
+        -p ~{plasmid_report} \
+        -c "~{version}" \
+        -b ~{blast_result} \
+        -f "~{footer_note}"
+      # no mash or blast
+      else
+        report_gen.py \
+        -s ~{samplename} \
+        -t ~{taxon_report} \
+        -st ~{mlst_report} \
+        -a ~{amr_report} \
+        -p ~{plasmid_report} \
+        -c "~{version}" \
+        -f "~{footer_note}"
+      fi
     fi
-    
+
     # alternative genome size
     taxid=$(<"~{taxid}")
     datasets summary genome taxon $taxid --reference > gs.json
@@ -72,7 +104,7 @@ task generate_report {
   >>>
 
   output {
-    File txt_report = "~{samplename}_txt_report.txt"
+    File? clia_report = "~{samplename}_clia_report.html"
     File html_report = "~{samplename}_html_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float? sequencing_depth = read_float("COVERAGE")

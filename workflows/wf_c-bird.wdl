@@ -146,7 +146,8 @@ workflow cbird_workflow {
         genome_length = quast.genome_length,
         quast_report = quast.quast_report,
         busco_report = busco.busco_json,
-        mash_result = predict_taxon.top_taxon   
+        mash_result = predict_taxon.top_taxon,
+        blast_result = tblastn.blast_results
       }
     }
   }
@@ -240,7 +241,7 @@ workflow cbird_workflow {
     String? blast_docker = tblastn.blast_docker
     String? blast_version = tblastn.blast_version
     # Report
-    File? summary_txt_report = generate_report.txt_report
+    File? clia_report = generate_report.clia_report
     File? summary_html_report = generate_report.html_report
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth

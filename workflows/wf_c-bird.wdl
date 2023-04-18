@@ -32,7 +32,7 @@ workflow cbird_workflow {
     File genome_stats_file
     File amrfinder_database
     File? target_genes_fasta = ""
-    Int minimum_total_reads = 7472
+    Int minimum_total_reads = 30000
     Boolean html_report = true
   }
  

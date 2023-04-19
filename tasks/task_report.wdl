@@ -23,11 +23,16 @@ task generate_report {
   }
 
   command <<<
-    # create summary report
+    # check mash results  
     if [ -f "~{mash_result}" ]
     then
-      # mash + blast
+      # catch taxon & find genome size
+      taxon=$(awk '{print $1,$2}' ~{mash_result})
+      datasets summary genome taxon "$taxon" --reference > gs.json
+
+      # create summary report with mash
       if [ -f "~{blast_result}" ]
+      # with blast
       then
         report_gen.py \
         -s ~{samplename} \
@@ -52,8 +57,13 @@ task generate_report {
         -f "~{footer_note}"
       fi
     else
-      # blast only
+      # find genome size with bracken taxon id
+      taxid=$(cat ~{taxid})
+      datasets summary genome taxon "$taxid" --reference > gs.json
+      
+      # create summary report w/o mash      
       if [ -f "~{blast_result}" ]
+      # blast only
       then
         report_gen.py \
         -s ~{samplename} \
@@ -77,16 +87,15 @@ task generate_report {
       fi
     fi
 
-    # alternative genome size
-    taxid=$(<"~{taxid}")
-    datasets summary genome taxon $taxid --reference > gs.json
-    jq -r '.assemblies[0].assembly.seq_length' gs.json > alt_gs.txt
+    # alternative source for expected genome size
+    jq -r '.reports[0].assembly_stats.total_sequence_length' gs.json > alt_gs.txt
     
     # calculate esimated coverage & genome ratio
+    taxid=$(cat ~{taxid})
     est_coverage.py \
     ~{genome_stats} \
     ~{total_bases} \
-    $taxid \
+    "$taxid" \
     alt_gs.txt \
     "~{genome_length}"    
 

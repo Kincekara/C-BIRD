@@ -4,12 +4,12 @@ task fetch_reference {
   input {
     String samplename
     String taxon
-    String docker = "kincekara/cbird-util:alpine-v0.7"
+    String docker = "kincekara/cbird-util:alpine-v0.8"
   }
 
   command <<<    
     datasets summary genome taxon "~{taxon}" --reference > ref.json
-    acc_id=$(jq -r '.assemblies[0].assembly.assembly_accession' ref.json)
+    acc_id=$(jq -r '.reports[0].accession' ref.json)
     if [ ! -z "$acc_id" ]
     then
       datasets download genome accession $acc_id

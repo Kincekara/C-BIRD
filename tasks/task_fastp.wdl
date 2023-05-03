@@ -44,6 +44,7 @@ command <<<
     jq '.read1_before_filtering.total_reads' fastp.json > R1_READS    
     jq '.read2_before_filtering.total_reads' fastp.json > R2_READS
     jq '.summary.before_filtering.total_reads' fastp.json > TOTAL_READS
+    jq '.summary.after_filtering.total_reads' fastp.json > TOTAL_READS_TRIM
     
     r1_q30=$(jq '.read1_before_filtering.q30_bases' fastp.json)
     r1_total=$(jq '.read1_before_filtering.total_bases' fastp.json)
@@ -80,6 +81,7 @@ output {
     String fastp_version = read_string("VERSION")
     File total_bases = "total_bases.txt"
     Int total_reads = read_int("TOTAL_READS")
+    Int total_reads_trim = read_int("TOTAL_READS_TRIM")
     Int r1_reads = read_int("R1_READS")
     Int r2_reads = read_int("R2_READS")
     Float r1_q30_raw = read_float("R1_Q30_RAW")

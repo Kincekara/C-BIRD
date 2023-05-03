@@ -159,10 +159,9 @@ workflow cbird_workflow {
     # FastP
     String fastp_version = fastp_trim.fastp_version
     String fastp_docker = fastp_trim.fastp_docker
-    #File read1_trimmed = fastp_trim.read1_trimmed
-    #File read2_trimmed = fastp_trim.read2_trimmed
     File fastp_report = fastp_trim.fastp_report
-    Int total_reads = fastp_trim.total_reads    
+    Int total_reads = fastp_trim.total_reads
+    Int total_reads_trim = fastp_trim.total_reads_trim
     Int r1_reads =  fastp_trim.r1_reads
     Int r2_reads = fastp_trim.r2_reads
     Float? r1_q30_raw = fastp_trim.r1_q30_raw
@@ -170,8 +169,6 @@ workflow cbird_workflow {
     Float? r1_q30_trim = fastp_trim.r1_q30_trim
     Float? r2_q30_trim = fastp_trim.r2_q30_trim
     # BBtools
-    #File? read1_clean_norm = assembly_prep.read1_clean_norm
-    #File? read2_clean_norm = assembly_prep.read2_clean_norm
     File? phiX_stats = assembly_prep.phiX_stats
     String? bbtools_docker = assembly_prep.bbtools_docker
     String? bbtools_version = assembly_prep.bbmap_version

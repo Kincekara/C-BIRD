@@ -50,7 +50,7 @@ The following programs and tools are used in C-BIRD pipeline.
 | [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.10.40 | AMR gene identification |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| Cbird-Util | 0.6 | Individual summary report generation |
+| Cbird-Util | 0.8 | Individual summary report generation |
 
 ## Outputs ##
 In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in html and text format for each sample. 

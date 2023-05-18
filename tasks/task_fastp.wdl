@@ -4,7 +4,7 @@ task fastp_pe {
   input {
     File read1
     File read2
-    File adapters
+    File? adapters
     String docker = "kincekara/fastp:0.23.2"
     String samplename
     Int? leading = 1
@@ -19,24 +19,46 @@ task fastp_pe {
     }
 
 command <<<
-    fastp \
-    -i ~{read1} \
-    -I ~{read2} \
-    -o ~{samplename}_R1_trim.fastq.gz \
-    -O ~{samplename}_R2_trim.fastq.gz \
-    --length_required ~{minlen} \
-    --average_qual ~{read_quality} \
-    --cut_front_window_size ~{leading} \
-    --cut_front_mean_quality ~{front_mean_quality} \
-    -3 \
-    --cut_tail_window_size ~{trailing} \
-    --cut_tail_mean_quality ~{tail_mean_quality} \
-    -r \
-    --cut_right_window_size ~{window_size} \
-    --cut_right_mean_quality ~{right_mean_quality} \
-    --adapter_fasta ~{adapters} \
-    --thread ~{thread} \
-    -h ~{samplename}_fastp.html
+    if [ -f "~{adapters}" ]
+    then
+        fastp \
+        -i ~{read1} \
+        -I ~{read2} \
+        -o ~{samplename}_R1_trim.fastq.gz \
+        -O ~{samplename}_R2_trim.fastq.gz \
+        --length_required ~{minlen} \
+        --average_qual ~{read_quality} \
+        --cut_front_window_size ~{leading} \
+        --cut_front_mean_quality ~{front_mean_quality} \
+        -3 \
+        --cut_tail_window_size ~{trailing} \
+        --cut_tail_mean_quality ~{tail_mean_quality} \
+        -r \
+        --cut_right_window_size ~{window_size} \
+        --cut_right_mean_quality ~{right_mean_quality} \
+        --adapter_fasta ~{adapters} \
+        --thread ~{thread} \
+        -h ~{samplename}_fastp.html
+    else
+        fastp \
+        -i ~{read1} \
+        -I ~{read2} \
+        -o ~{samplename}_R1_trim.fastq.gz \
+        -O ~{samplename}_R2_trim.fastq.gz \
+        --length_required ~{minlen} \
+        --average_qual ~{read_quality} \
+        --cut_front_window_size ~{leading} \
+        --cut_front_mean_quality ~{front_mean_quality} \
+        -3 \
+        --cut_tail_window_size ~{trailing} \
+        --cut_tail_mean_quality ~{tail_mean_quality} \
+        -r \
+        --cut_right_window_size ~{window_size} \
+        --cut_right_mean_quality ~{right_mean_quality} \
+        --detect_adapter_for_pe \
+        --thread ~{thread} \
+        -h ~{samplename}_fastp.html
+    fi
 
     # parse output
     jq -r '.summary.fastp_version' fastp.json > VERSION

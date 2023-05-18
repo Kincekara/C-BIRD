@@ -20,7 +20,7 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 
 | File | Comments |
 | --- | --- |
-| Adapters fasta | Your sequencing adapters' list as a fasta file |
+| Adapters fasta | Your sequencing adapters' list as a fasta file (optional)|
 | [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 |
 | [BUSCO database](https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2020-03-06.tar.gz)| bacteria_odb10 |
 | [Mash sketch](https://drive.google.com/file/d/1OH5UXvNnBWWLMNsKwz3QwGFB2RML8HV_/view?usp=share_link) | custom mash sketch |

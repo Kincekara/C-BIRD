@@ -23,7 +23,7 @@ task profile {
 
     # Decompress the Kraken2 database
     mkdir db
-    tar -C ./db/ -xzvf ~{kraken2_db} 
+    tar -I pigz -C ./db/ -xvf ~{kraken2_db} 
 
     # Run Kraken2
     kraken2 \

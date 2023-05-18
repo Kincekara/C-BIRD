@@ -24,14 +24,14 @@ workflow cbird_workflow {
     File read1
     File read2
     String samplename
-    File adapters
+    File? adapters
     File kraken2_database
     File mash_reference   
     File plasmidfinder_database
     File busco_database
     File genome_stats_file
     File amrfinder_database
-    File? target_genes_fasta = ""
+    File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
     Boolean html_report = true
   }
@@ -73,7 +73,7 @@ workflow cbird_workflow {
       read2 = assembly_prep.read2_clean_norm       
     }
 
-    if ( target_genes_fasta != "" ) {
+    if ( target_genes_fasta != 'null' ) {
       call blast.tblastn {
         input:
         samplename = samplename,

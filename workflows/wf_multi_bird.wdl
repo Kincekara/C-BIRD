@@ -6,7 +6,7 @@ workflow multibird {
     input {
     File inputSamplesFile
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile)
-    File adapters
+    File? adapters
     File kraken2_database
     File mash_reference   
     File plasmidfinder_database

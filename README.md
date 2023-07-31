@@ -55,9 +55,9 @@ The following programs and tools are used in the C-BIRD pipeline.
 ## Outputs ##
 In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in HTML for each sample. 
 
-[Basic report]()  
-[Advanced report]()  
-[QC report]()
+[Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/AR_0859_basic_report.html)  
+[Advanced report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/AR_0859_advanced_report.html)  
+[QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/AR_0859_QC_summary.html)
 
 ## Known issues ##
 SPAdes may fail if an authorization domain is defined for the workspace on Terra.

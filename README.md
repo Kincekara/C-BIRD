@@ -1,19 +1,20 @@
 # <img src="/c-bird.png" width=80>   C-BIRD  
 **CT-PHL Bacterial Identification and Resistance Detection**
 ## Overview ##
-C-BIRD is an pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where is available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 
+C-BIRD is a pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where they are available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 
 
 ## Purpose ##
-The main goal of this project is to create a small, fast, and accurate workflow which can work in a cloud environment with high reproducibility and parallelization. To achieve this goal, C-BIRD uses minimalized docker containers for each step of the pipeline. C-BIRD will be validated for a selected set of bacteria.
+The main goal of this project is to create a small, fast, and accurate workflow which can work in a cloud environment with high reproducibility and parallelization. C-BIRD uses minimalized docker containers for each pipeline step to achieve this goal. C-BIRD will be validated for a selected set of bacteria.
 
 ## Scope ##
-C-BIRD has been created with a minimalistic approach. Producing clinically meaningful results and generating individual reports for each sample is within the scope of this project. 
-Any typing (except MLST) or further analysis is out of the scope of this project. However, extra tools and programs may be added for validation purposes. 
+C-BIRD has been created with a minimalistic approach. Producing clinically meaningful results and generating individual reports for each sample is within this project's scope. 
+Any typing (except MLST) or further analysis is out of this project's scope. However, extra tools and programs may be added for validation purposes. 
 
 ## Installation ##
-Please check [Dockstore](https://dockstore.org/workflows/github.com/Kincekara/C-BIRD/cbird-workflow:main?tab=info) for Terra installation.
+Terra users can add C-BIRD to their existing workspace in Terra via [Dockstore](https://dockstore.org/workflows/github.com/Kincekara/C-BIRD/cbird-workflow:main?tab=info).
 
-C-BIRD deliberately avoids auto-updates of the necessary databases for strict control and validation purposes. The following databases and files should be installed or uploaded manually.
+C-BIRD deliberately avoids auto-updates of the necessary databases for strict control and validation purposes. The following databases and files should be installed or uploaded manually. Please check [wiki](https://github.com/Kincekara/C-BIRD/wiki) for detailed instructions.
+
 
 | File | Comments |
 | --- | --- |
@@ -27,13 +28,13 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 | Target genes fasta | Extra set of genes/proteins as a fasta file containing protein sequences (optional) |
 
 ## Workflow ##
-C-BIRD uses Kraken2 and Braken for taxonomic profiling of reads which serves a contamination check. It can be expected to high abundance estimation from pure isolates in general. However, there are some exceptions due to the restrictions of databases, k-mer based approaches and highly similar organisms. Results should be interpreted considering these factors. 
+C-BIRD uses Kraken2 and Braken for taxonomic profiling of reads, which serves as a contamination check. It can be expected to have a high abundance estimation from pure isolates in general. However, there are some exceptions due to the restrictions of databases, k-mer based approaches, and highly similar organisms. Results should be interpreted considering these factors. 
 
-Mash is used to determine the identity of bacteria for selected genus with a custom mash sketch (Acinetobacter, Citrobacter, Enterobacter, Escherichia, Klebsiella, Kluyvera, Morganella, Proteus, Providencia, Pseudomonas, Raoultella, Salmonella, Serratia).
+Mash is used to determine the identity of bacteria for selected genera with a custom mash sketch (Acinetobacter, Citrobacter, Enterobacter, Escherichia, Klebsiella, Kluyvera, Morganella, Proteus, Providencia, Pseudomonas, Raoultella, Salmonella, Serratia).
 
-Detection of AMR genes depends on NCBI’s AMRFinderPlus program and its database. 
+Detection of AMR genes depends on NCBI's AMRFinderPlus program and its database. 
 
-The following programs and tools are used in C-BIRD pipeline.
+The following programs and tools are used in the C-BIRD pipeline.
 
 | Tools | Version | Comments |
 | --- | --- | --- |
@@ -52,7 +53,7 @@ The following programs and tools are used in C-BIRD pipeline.
 | Cbird-Util | 0.8 | Individual summary report generation |
 
 ## Outputs ##
-In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in html for each sample. 
+In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in HTML for each sample. 
 
 [Basic report]()  
 [Advanced report]()  
@@ -62,6 +63,6 @@ In addition to outputs generated in each step by the specific programs, C-BIRD c
 SPAdes may fail if an authorization domain is defined for the workspace on Terra.
 
 ## Additional Notes ##
-C-BIRD includes modified and unmodified codes of [Theiagen’s Public Health Bacterial Genomics](https://github.com/theiagen/public_health_bacterial_genomics) workflows. If you need a more sophisticated pipeline, please check Theiagen’s TheiaProk workflow. 
+C-BIRD includes modified and unmodified codes of [Theiagen's Public Health Bacterial Genomics](https://github.com/theiagen/public_health_bacterial_genomics) workflows. If you need a more sophisticated pipeline, please check Theiagen's TheiaProk workflow. 
 
 

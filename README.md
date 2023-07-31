@@ -1,10 +1,7 @@
 # <img src="/c-bird.png" width=80>   C-BIRD  
 **CT-PHL Bacterial Identification and Resistance Detection**
-
-:construction: This workflow is currently in the active development and testing stage. Please use it with caution! :hatching_chick:
-
 ## Overview ##
-C-BIRD is an agnostic pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where is available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 
+C-BIRD is an pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where is available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 
 
 ## Purpose ##
 The main goal of this project is to create a small, fast, and accurate workflow which can work in a cloud environment with high reproducibility and parallelization. To achieve this goal, C-BIRD uses minimalized docker containers for each step of the pipeline. C-BIRD will be validated for a selected set of bacteria.
@@ -27,6 +24,7 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 | [NCBI’s AmrFinderPlus database](https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/) | It should be compressed as tar.gz. Alternatively, it can be obtained via AmrFinderPlus |
 | [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexed db |
 | [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
+| Target genes fasta | Extra set of genes/proteins as a fasta file containing protein sequences (optional) |
 
 ## Workflow ##
 C-BIRD uses Kraken2 and Braken for taxonomic profiling of reads which serves a contamination check. It can be expected to high abundance estimation from pure isolates in general. However, there are some exceptions due to the restrictions of databases, k-mer based approaches and highly similar organisms. Results should be interpreted considering these factors. 
@@ -49,13 +47,16 @@ The following programs and tools are used in C-BIRD pipeline.
 | [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.4.3 | Genomic data quality assesment |
 | [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.10.40 | AMR gene identification |
+| [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.13.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
 | Cbird-Util | 0.8 | Individual summary report generation |
 
 ## Outputs ##
-In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in html and text format for each sample. 
+In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in html for each sample. 
 
-[Example report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/example_report.html)
+[Basic report]()  
+[Advanced report]()  
+[QC report]()
 
 ## Known issues ##
 SPAdes may fail if an authorization domain is defined for the workspace on Terra.

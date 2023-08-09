@@ -12,7 +12,7 @@ task amrfinderplus_nuc {
     Float? minid
     Float? mincov
     Int cpu = 4
-    String docker = "kincekara/amrfinder:3.10.40"
+    String docker = "kincekara/amrfinder:3.11.18"
   }
   command <<<
     # logging info

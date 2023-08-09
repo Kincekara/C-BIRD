@@ -11,7 +11,7 @@ task assembly_prep {
     Int min_depth = 5
     Int read_threshold = 8000000
     Int memory = 8
-    String docker = "kincekara/bbduk:38.98"
+    String docker = "kincekara/bbtools:39.01"
   }
 
   command <<<

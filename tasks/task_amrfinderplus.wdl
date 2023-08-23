@@ -21,76 +21,42 @@ task amrfinderplus_nuc {
     tar -C ./db/ -xzvf ~{amr_db}
 
     # select mash organism if avalible
-    if [[ "~{mash_organism}" != "null" ]]; then
+    if [[ "~{mash_organism}" != "" ]]; then
       organism="~{mash_organism}"
     else
       organism="~{bracken_organism}"
     fi
+    echo "organism is set to:" $organism
 
     # curated organisms
     declare -a taxa=(
       "Acinetobacter baumannii"
-      "Aeromonas hydrophila"
-      "Aeromonas salmonicida"
-      "Aeromonas sobria"
-      "Aeromonas veronii"
-      "Bacillus cereus"
-      "Bordetella pertussis"
-      "Burkholderia cepacia complex"
-      "Burkholderia pseudomallei group"      
+      "Burkholderia cepacia"
+      "Burkholderia pseudomallei"      
       "Citrobacter freundii"
       "Clostridioides difficile"
-      "Clostridium botulinum"
-      "Clostridium perfringens"
-      "Corynebacterium striatum"      
-      "Edwardsiella ictaluri"
-      "Edwardsiella piscicida"
-      "Edwardsiella tarda"
-      "Elizabethkingia anophelis"
       "Enterobacter asburiae"
       "Enterobacter cloacae"
       "Enterococcus faecalis"
       "Enterococcus faecium"      
-      "Flavobacterium psychrophilum"
-      "Francisella tularemia"
-      "Klebsiella aerogenes"
       "Klebsiella oxytoca"
       "Klebsiella penumoniae"
-      "Kluyvera intermedia"
-      "Legionella pneumophila"
-      "Listeria monocytogenes"
-      "Morganella morganii"
-      "Mycobacterium tuberculosis"
-      "Mycoplasma genitalium"
       "Neisseria meningitidis"
       "Neisseria gonorrhoeae"
-      "Photobacterium damselae"
-      "Providencia alcalifaciens"
-      "Pseudomonas aeruginosa"
-      "Pseudomonas putida"      
-      "Serratia marcescens"
-      "Shewanella algae"      
+      "Pseudomonas aeruginosa" 
+      "Serratia marcescens"  
       "Staphylococcus aureus"
       "Staphylococcus pseudintermedius"
       "Streptococcus agalactiae"
-      "Streptococcus iniae"
       "Streptococcus pneumoniae"
       "Streptococcus pyogenes"
       "Vibrio cholerae"
-      "Vibrio harveyi"
-      "Vibrio parahaemolyticus"
-      "Vibrio vulnificus"
-      "Yersinia enterocolitica"
-      "Yersinia pestis"
-      "Yersinia ruckeri"
     )
 
     declare -a genera=(
       "Campylobacter"
-      "Cronobacter"
       "Escherichia"
       "Salmonella"
-      "Shigella"
     )
 
     # check organism in curated organism list

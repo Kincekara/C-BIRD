@@ -4,11 +4,9 @@ task amrfinderplus_nuc {
   input {
     File assembly
     String samplename
-    File amr_db
-    # Parameters 
-    # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
-    # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
-    String? organism # make optional?
+    File amr_db     
+    String bracken_organism
+    String? mash_organism
     Float? minid
     Float? mincov
     Int cpu = 4
@@ -21,51 +19,97 @@ task amrfinderplus_nuc {
 
     mkdir db
     tar -C ./db/ -xzvf ~{amr_db}
-    
-    ### set $amrfinder_organism BASH variable based on gambit_predicted_taxon or user-defined input string
-    ### final variable has strict syntax/spelling based on list from amrfinder --list_organisms
-    # there may be other Acinetobacter species to add later, like those in the A. baumannii-calcoaceticus species complex
-    if [[ "~{organism}" == *"Acinetobacter"*"baumannii"* ]]; then
-      amrfinder_organism="Acinetobacter_baumannii"
-    elif [[ "~{organism}" == *"Campylobacter"*"coli"* ]] || [[ "~{organism}" == *"Campylobacter"*"jejuni"* ]]; then
-      amrfinder_organism="Campylobacter"
-    elif [[ "~{organism}" == *"Clostridioides"*"difficile"* ]]; then
-      amrfinder_organism="Clostridioides_difficile"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecalis"* ]]; then 
-      amrfinder_organism="Enterococcus_faecalis"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecium"* ]] || [[ "~{organism}" == *"Enterococcus"*"hirae"* ]]; then 
-      amrfinder_organism="Enterococcus_faecium"
-    # should capture all Shigella and Escherichia species
-    elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then 
-      amrfinder_organism="Escherichia"
-    # add other Klebsiella species later? Cannot use K. oxytoca as per amrfinderplus wiki
-    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pneumoniae"* ]]; then 
-      amrfinder_organism="Klebsiella"
-    # because some people spell the species 'gonorrhea' differently
-    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
-      amrfinder_organism="Neisseria"
-    elif [[ "~{organism}" == *"Pseudomonas"*"aeruginosa"* ]]; then 
-      amrfinder_organism="Pseudomonas_aeruginosa"
-    # pretty broad, could work on Salmonella bongori and other species
-    elif [[ "~{organism}" == *"Salmonella"* ]]; then 
-      amrfinder_organism="Salmonella"
-    elif [[ "~{organism}" == *"Staphylococcus"*"aureus"* ]]; then 
-      amrfinder_organism="Staphylococcus_aureus"
-    elif [[ "~{organism}" == *"Staphylococcus"*"pseudintermedius"* ]]; then 
-      amrfinder_organism="Staphylococcus_pseudintermedius"
-    elif [[ "~{organism}" == *"Streptococcus"*"agalactiae"* ]]; then 
-      amrfinder_organism="Streptococcus_agalactiae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pneumoniae"* ]] || [[ "~{organism}" == *"Streptococcus"*"mitis"* ]]; then 
-      amrfinder_organism="Streptococcus_pneumoniae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pyogenes"* ]]; then 
-      amrfinder_organism="Streptococcus_pyogenes"
-    elif [[ "~{organism}" == *"Vibrio"*"cholerae"* ]]; then 
-      amrfinder_organism="Vibrio_cholerae"
-    else 
-      echo "Either Bracken predicted taxon is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
-      echo "Skipping the use of amrfinder --organism optional parameter."
+
+    # select mash organism if avalible
+    if [[ "~{mash_organism}" != "null" ]]; then
+      organism="~{mash_organism}"
+    else
+      organism="~{bracken_organism}"
     fi
 
+    # curated organisms
+    declare -a taxa=(
+      "Acinetobacter baumannii"
+      "Aeromonas hydrophila"
+      "Aeromonas salmonicida"
+      "Aeromonas sobria"
+      "Aeromonas veronii"
+      "Bacillus cereus"
+      "Bordetella pertussis"
+      "Burkholderia cepacia complex"
+      "Burkholderia pseudomallei group"      
+      "Citrobacter freundii"
+      "Clostridioides difficile"
+      "Clostridium botulinum"
+      "Clostridium perfringens"
+      "Corynebacterium striatum"      
+      "Edwardsiella ictaluri"
+      "Edwardsiella piscicida"
+      "Edwardsiella tarda"
+      "Elizabethkingia anophelis"
+      "Enterobacter asburiae"
+      "Enterobacter cloacae"
+      "Enterococcus faecalis"
+      "Enterococcus faecium"      
+      "Flavobacterium psychrophilum"
+      "Francisella tularemia"
+      "Klebsiella aerogenes"
+      "Klebsiella oxytoca"
+      "Klebsiella penumoniae"
+      "Kluyvera intermedia"
+      "Legionella pneumophila"
+      "Listeria monocytogenes"
+      "Morganella morganii"
+      "Mycobacterium tuberculosis"
+      "Mycoplasma genitalium"
+      "Neisseria meningitidis"
+      "Neisseria gonorrhoeae"
+      "Photobacterium damselae"
+      "Providencia alcalifaciens"
+      "Pseudomonas aeruginosa"
+      "Pseudomonas putida"      
+      "Serratia marcescens"
+      "Shewanella algae"      
+      "Staphylococcus aureus"
+      "Staphylococcus pseudintermedius"
+      "Streptococcus agalactiae"
+      "Streptococcus iniae"
+      "Streptococcus pneumoniae"
+      "Streptococcus pyogenes"
+      "Vibrio cholerae"
+      "Vibrio harveyi"
+      "Vibrio parahaemolyticus"
+      "Vibrio vulnificus"
+      "Yersinia enterocolitica"
+      "Yersinia pestis"
+      "Yersinia ruckeri"
+    )
+
+    declare -a genera=(
+      "Campylobacter"
+      "Cronobacter"
+      "Escherichia"
+      "Salmonella"
+      "Shigella"
+    )
+
+    # check organism in curated organism list
+    genus=$(echo $organism | cut -d " " -f1)
+    for i in "${genera[@]}"
+    do
+    if [[ "$genus" == "$i" ]]; then
+     amrfinder_organism="$genus"
+    fi
+    done
+
+    taxon=$(echo $organism | cut -d " " -f1,2)
+    for i in "${taxa[@]}"
+    do
+    if [[ "$taxon" == "$i" ]]; then
+     amrfinder_organism="$taxon"
+    fi
+    done
+  
     # checking bash variable
     echo "amrfinder_organism is set to:" ${amrfinder_organism}
     
@@ -75,7 +119,7 @@ task amrfinderplus_nuc {
       # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
         -d ./db/ \
-        --organism ${amrfinder_organism} \
+        --organism "${amrfinder_organism}" \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \

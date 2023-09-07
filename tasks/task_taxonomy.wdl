@@ -6,7 +6,7 @@ task profile {
     File read2
     File kraken2_db
     String samplename
-    String docker = "kincekara/kraken-bracken:k2.1.2-b2.8"
+    String docker = "kincekara/kraken-bracken:k2.1.3-b2.8"
     Int? bracken_read_len = 100
     Int? bracken_threshold = 10
     String? min_hit_groups = 3

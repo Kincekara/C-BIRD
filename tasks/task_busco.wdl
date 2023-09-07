@@ -5,7 +5,7 @@ task busco {
     File assembly   
     File busco_db
     String samplename
-    String docker = "kincekara/busco:5.4.3"
+    String docker = "kincekara/busco:5.4.7"
     Int? memory = 16
     Int? cpu = 4
   }

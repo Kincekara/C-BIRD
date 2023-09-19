@@ -33,12 +33,12 @@ task plasmidfinder {
     if [ ! -f results_tab.tsv ]; then
       PF="No plasmids detected in database"
     else
-      PF="$(tail -n +2 results_tab.tsv | cut -f 2 | sort | uniq -u | paste -s -d, - )"
+      PF="$(tail -n +2 results_tab.tsv | uniq | cut -f 2 | sort | paste -s -d, - )"
         if [ "$PF" == "" ]; then
           PF="No plasmids detected in database"
         fi  
     fi
-    echo $PF | tee PLASMIDS
+    echo "$PF" | tee PLASMIDS
 
     # rename results
     mv results_tab.tsv ~{samplename}.plasmid.tsv

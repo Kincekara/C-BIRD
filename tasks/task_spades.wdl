@@ -4,7 +4,7 @@ task spades_pe {
   input {
     File read1
     File read2
-    Int? contig_threshold = 500
+    Int? contig_threshold = 300
     String samplename
     String docker = "kincekara/spades:3.15.5"
 

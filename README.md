@@ -1,4 +1,4 @@
-# <img src="/c-bird.png" width=80>   C-BIRD  
+# <img src="/files/c-bird.png" width=80>   C-BIRD  
 **CT-PHL Bacterial Identification and Resistance Detection**
 ## Overview ##
 C-BIRD is a pipeline that makes *de novo* assembly from Illumina paired-end reads and uses k-mer based approaches where they are available. It works on [Terra.Bio](https://terra.bio/) platform as well as any Linux machine which has [Cromwell](https://cromwell.readthedocs.io/en/stable/) or [miniwdl](https://miniwdl.readthedocs.io/en/latest/) workflow engines. As its name indicates, C-BIRD is designed for only rapid bacterial identification and antimicrobial resistance detection. 
@@ -18,13 +18,11 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 
 | File | Comments |
 | --- | --- |
-| Adapters fasta | Your sequencing adapters' list as a fasta file (optional)|
 | [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 |
-| [BUSCO database](https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2020-03-06.tar.gz)| bacteria_odb10 |
 | [Mash sketch](https://drive.google.com/file/d/1OH5UXvNnBWWLMNsKwz3QwGFB2RML8HV_/view?usp=share_link) | custom mash sketch |
-| [NCBI’s AmrFinderPlus database](https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/) | It should be compressed as tar.gz. Alternatively, it can be obtained via AmrFinderPlus |
 | [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexed db |
 | [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
+| Adapters fasta | Your sequencing adapters' list as a fasta file (optional)|
 | Target genes fasta | Extra set of genes/proteins as a fasta file containing protein sequences (optional) |
 
 ## Workflow ##

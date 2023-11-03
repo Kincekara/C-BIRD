@@ -30,7 +30,6 @@ workflow cbird_workflow {
     File plasmidfinder_database
     File busco_database
     File genome_stats_file
-    File amrfinder_database
     File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
     Boolean html_report = true
@@ -118,7 +117,6 @@ workflow cbird_workflow {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
-      amr_db = amrfinder_database,
       bracken_organism = profile.bracken_taxon,
       mash_organism = predict_taxon.taxon
     }

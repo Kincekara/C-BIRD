@@ -3,22 +3,18 @@ version 1.0
 task amrfinderplus_nuc {
   input {
     File assembly
-    String samplename
-    File amr_db     
+    String samplename 
     String bracken_organism
     String? mash_organism
     Float? minid
     Float? mincov
     Int cpu = 4
-    String docker = "kincekara/amrfinder:3.11.18"
+    String docker = "staphb/ncbi-amrfinderplus:3.11.20-2023-09-26.1"
   }
   command <<<
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
-
-    mkdir db
-    tar -C ./db/ -xzvf ~{amr_db}
 
     # select mash organism if avalible
     if [[ "~{mash_organism}" != "" ]]; then
@@ -152,7 +148,6 @@ task amrfinderplus_nuc {
       # always use --plus flag, others may be left out if param is optional and not supplied 
       # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
-        -d ./db/ \
         --organism "${amrfinder_organism}" \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
@@ -164,7 +159,6 @@ task amrfinderplus_nuc {
       # always use --plus flag, others may be left out if param is optional and not supplied 
       # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
-        -d ./db/ \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \

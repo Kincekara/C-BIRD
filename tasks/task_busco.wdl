@@ -3,9 +3,8 @@ version 1.0
 task busco {
   input {
     File assembly   
-    File busco_db
     String samplename
-    String docker = "kincekara/busco:5.4.7"
+    String docker = "kincekara/busco:5.4.7-bacteria_odb10.2020-03-06"
     Int? memory = 16
     Int? cpu = 4
   }
@@ -13,14 +12,10 @@ task busco {
   command <<<
     busco -v > VERSION
 
-    # Decompress the busco database
-    mkdir db
-    tar -C ./db/ -xzvf ~{busco_db} 
-
     # Run Busco
     busco \
     -i ~{assembly} \
-    -l ./db/bacteria_odb10 \
+    -l /busco_downloads/lineages/bacteria_odb10 \
     -o out \
     -m genome \
     --offline

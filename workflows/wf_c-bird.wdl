@@ -28,7 +28,6 @@ workflow cbird_workflow {
     File kraken2_database
     File mash_reference   
     File plasmidfinder_database
-    File busco_database
     File genome_stats_file
     File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
@@ -103,8 +102,7 @@ workflow cbird_workflow {
     call busco.busco {
       input:
       samplename = samplename,
-      assembly = assembly.scaffolds_trim,
-      busco_db = busco_database
+      assembly = assembly.scaffolds_trim
     }
 
     call mlst.ts_mlst {

@@ -10,9 +10,7 @@ workflow multibird {
     File kraken2_database
     File mash_reference   
     File plasmidfinder_database
-    File busco_database
     File genome_stats_file
-    File amrfinder_database
     File? target_genes_fasta
     Int minimum_total_reads = 30000
     Boolean html_report = true
@@ -28,9 +26,7 @@ workflow multibird {
             kraken2_database = kraken2_database,
             mash_reference = mash_reference,
             plasmidfinder_database = plasmidfinder_database,
-            busco_database = busco_database,
             genome_stats_file = genome_stats_file,
-            amrfinder_database = amrfinder_database,
             minimum_total_reads = minimum_total_reads,
             target_genes_fasta = target_genes_fasta,
             html_report = html_report

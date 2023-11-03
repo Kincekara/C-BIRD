@@ -6,14 +6,13 @@ task profile {
     File read2
     File kraken2_db
     String samplename
-    String docker = "kincekara/kraken-bracken:k2.1.3-b2.8"
+    String docker = "staphb/bracken:2.9"
     Int? bracken_read_len = 100
     Int? bracken_threshold = 10
     String? min_hit_groups = 3
     Int? memory = 32
     Int? cpu = 4
-    String? bracken_version = "Bracken 2.8"
-    String? kraken2_db_version = "Standard-8 2022-09-26"
+    String? kraken2_db_version = "Standard-8 2023-06-05"
   }
   
   command <<<
@@ -37,7 +36,7 @@ task profile {
     ~{read1} ~{read2}
     
     # run bracken
-    echo ~{bracken_version} > BVERSION
+    bracken -v > BVERSION
 
     bracken \
     -d ./db/ \
@@ -72,7 +71,7 @@ task profile {
   }
   
   runtime {
-    docker: "~{docker}"
+    docker: "staphb/bracken:2.9"
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk 100 SSD"

@@ -4,7 +4,7 @@ task spades_pe {
   input {
     File read1
     File read2
-    Int? contig_threshold = 300
+    Int contig_threshold
     String samplename
     String docker = "staphb/spades:3.15.5"
 
@@ -22,6 +22,7 @@ task spades_pe {
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
 
     # remove short contigs
+    echo "removing contigs shorter than ~{contig_threshold}"
     python <<CODE
     import re
     with open("~{samplename}_scaffolds.fasta", "r") as input:

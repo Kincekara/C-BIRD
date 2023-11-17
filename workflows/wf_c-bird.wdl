@@ -66,7 +66,8 @@ workflow cbird_workflow {
       input:
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
-      read2 = assembly_prep.read2_clean_norm       
+      read2 = assembly_prep.read2_clean_norm,
+      contig_threshold = fastp_trim.read_length * 2    
     }
 
     if ( target_genes_fasta != 'null' ) {

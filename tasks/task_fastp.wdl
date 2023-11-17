@@ -63,11 +63,12 @@ command <<<
     # parse output
     jq -r '.summary.fastp_version' fastp.json > VERSION
     jq '.summary.before_filtering.total_bases' fastp.json > total_bases.txt
-    jq '.summary.after_filtering.total_bases' fastp.json >> total_bases.txt
+    jq '.summary.after_filtering.total_bases' fastp.json >> total_bases.txt  
     jq '.read1_before_filtering.total_reads' fastp.json > R1_READS    
     jq '.read2_before_filtering.total_reads' fastp.json > R2_READS
     jq '.summary.before_filtering.total_reads' fastp.json > TOTAL_READS
     jq '.summary.after_filtering.total_reads' fastp.json > TOTAL_READS_TRIM
+
     
     r1_q30=$(jq '.read1_before_filtering.q30_bases' fastp.json)
     r1_total=$(jq '.read1_before_filtering.total_bases' fastp.json)
@@ -77,6 +78,9 @@ command <<<
     r1_total_trim=$(jq '.read1_after_filtering.total_bases' fastp.json)
     r2_q30_trim=$(jq '.read2_after_filtering.q30_bases' fastp.json)
     r2_total_trim=$(jq '.read2_after_filtering.total_bases' fastp.json)
+
+    echo $(($(jq '.summary.before_filtering.read1_mean_length' fastp.json) + 1 )) > read_length.txt
+    
     
     if [ "$r1_total_trim" -gt 0 ]
     then
@@ -107,6 +111,7 @@ output {
     Int total_reads_trim = read_int("TOTAL_READS_TRIM")
     Int r1_reads = read_int("R1_READS")
     Int r2_reads = read_int("R2_READS")
+    Int read_length = read_int("read_length.txt")
     Float r1_q30_raw = read_float("R1_Q30_RAW")
     Float r2_q30_raw = read_float("R2_Q30_RAW")
     Float r1_q30_trim = read_float("R1_Q30_TRIM")

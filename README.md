@@ -18,10 +18,8 @@ C-BIRD deliberately avoids auto-updates of the necessary databases for strict co
 
 | File | Comments |
 | --- | --- |
-| [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 |
-| [Mash sketch](https://drive.google.com/file/d/1OH5UXvNnBWWLMNsKwz3QwGFB2RML8HV_/view?usp=share_link) | custom mash sketch |
-| [PlasmidFinder database]( https://bitbucket.org/genomicepidemiology/plasmidfinder_db/src/master/) | It should be compressed as tar.gz. Get it via docker for indexed db |
-| [NCBI’s genome statistics](https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/species_genome_size.txt.gz) | Use decompressed text file |
+| [Kraken2/Bracken database](https://benlangmead.github.io/aws-indexes/k2) | Standard 8 (required)|
+| [Mash sketch](https://drive.google.com/file/d/1OH5UXvNnBWWLMNsKwz3QwGFB2RML8HV_/view?usp=share_link) | custom mash sketch (required) |
 | Adapters fasta | Your sequencing adapters' list as a fasta file (optional)|
 | Target genes fasta | Extra set of genes/proteins as a fasta file containing protein sequences (optional) |
 
@@ -48,7 +46,7 @@ The following programs and tools are used in the C-BIRD pipeline.
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.11.20 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.14.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| Cbird-Util | 0.8 | Individual summary report generation |
+| Cbird-Util | 1.0 | Individual summary report generation |
 
 ## Outputs ##
 In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in HTML for each sample. 

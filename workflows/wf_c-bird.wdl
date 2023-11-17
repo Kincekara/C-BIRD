@@ -27,7 +27,6 @@ workflow cbird_workflow {
     File? adapters
     File kraken2_database
     File mash_reference   
-    File genome_stats_file
     File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
     Boolean html_report = true
@@ -128,7 +127,6 @@ workflow cbird_workflow {
       call report.generate_report {
         input:
         samplename = samplename,
-        genome_stats = genome_stats_file,
         total_bases = fastp_trim.total_bases,
         taxon_report = profile.bracken_report_filter,
         mlst_report = ts_mlst.ts_mlst_results,
@@ -237,6 +235,7 @@ workflow cbird_workflow {
     File? summary_html_report = generate_report.html_report
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
+    Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim
     Float? est_genome_ratio = generate_report.genome_ratio
     String? cbird_util_dcoker = generate_report.cbird_util_docker
     }

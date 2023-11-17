@@ -3,7 +3,6 @@ version 1.0
 task generate_report {
   input {
     String samplename
-    File genome_stats
     File total_bases
     File taxon_report
     File mlst_report
@@ -19,7 +18,7 @@ task generate_report {
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v0.8"    
+    String docker = "kincekara/cbird-util:alpine-v1.0"    
   }
 
   command <<<
@@ -93,7 +92,6 @@ task generate_report {
     # calculate esimated coverage & genome ratio
     taxid=$(cat ~{taxid})
     est_coverage.py \
-    ~{genome_stats} \
     ~{total_bases} \
     "$taxid" \
     alt_gs.txt \
@@ -117,6 +115,7 @@ task generate_report {
     File html_report = "~{samplename}_html_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float? sequencing_depth = read_float("COVERAGE")
+    Float? sequencing_depth_trim = read_float("COVERAGE_TRIM")
     Float? genome_ratio = read_float("GENOME_RATIO")
     String cbird_util_docker = docker
   }

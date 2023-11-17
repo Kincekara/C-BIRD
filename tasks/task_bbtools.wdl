@@ -62,7 +62,7 @@ task insert_size_dist {
     Int max_reads = 1000000
     Int max_indel = 16000
     Int memory = 8
-    String docker = "kincekara/bbduk:38.98"
+    String docker = "kincekara/bbtools:39.03"
   }
 
   command <<<

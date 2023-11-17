@@ -27,7 +27,6 @@ workflow cbird_workflow {
     File? adapters
     File kraken2_database
     File mash_reference   
-    File plasmidfinder_database
     File genome_stats_file
     File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
@@ -122,8 +121,7 @@ workflow cbird_workflow {
     call plasmid.plasmidfinder {
       input:
       samplename = samplename,
-      assembly = assembly.scaffolds_trim,
-      plasmidfinder_db = plasmidfinder_database
+      assembly = assembly.scaffolds_trim
     }
 
     if (html_report) {

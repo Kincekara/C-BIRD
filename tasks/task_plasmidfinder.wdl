@@ -3,28 +3,21 @@ version 1.0
 task plasmidfinder {
   input {
     File assembly
-    File plasmidfinder_db
     String samplename
-    String docker = "staphb/plasmidfinder:2.1.6"
+    String docker = "kincekara/plasmidfinder:2.1.6-db_2023-03-17"
     Float? min_coverage = 0.6
     Float? threshold = 0.9
-    String? version = "2.1.6"
-    String? db_date = "2022-11-08"
-  }
+    }
 
   command <<<
-    #version
-    echo ~{version} > VERSION
-    echo ~{db_date} > PLASMIDFINDER_DB_DATE
-
-    # Decompress the plasmidfinder database
-    mkdir db
-    tar -C ./db/ -xzvf ~{plasmidfinder_db} 
-
+    # version
+    cp /VERSION .
+    cp /DB_DATE .
+    
     # Run plasmidfinder
     plasmidfinder.py \
     -i ~{assembly} \
-    -p ./db/ \
+    -p /plasmidfinder_db/ \
     -l ~{min_coverage} \
     -t ~{threshold} \
     -x 
@@ -46,7 +39,7 @@ task plasmidfinder {
 
   output {
     String plasmidfinder_version = read_string("VERSION")
-    String plasmidfinder_db_date = read_string("PLASMIDFINDER_DB_DATE")
+    String plasmidfinder_db_date = read_string("DB_DATE")
     String plasmids = read_string("PLASMIDS")
     File plasmid_report = "~{samplename}.plasmid.tsv"
     String plasmidfinder_docker = docker

@@ -63,6 +63,7 @@ command <<<
     # parse output
     jq -r '.summary.fastp_version' fastp.json > VERSION
     jq '.summary.before_filtering.total_bases' fastp.json > total_bases.txt
+    jq '.summary.after_filtering.total_bases' fastp.json >> total_bases.txt
     jq '.read1_before_filtering.total_reads' fastp.json > R1_READS    
     jq '.read2_before_filtering.total_reads' fastp.json > R2_READS
     jq '.summary.before_filtering.total_reads' fastp.json > TOTAL_READS

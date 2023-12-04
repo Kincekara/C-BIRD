@@ -43,7 +43,7 @@ The following programs and tools are used in the C-BIRD pipeline.
 | [QUAST](https://github.com/ablab/quast) | 5.2.0 | Genome assembly evaluation |
 | [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.4.7 | Genomic data quality assesment |
 | [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
-| [AMRFinderPlus](https://github.com/ncbi/amr) | 3.11.20 | AMR gene identification |
+| [AMRFinderPlus](https://github.com/ncbi/amr) | 3.11.26 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.14.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
 | Cbird-Util | 1.0 | Individual summary report generation |

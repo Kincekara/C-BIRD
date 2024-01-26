@@ -4,7 +4,7 @@ task busco {
   input {
     File assembly   
     String samplename
-    String docker = "kincekara/busco:5.4.7-bacteria_odb10.2020-03-06"
+    String docker = "stphb/bucso:5.6.1-prok-bacteria_odb10_2024-01-08"
     Int? memory = 16
     Int? cpu = 4
   }
@@ -15,7 +15,7 @@ task busco {
     # Run Busco
     busco \
     -i ~{assembly} \
-    -l /busco_downloads/lineages/bacteria_odb10 \
+    -l bacteria_odb10 \
     -o out \
     -m genome \
     --offline

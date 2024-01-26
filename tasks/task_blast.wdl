@@ -8,7 +8,7 @@ task tblastn {
     Float evalue = 0.001
     Int max_hsps = 1
     Int percent_identity = 90
-    String docker = "staphb/blast:2.14.0"
+    String docker = "staphb/blast:2.15.0"
   }
 
   command <<<

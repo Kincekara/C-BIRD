@@ -15,7 +15,7 @@ task busco {
     # Run Busco
     busco \
     -i ~{assembly} \
-    -l bacteria_odb10 \
+    -l /busco_downloads/lineages/bacteria_odb10 \
     -o out \
     -m genome \
     --offline

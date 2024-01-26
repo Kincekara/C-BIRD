@@ -9,7 +9,7 @@ task amrfinderplus_nuc {
     Float? minid
     Float? mincov
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:3.11.20-2023-09-26.1"
+    String docker = "staphb/ncbi-amrfinderplus:3.11.26-2023-11-15.1"
   }
   command <<<
     # logging info
@@ -93,6 +93,8 @@ task amrfinderplus_nuc {
       "Streptococcus agalactiae"
       "Streptococcus pyogenes"
       "Vibrio cholerae"
+      "Vibrio parahaemolyticus"
+      "Vibrio vulnificus"
     )
 
     # check organism in curated organism list

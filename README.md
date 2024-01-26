@@ -35,16 +35,16 @@ The following programs and tools are used in the C-BIRD pipeline.
 | Tools | Version | Comments |
 | --- | --- | --- |
 | [FastP](https://github.com/OpenGene/fastp) | 0.23.4 | QC, adapter removal, quality filtering and trimming |
-| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 39.01 | phiX removal & optional normalization |
+| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 39.06 | phiX removal & optional normalization |
 | [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.3 | Taxonomic profiling & contamination check |
 | [Bracken](https://github.com/jenniferlu717/Bracken) | 2.9 | Abundance estimation |
 | [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
 | [Mash](https://github.com/marbl/Mash) | 2.3 | Bacterial identification |
 | [QUAST](https://github.com/ablab/quast) | 5.2.0 | Genome assembly evaluation |
-| [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.4.7 | Genomic data quality assesment |
-| [mlst](https://github.com/tseemann/mlst) | 2.22.0 | MLST typing |
-| [AMRFinderPlus](https://github.com/ncbi/amr) | 3.11.20 | AMR gene identification |
-| [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.14.0 | Target gene search |
+| [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.6.1 | Genomic data quality assesment |
+| [mlst](https://github.com/tseemann/mlst) | 2.23.0 | MLST typing |
+| [AMRFinderPlus](https://github.com/ncbi/amr) | 3.11.26 | AMR gene identification |
+| [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.15.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
 | Cbird-Util | 1.0 | Individual summary report generation |
 

@@ -4,7 +4,7 @@ task busco {
   input {
     File assembly   
     String samplename
-    String docker = "kincekara/busco:5.4.7-bacteria_odb10.2020-03-06"
+    String docker = "staphb/busco:5.6.1-prok-bacteria_odb10_2024-01-08"
     Int? memory = 16
     Int? cpu = 4
   }

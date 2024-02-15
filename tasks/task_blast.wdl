@@ -23,8 +23,8 @@ task tblastn {
     then
       echo "No subject file!"
     else
-      tblastn -query ~{query} -subject ~{subject} -evalue ~{evalue} -max_hsps ~{max_hsps} -out blast.txt -outfmt 6
-      awk 'BEGIN{print "qseqid\tsseqid\tpident\tlength\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore"};$3>=~{percent_identity} {print}' blast.txt > ~{samplename}.tblastn.tsv
+      tblastn -query ~{query} -subject ~{subject} -evalue ~{evalue} -max_hsps ~{max_hsps} -out blast.txt -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen"
+      awk 'BEGIN{print "qseqid\tsseqid\tpident\tlength\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore\tqlen"};$3>=~{percent_identity} {print}' blast.txt > ~{samplename}.tblastn.tsv
       hits=$(awk '$3>=~{percent_identity} {print $1}' blast.txt | tr '\n' ', ' | sed 's/.$//')
     fi
     if [ -z "$hits" ]

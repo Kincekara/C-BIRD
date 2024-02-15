@@ -4,7 +4,7 @@ task quast {
   input {
     File assembly
     String samplename
-    String docker= "kincekara/quast:5.2.0-lite"
+    String docker= "staphb/quast:5.2.0-slim"
   }
   command <<<
     # version
@@ -13,7 +13,7 @@ task quast {
     quast.py ~{assembly} -o .
     mv report.tsv ~{samplename}_report.tsv
     
-    python <<CODE
+    python3 <<CODE
     import csv
     #grab output genome length and number contigs by column header
     with open("~{samplename}_report.tsv",'r') as tsv_file:

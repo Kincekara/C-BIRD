@@ -9,7 +9,7 @@ task amrfinderplus_nuc {
     Float? minid
     Float? mincov
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:3.12.8-2024-01-31.1"
+    String docker = "staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
   }
   command <<<
     # logging info

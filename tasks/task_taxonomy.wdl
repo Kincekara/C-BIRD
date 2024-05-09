@@ -12,7 +12,7 @@ task profile {
     String? min_hit_groups = 3
     Int? memory = 32
     Int? cpu = 4
-    String? kraken2_db_version = "Standard-8 2023-10-09"
+    String? kraken2_db_version = "Standard-8 2024-01-12"
   }
   
   command <<<

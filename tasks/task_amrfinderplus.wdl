@@ -8,6 +8,8 @@ task amrfinderplus_nuc {
     String? mash_organism
     Float? minid
     Float? mincov
+    File? prodigal_faa
+    File? prodigal_gff
     Int cpu = 4
     String docker = "staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
   }
@@ -15,6 +17,13 @@ task amrfinderplus_nuc {
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
+
+    # check prodigal files
+    if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then
+      protein=true
+    else
+      protein=false
+    fi
 
     # select mash organism if avalible
     if [[ "~{mash_organism}" != "" ]]; then
@@ -145,28 +154,56 @@ task amrfinderplus_nuc {
     # checking bash variable
     echo "amrfinder_organism is set to:" ${amrfinder_organism}
     
-    # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
-    if [[ -v amrfinder_organism ]] ; then
-      # always use --plus flag, others may be left out if param is optional and not supplied 
-      # send STDOUT/ERR to log file for capturing database version
-      amrfinder --plus \
-        --organism "${amrfinder_organism}" \
-        ~{'--name ' + samplename} \
-        ~{'--nucleotide ' + assembly} \
-        ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
-        ~{'--coverage_min ' + mincov} \
-        ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
-    else 
-      # always use --plus flag, others may be left out if param is optional and not supplied 
-      # send STDOUT/ERR to log file for capturing database version
-      amrfinder --plus \
-        ~{'--name ' + samplename} \
-        ~{'--nucleotide ' + assembly} \
-        ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
-        ~{'--coverage_min ' + mincov} \
-        ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+    # protein + nucleotide (activate HMM)
+    if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then
+      # protein + nucleotide & use --organism 
+      if [[ -v amrfinder_organism ]]; then
+        amrfinder --plus \
+          --organism "${amrfinder_organism}" \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'--protein ' + prodigal_faa} \
+          ~{'--gff ' + prodigal_gff} \
+          --annotation_format prodigal \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + mincov} \
+          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+      # protein + nucleotide & no organism
+      else        
+        amrfinder --plus \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'--protein ' + prodigal_faa} \
+          ~{'--gff ' + prodigal_gff} \
+          --annotation_format prodigal \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + mincov} \
+          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+        fi
+    # nucleotide only
+    else
+      # nucletode only & use --organism 
+      if [[ -v amrfinder_organism ]] ; then
+        amrfinder --plus \
+          --organism "${amrfinder_organism}" \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + mincov} \
+          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+      # nucletode only & no organism 
+      else 
+        amrfinder --plus \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + mincov} \
+          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+      fi
     fi
 
     # capture the database version from the stdout and stderr file that was just created

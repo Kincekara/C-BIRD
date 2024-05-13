@@ -115,7 +115,9 @@ workflow cbird_workflow {
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
       bracken_organism = profile.bracken_taxon,
-      mash_organism = predict_taxon.taxon
+      mash_organism = predict_taxon.taxon,
+      prodigal_faa = busco.prodigal_faa,
+      prodigal_gff = busco.prodigal_gff
     }
 
     call plasmid.plasmidfinder {

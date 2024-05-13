@@ -20,6 +20,10 @@ task busco {
     -m genome \
     --offline
 
+    # extract prodigal results
+    cp ./out/prodigal_output/predicted_genes/predicted.faa ./~{samplename}.prodigal.faa
+    cp ./out/prodigal_output/predicted_genes/tmp/*_out.log ./~{samplename}.prodigal.gff
+
     # parse results
     cp ./out/short_summary.specific.bacteria_odb10.out.txt ./~{samplename}_busco_results.txt
     cp ./out/short_summary.specific.bacteria_odb10.out.json ./~{samplename}_busco.json
@@ -45,7 +49,8 @@ task busco {
     String busco_db_date = read_string("BUSCO_DB_DATE")
     File busco_report = "~{samplename}_busco_results.txt"
     File busco_json = "~{samplename}_busco.json"
-    
+    File? prodigal_faa = "~{samplename}.prodigal.faa"
+    File? prodigal_gff = "~{samplename}.prodigal.gff"
   }
   runtime {
       docker: "~{docker}"

@@ -46,7 +46,7 @@ The following programs and tools are used in the C-BIRD pipeline.
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.12.8 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.15.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| Cbird-Util | 1.1 | Individual summary report generation |
+| Cbird-Util | 1.2 | Individual summary report generation |
 
 ## Outputs ##
 In addition to outputs generated in each step by the specific programs, C-BIRD creates additional summary reports in HTML for each sample. 

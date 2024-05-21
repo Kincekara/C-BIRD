@@ -18,7 +18,7 @@ task generate_report {
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v1.1"    
+    String docker = "kincekara/cbird-util:alpine-v1.2"    
   }
 
   command <<<

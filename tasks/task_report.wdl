@@ -114,9 +114,9 @@ task generate_report {
     File? clia_report = "~{samplename}_clia_report.html"
     File html_report = "~{samplename}_html_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
-    Float? sequencing_depth = read_float("COVERAGE")
-    Float? sequencing_depth_trim = read_float("COVERAGE_TRIM")
-    Float? genome_ratio = read_float("GENOME_RATIO")
+    Float sequencing_depth = read_float("COVERAGE")
+    Float sequencing_depth_trim = read_float("COVERAGE_TRIM")
+    Float genome_ratio = read_float("GENOME_RATIO")
     String cbird_util_docker = docker
   }
 

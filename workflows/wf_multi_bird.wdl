@@ -11,7 +11,6 @@ workflow multibird {
     File mash_reference   
     File? target_genes_fasta
     Int minimum_total_reads = 30000
-    Boolean html_report = true
     }
 
     scatter (sample in inputSamples) {
@@ -25,7 +24,6 @@ workflow multibird {
             mash_reference = mash_reference,
             minimum_total_reads = minimum_total_reads,
             target_genes_fasta = target_genes_fasta,
-            html_report = html_report
         }
     }
 }

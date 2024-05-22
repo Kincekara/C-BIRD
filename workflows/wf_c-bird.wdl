@@ -13,6 +13,7 @@ import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_mash.wdl" as mash
 import "../tasks/task_blast.wdl" as blast
 import "../tasks/task_report.wdl" as report
+import "../tasks/task_qc_check.wdl" as qc_check
 
 workflow cbird_workflow {
   
@@ -29,7 +30,6 @@ workflow cbird_workflow {
     File mash_reference   
     File? target_genes_fasta = 'null'
     Int minimum_total_reads = 30000
-    Boolean html_report = true
   }
  
   call version.version_capture {
@@ -126,26 +126,37 @@ workflow cbird_workflow {
       assembly = assembly.scaffolds_trim
     }
 
-    if (html_report) {
-      call report.generate_report {
-        input:
-        samplename = samplename,
-        total_bases = fastp_trim.total_bases,
-        taxon_report = profile.bracken_report_filter,
-        mlst_report = ts_mlst.ts_mlst_results,
-        amr_report = amrfinder.amrfinderplus_all_report,
-        plasmid_report = plasmidfinder.plasmid_report,
-        fastp_report = fastp_trim.fastp_report,
-        taxid = profile.taxid,
-        version = version_capture.cbird_version,
-        phix_ratio = assembly_prep.phix_ratio,
-        genome_length = quast.genome_length,
-        quast_report = quast.quast_report,
-        busco_report = busco.busco_json,
-        mash_result = predict_taxon.top_taxon,
-        blast_result = tblastn.blast_results
-      }
+    call report.generate_report {
+      input:
+      samplename = samplename,
+      total_bases = fastp_trim.total_bases,
+      taxon_report = profile.bracken_report_filter,
+      mlst_report = ts_mlst.ts_mlst_results,
+      amr_report = amrfinder.amrfinderplus_all_report,
+      plasmid_report = plasmidfinder.plasmid_report,
+      fastp_report = fastp_trim.fastp_report,
+      taxid = profile.taxid,
+      version = version_capture.cbird_version,
+      phix_ratio = assembly_prep.phix_ratio,
+      genome_length = quast.genome_length,
+      quast_report = quast.quast_report,
+      busco_report = busco.busco_json,
+      mash_result = predict_taxon.top_taxon,
+      blast_result = tblastn.blast_results
     }
+
+    call qc_check.qc {
+      input:
+      r1_q30_trim = fastp_trim.r1_q30_trim,
+      r2_q30_trim = fastp_trim.r2_q30_trim,
+      total_reads_trim = fastp_trim.total_reads_trim,
+      coverage = generate_report.sequencing_depth,
+      coverage_trim = generate_report.sequencing_depth_trim,
+      number_of_scaffolds = quast.number_contigs,
+      busco_summary = busco.busco_summary,
+      genome_ratio = generate_report.genome_ratio
+    }
+    
   }
 
   output {
@@ -240,6 +251,8 @@ workflow cbird_workflow {
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim
     Float? est_genome_ratio = generate_report.genome_ratio
-    String? cbird_util_dcoker = generate_report.cbird_util_docker
+    String? cbird_util_docker = generate_report.cbird_util_docker
+    # QC Eval
+    String? qc_eval = qc.qc_eval
     }
 }

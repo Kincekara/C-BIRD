@@ -6,8 +6,6 @@ task amrfinderplus_nuc {
     String samplename 
     String bracken_organism
     String? mash_organism
-    Float? minid
-    Float? mincov
     File? prodigal_faa
     File? prodigal_gff
     Int cpu = 4
@@ -166,9 +164,7 @@ task amrfinderplus_nuc {
           ~{'--gff ' + prodigal_gff} \
           --annotation_format prodigal \
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-          ~{'--threads ' + cpu} \
-          ~{'--coverage_min ' + mincov} \
-          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+          ~{'--threads ' + cpu} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
       # protein + nucleotide & no organism
       else        
         amrfinder --plus \
@@ -178,9 +174,7 @@ task amrfinderplus_nuc {
           ~{'--gff ' + prodigal_gff} \
           --annotation_format prodigal \
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-          ~{'--threads ' + cpu} \
-          ~{'--coverage_min ' + mincov} \
-          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+          ~{'--threads ' + cpu} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
         fi
     # nucleotide only
     else
@@ -191,18 +185,14 @@ task amrfinderplus_nuc {
           ~{'--name ' + samplename} \
           ~{'--nucleotide ' + assembly} \
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-          ~{'--threads ' + cpu} \
-          ~{'--coverage_min ' + mincov} \
-          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+          ~{'--threads ' + cpu} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
       # nucletode only & no organism 
       else 
         amrfinder --plus \
           ~{'--name ' + samplename} \
           ~{'--nucleotide ' + assembly} \
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-          ~{'--threads ' + cpu} \
-          ~{'--coverage_min ' + mincov} \
-          ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+          ~{'--threads ' + cpu} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
       fi
     fi
 

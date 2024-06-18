@@ -41,7 +41,7 @@ The following programs and tools are used in the C-BIRD pipeline.
 | [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
 | [Mash](https://github.com/marbl/Mash) | 2.3 | Bacterial identification |
 | [QUAST](https://github.com/ablab/quast) | 5.2.0 | Genome assembly evaluation |
-| [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.7.1 | Genomic data quality assesment |
+| [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.7.1 | Genomic data quality assessment |
 | [mlst](https://github.com/tseemann/mlst) | 2.23.0 | MLST typing |
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 3.12.8 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.15.0 | Target gene search |

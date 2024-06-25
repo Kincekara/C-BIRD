@@ -38,7 +38,7 @@ The following programs and tools are used in the C-BIRD pipeline.
 | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) | 39.06 | phiX removal & optional normalization |
 | [Kraken2](https://github.com/DerrickWood/kraken2) | 2.1.3 | Taxonomic profiling & contamination check |
 | [Bracken](https://github.com/jenniferlu717/Bracken) | 2.9 | Abundance estimation |
-| [SPAdes](https://github.com/ablab/spades) | 3.15.5 | *De novo* assembly |
+| [SPAdes](https://github.com/ablab/spades) | 4.0.0 | *De novo* assembly |
 | [Mash](https://github.com/marbl/Mash) | 2.3 | Bacterial identification |
 | [QUAST](https://github.com/ablab/quast) | 5.2.0 | Genome assembly evaluation |
 | [BUSCO](https://gitlab.com/ezlab/busco/-/tree/master) | 5.7.1 | Genomic data quality assessment |

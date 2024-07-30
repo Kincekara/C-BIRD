@@ -28,7 +28,7 @@ workflow cbird_workflow {
     File? adapters
     File kraken2_database
     File mash_reference   
-    File? target_genes_fasta = 'null'
+    File? target_genes_fasta
     Int minimum_total_reads = 30000
   }
  
@@ -70,7 +70,7 @@ workflow cbird_workflow {
       contig_threshold = fastp_trim.read_length * 2    
     }
 
-    if ( target_genes_fasta != 'null' ) {
+    if (defined(target_genes_fasta)) {
       call blast.tblastn {
         input:
         samplename = samplename,

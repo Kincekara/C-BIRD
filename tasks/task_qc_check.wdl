@@ -42,8 +42,10 @@ task qc {
     fi
     # completeness
     comp=$(echo ~{busco_summary} | cut -d "%" -f1 | cut -d ":" -f2)
-    if [ $(echo "$comp < 97" | bc) -eq 1 ]; then
-        echo "FAIL:genome_completeness<97%" | tee -a QC_EVAL
+    if [ $(echo "$comp < 95" | bc) -eq 1 ]; then
+        echo "FAIL:genome_completeness<95%" | tee -a QC_EVAL
+    elif [ $(echo "$comp < 97" | bc) -eq 1 ]; then
+        echo "WARN:genome_completeness<97%" | tee -a QC_EVAL
     fi
     # write pass if no fail
     if [ ! -f QC_EVAL ]; then

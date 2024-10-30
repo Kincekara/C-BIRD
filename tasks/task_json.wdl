@@ -121,4 +121,12 @@ task write_json {
   output {
     File json_report = "~{samplename}_report.json"
   }
+
+  runtime {
+    memory: "256 MB"
+    cpu: 1
+    docker: "kincekara/bash:alpine"
+    disks: "local-disk 10 HDD"
+    dx_instance_type: "mem1_ssd1_v2_x2" 
+  }
 }

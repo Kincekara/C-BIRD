@@ -56,4 +56,12 @@ task qc {
   output {
     String qc_eval = read_string("QC_EVAL")
   }
+
+  runtime {
+    memory: "256 MB"
+    cpu: 1
+    docker: "kincekara/bash:alpine"
+    disks: "local-disk 10 HDD"
+    dx_instance_type: "mem1_ssd1_v2_x2" 
+  }
 }

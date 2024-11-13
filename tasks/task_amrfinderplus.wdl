@@ -9,7 +9,7 @@ task amrfinderplus_nuc {
     File? prodigal_faa
     File? prodigal_gff
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1"
+    String docker = "staphb/ncbi-amrfinderplus:4.0.3-2024-10-22.1"
   }
   command <<<
     # logging info
@@ -89,7 +89,8 @@ task amrfinderplus_nuc {
       "Clostridioides difficile"
       "Enterobacter asburiae"
       "Enterobacter cloacae"
-      "Enterococcus faecalis"    
+      "Enterococcus faecalis"
+      "Haemophilus influenzae"    
       "Klebsiella oxytoca"
       "Neisseria meningitidis"
       "Neisseria gonorrhoeae"

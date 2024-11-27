@@ -82,7 +82,7 @@ workflow cbird_workflow {
 
     if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Burkholderia" || profile.bracken_genus == "Citrobacter" || 
     profile.bracken_genus == "Enterobacter" || profile.bracken_genus == "Escherichia" || profile.bracken_genus == "Klebsiella" || 
-    profile.bracken_genus == "Kluyvera" profile.bracken_genus == "Metapseudomonas" || profile.bracken_genus == "Morganella" || 
+    profile.bracken_genus == "Kluyvera" || profile.bracken_genus == "Metapseudomonas" || profile.bracken_genus == "Morganella" || 
     profile.bracken_genus == "Neisseria" ||     profile.bracken_genus == "Proteus" || profile.bracken_genus == "Providencia" || 
     profile.bracken_genus == "Pseudomonas" || profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Salmonella" || 
     profile.bracken_genus == "Serratia" || profile.bracken_genus == "Streptococcus") {

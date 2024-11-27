@@ -6,7 +6,7 @@ task predict_taxon {
     File reference
     String samplename
     String docker = "kincekara/mash:2.3"
-    Int? memory = 8
+    Int? memory = 16
     Int? cpu = 4
   }
 

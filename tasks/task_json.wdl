@@ -28,8 +28,9 @@ task write_json {
     Int? number_of_contigs 
     Int? n50_value 
     Float? gc_content 
-    # BUSCO
-    String? busco_summary 
+    # CheckM2 
+    String? completeness
+    String? contamination
     # MLST
     String? mlst 
     String? pubmlst_scheme 
@@ -88,8 +89,9 @@ task write_json {
           "n50_value": "~{n50_value}",
           "gc_content": "~{gc_content}"
         },
-        "busco": {
-          "busco_summary": "~{busco_summary}"
+        "checkm2": {
+          "completeness": "~{completeness}",
+          "contamination": "~{contamination}"
         },
         "mlst": {
           "mlst": "~{mlst}",

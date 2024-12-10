@@ -5,7 +5,7 @@ task assembly_prep {
     File read1_trimmed
     File read2_trimmed
     String samplename
-    Boolean normalization = false
+    Boolean normalization = true
     Int total_reads
     Int norm_target = 100
     Int min_depth = 5

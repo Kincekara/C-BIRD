@@ -16,10 +16,9 @@ task profile {
   }
   
   command <<<
+    # version
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
-    date | tee DATE
     
-
     # Decompress the Kraken2 database
     mkdir db
     tar -I pigz -C ./db/ -xvf ~{kraken2_db} 

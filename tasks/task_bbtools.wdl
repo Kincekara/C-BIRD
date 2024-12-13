@@ -11,7 +11,8 @@ task assembly_prep {
     Int min_depth = 5
     Int read_threshold = 8000000
     Int memory = 8
-    String docker = "kincekara/bbtools:39.06"
+    Int cpu = 4
+    String docker = "staphb/bbtools:39.10"
   }
 
   command <<<
@@ -19,14 +20,31 @@ task assembly_prep {
     echo "$(java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1)" | grep version > VERSION
     
     # PhiX cleaning   
-    bbduk.sh in1=~{read1_trimmed} in2=~{read2_trimmed} out1=~{samplename}_1.clean.fastq.gz out2=~{samplename}_2.clean.fastq.gz outm=~{samplename}.matched_phix.fq ref=/bbmap/resources/phix174_ill.ref.fa.gz k=31 hdist=1 stats=~{samplename}.phix.stats.txt
+    bbduk.sh \
+      in1=~{read1_trimmed} \
+      in2=~{read2_trimmed} \
+      out1=~{samplename}_1.clean.fastq.gz \
+      out2=~{samplename}_2.clean.fastq.gz \
+      outm=~{samplename}.matched_phix.fq \
+      ref=/bbmap/resources/phix174_ill.ref.fa.gz \
+      k=31 \
+      hdist=1 \
+      stats=~{samplename}.phix.stats.txt
+
     grep Matched ~{samplename}.phix.stats.txt | awk '{print $3}' > PHIX_RATIO
     
     # normalization
     if ~{normalization} && [ "~{total_reads}" -gt "~{read_threshold}" ]      
       then
         echo "normalizing reads..."
-        bbnorm.sh in=~{samplename}_1.clean.fastq.gz in2=~{samplename}_2.clean.fastq.gz out=~{samplename}_1.clean.norm.fastq.gz  out2=~{samplename}_2.clean.norm.fastq.gz target=~{norm_target} min=~{min_depth}
+        bbnorm.sh \
+          threads=~{cpu} \
+          in=~{samplename}_1.clean.fastq.gz \
+          in2=~{samplename}_2.clean.fastq.gz \
+          out=~{samplename}_1.clean.norm.fastq.gz \
+          out2=~{samplename}_2.clean.norm.fastq.gz \
+          target=~{norm_target} \
+          min=~{min_depth}
       else
         echo "skipping normalization..."
         mv ~{samplename}_1.clean.fastq.gz ~{samplename}_1.clean.norm.fastq.gz
@@ -46,7 +64,7 @@ task assembly_prep {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: 4
+    cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3
@@ -62,14 +80,21 @@ task insert_size_dist {
     Int max_reads = 1000000
     Int max_indel = 16000
     Int memory = 8
-    String docker = "kincekara/bbtools:39.03"
+    String docker = "staphb/bbtools:39.10"
   }
 
   command <<<
     # version control
     echo "$(java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1)" | grep version > VERSION
     # map reads and create histogram
-    bbmap.sh ref=~{reference} in1=~{read1} in2=~{read2} ihist=~{samplename}.ihist.txt reads=~{max_reads} maxindel=~{max_indel} fast
+    bbmap.sh \
+      ref=~{reference} \
+      in1=~{read1} \
+      in2=~{read2} \
+      ihist=~{samplename}.ihist.txt \
+      reads=~{max_reads} \
+      maxindel=~{max_indel} \
+      fast
     #parse histogram file
     cat ~{samplename}.ihist.txt | sed '6,1006!d' > ~{samplename}.hist.txt
     mean=$(awk -F "\t" 'NR==1 {print $2}' ~{samplename}.ihist.txt)

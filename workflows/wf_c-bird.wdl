@@ -33,6 +33,16 @@ workflow cbird_workflow {
     File checkm2_db  
     File? target_genes_fasta
     Int minimum_total_reads = 30000
+    String? labid
+    File? report_logo1
+    File? report_logo2
+    File? report_disclaimer
+    String? header_line1
+    String? header_line2
+    String? header_line3
+    String? header_line4
+    String? header_line5
+    String? header_line6
   }
  
   call version.version_capture {
@@ -154,7 +164,18 @@ workflow cbird_workflow {
       quast_report = quast.quast_report,
       busco_report = busco.busco_json,
       mash_result = predict_taxon.top_taxon,
-      blast_result = tblastn.blast_results
+      blast_result = tblastn.blast_results,
+      labid = labid,
+      analysis_date = version_capture.date,
+      logo1 = report_logo1,
+      logo2 = report_logo2,
+      disclaimer = report_disclaimer,
+      line1 = header_line1,
+      line2 = header_line2,
+      line3 = header_line3,
+      line4 = header_line4,
+      line5 = header_line5,
+      line6 = header_line6
     }
 
     call qc_check.qc {
@@ -299,7 +320,7 @@ workflow cbird_workflow {
     String? blast_docker = tblastn.blast_docker
     String? blast_version = tblastn.blast_version
     # Report
-    File? clia_report = generate_report.clia_report
+    File? plain_report = generate_report.plain_report
     File? summary_html_report = generate_report.html_report
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth

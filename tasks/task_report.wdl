@@ -18,7 +18,18 @@ task generate_report {
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v1.3"    
+    String? labid
+    String analysis_date
+    File? logo1
+    File? logo2
+    File? disclaimer
+    String? line1
+    String? line2
+    String? line3
+    String? line4
+    String? line5
+    String? line6
+    String docker = "kincekara/cbird-util:2.0"    
   }
 
   command <<<
@@ -27,7 +38,30 @@ task generate_report {
     then
       # catch taxon & find genome size
       taxon=$(awk '{print $1,$2}' ~{mash_result})
+      percent=$(awk '{print $3}' ~{mash_result})
       datasets summary genome taxon "$taxon" --reference > gs.json
+
+      #  create plain report
+      if [ -z "~{labid}" ]
+      then
+        plain_report.py \
+        -d "~{analysis_date}" \
+        -i "~{labid}" \
+        -o "$taxon" \
+        -p "$percent" \
+        -a ~{amr_report} \
+        -n ~{disclaimer} \
+        -l ~{logo1} \
+        -r ~{logo2} \
+        --hl1 "~{line1}"\
+        --hl2 "~{line2}" \
+        --hl3 "~{line3}" \
+        --hl4 "~{line4}" \
+        --hl5 "~{line5}" \
+        --hl6 "~{line6}"
+      else
+        echo "No labid is provided!"
+      fi
 
       # create summary report with mash
       if [ -f "~{blast_result}" ]
@@ -111,7 +145,7 @@ task generate_report {
   >>>
 
   output {
-    File? clia_report = "~{samplename}_clia_report.html"
+    File? plain_report = "~{labid}_report.docx"
     File html_report = "~{samplename}_html_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float sequencing_depth = read_float("COVERAGE")

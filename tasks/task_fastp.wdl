@@ -5,7 +5,7 @@ task fastp_pe {
     File read1
     File read2
     File? adapters
-    String docker = "kincekara/fastp:0.23.4"
+    String docker = "staphb/fastp:0.24.0"
     String samplename
     Int? leading = 1
     Int? front_mean_quality = 10

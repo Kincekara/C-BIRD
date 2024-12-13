@@ -1,13 +1,13 @@
 version: 1.2
 workflows:
- - name: cbird-workflow
+ - name: C-BIRD
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_c-bird.wdl
    testParameterFiles:
-    - /files/empty.json
+    - /misc/empty.json
 
  - name: cbird-insert_size_dist
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_insert_size.wdl
    testParameterFiles:
-    - /files/empty.json
+    - /misc/empty.json

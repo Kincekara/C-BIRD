@@ -4,7 +4,7 @@ task quast {
   input {
     File assembly
     String samplename
-    String docker= "staphb/quast:5.2.0-slim"
+    String docker= "staphb/quast:5.3.0-slim"
   }
   command <<<
     # version

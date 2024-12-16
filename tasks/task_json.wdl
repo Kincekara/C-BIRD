@@ -127,7 +127,7 @@ task write_json {
   runtime {
     memory: "256 MB"
     cpu: 1
-    docker: "kincekara/bash:alpine"
+    docker: "ubuntu:jammy-20240911.1"
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }

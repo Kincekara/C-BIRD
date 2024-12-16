@@ -12,12 +12,12 @@ task profile {
     String? min_hit_groups = 3
     Int? memory = 32
     Int? cpu = 4
-    String? k2_db_version = "Standard-8 2024-01-12"
   }
   
   command <<<
     # version
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
+    basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
     
     # Decompress the Kraken2 database
     mkdir db
@@ -56,7 +56,7 @@ task profile {
 
   output {
     String kraken2_version = read_string("KVERSION")
-    String kraken2_db_version = k2_db_version
+    String kraken2_db_version = read_string("K2DB")
     String kraken2_docker = docker
     File kraken2_report = "~{samplename}.kraken.report.txt"
     File bracken_report = "~{samplename}.bracken.txt"

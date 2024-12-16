@@ -8,7 +8,8 @@ task qc {
     Float coverage
     Float coverage_trim
     Int number_of_scaffolds
-    String busco_summary
+    String completeness
+    String contamination
     Float genome_ratio
   }
 
@@ -18,6 +19,16 @@ task qc {
         echo "FAIL:Coverage<40X, " | tee -a QC_EVAL
     elif [ $(echo "~{coverage_trim} < 30" | bc) -eq 1 ]; then
         echo "WARN:Trimmed Coverage<30X, " | tee -a QC_EVAL
+    fi
+    # contamination
+     if [ $(echo "~{contamination} > 1" | bc) -eq 1 ]; then
+        echo "FAIL:contamination>1%" | tee -a QC_EVAL
+    fi
+    # completeness
+     if [ $(echo "~{completeness} < 95" | bc) -eq 1 ]; then
+        echo "FAIL:genome_completeness<95%" | tee -a QC_EVAL
+    elif [ $(echo "$comp < 97" | bc) -eq 1 ]; then
+        echo "WARN:genome_completeness<97%" | tee -a QC_EVAL
     fi
     # q30
     if [ $(echo "~{r1_q30_trim} < 90" | bc) -eq 1 ]; then
@@ -40,13 +51,7 @@ task qc {
     elif [ $(echo "~{genome_ratio} < 0.75" | bc) -eq 1 ]; then 
         echo "WARN:genome ratio<0.75, " | tee -a QC_EVAL
     fi
-    # completeness
-    comp=$(echo ~{busco_summary} | cut -d "%" -f1 | cut -d ":" -f2)
-    if [ $(echo "$comp < 95" | bc) -eq 1 ]; then
-        echo "FAIL:genome_completeness<95%" | tee -a QC_EVAL
-    elif [ $(echo "$comp < 97" | bc) -eq 1 ]; then
-        echo "WARN:genome_completeness<97%" | tee -a QC_EVAL
-    fi
+
     # write pass if no fail
     if [ ! -f QC_EVAL ]; then
         echo "PASS" | tee QC_EVAL    
@@ -60,7 +65,7 @@ task qc {
   runtime {
     memory: "256 MB"
     cpu: 1
-    docker: "kincekara/bash:alpine"
+    docker: "ubuntu:jammy-20240911.1"
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }

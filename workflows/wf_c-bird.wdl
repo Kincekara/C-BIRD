@@ -8,7 +8,6 @@ import "../tasks/task_quast.wdl" as quast
 import "../tasks/task_mlst.wdl" as mlst
 import "../tasks/task_amrfinderplus.wdl" as amrplus
 import "../tasks/task_plasmidfinder.wdl" as plasmid
-import "../tasks/task_busco.wdl" as busco
 import "../tasks/task_checkm2.wdl" as checkm2
 import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_mash.wdl" as mash
@@ -113,12 +112,6 @@ workflow cbird_workflow {
       assembly = assembly.scaffolds_trim  
     }
 
-    call busco.busco {
-      input:
-      samplename = samplename,
-      assembly = assembly.scaffolds_trim
-    }
-
     call checkm2.checkm2 {
       input:
       samplename = samplename,
@@ -162,7 +155,7 @@ workflow cbird_workflow {
       phix_ratio = assembly_prep.phix_ratio,
       genome_length = quast.genome_length,
       quast_report = quast.quast_report,
-      busco_report = busco.busco_json,
+      checkm2_report = checkm2.report,
       mash_result = predict_taxon.top_taxon,
       blast_result = tblastn.blast_results,
       labid = labid,
@@ -186,7 +179,8 @@ workflow cbird_workflow {
       coverage = generate_report.sequencing_depth,
       coverage_trim = generate_report.sequencing_depth_trim,
       number_of_scaffolds = quast.number_contigs,
-      busco_summary = busco.busco_summary,
+      contamination = checkm2.contamination,
+      completeness =  checkm2.completeness,
       genome_ratio = generate_report.genome_ratio
     }
 
@@ -286,13 +280,6 @@ workflow cbird_workflow {
     Int? number_of_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     Float? gc_content = quast.gc_content
-    # BUSCO
-    String? busco_version = busco.busco_version
-    String? busco_docker = busco.busco_docker
-    File? busco_results = busco.busco_report 
-    String? busco_summary = busco.busco_summary
-    String? busco_lineage = busco.busco_db_name
-    String? busco_db_date = busco.busco_db_date
     # MLST
     String? mlst_version = ts_mlst.ts_mlst_version
     String? mlst_docker = ts_mlst.ts_mlst_docker
@@ -321,7 +308,8 @@ workflow cbird_workflow {
     String? blast_version = tblastn.blast_version
     # Report
     File? plain_report = generate_report.plain_report
-    File? summary_html_report = generate_report.html_report
+    File? basic_report = generate_report.basic_report
+    File? extended_report = generate_report.extended_report
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim

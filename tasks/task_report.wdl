@@ -9,7 +9,7 @@ task generate_report {
     File amr_report
     File plasmid_report
     File fastp_report
-    File busco_report
+    File checkm2_report
     File quast_report
     File taxid 
     File? mash_result
@@ -67,7 +67,7 @@ task generate_report {
       if [ -f "~{blast_result}" ]
       # with blast
       then
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -79,7 +79,7 @@ task generate_report {
         -f "~{footer_note}"
       # mash only
       else
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -98,7 +98,7 @@ task generate_report {
       if [ -f "~{blast_result}" ]
       # blast only
       then
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -109,7 +109,7 @@ task generate_report {
         -f "~{footer_note}"
       # no mash or blast
       else
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -137,7 +137,7 @@ task generate_report {
     ~{fastp_report} \
     ~{taxon_report} \
     ~{quast_report} \
-    ~{busco_report} \
+    ~{checkm2_report} \
     "~{version}" \
     "~{phix_ratio}" \
     "COVERAGE" \
@@ -146,7 +146,8 @@ task generate_report {
 
   output {
     File? plain_report = "~{labid}_report.docx"
-    File html_report = "~{samplename}_html_report.html"
+    File basic_report = "~{samplename}_basic_report.html"
+    File extended_report = "~{samplename}_extended_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float sequencing_depth = read_float("COVERAGE")
     Float sequencing_depth_trim = read_float("COVERAGE_TRIM")

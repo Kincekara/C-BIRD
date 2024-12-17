@@ -42,7 +42,7 @@ task generate_report {
       datasets summary genome taxon "$taxon" --reference > gs.json
 
       #  create plain report
-      if [ -z "~{labid}" ]
+      if [ -n "~{labid}" ]
       then
         plain_report.py \
         -d "~{analysis_date}" \

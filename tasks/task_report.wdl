@@ -53,12 +53,12 @@ task generate_report {
         -n ~{disclaimer} \
         -l ~{logo1} \
         -r ~{logo2} \
-        --hl1 "~{line1}"\
-        --hl2 "~{line2}" \
-        --hl3 "~{line3}" \
-        --hl4 "~{line4}" \
-        --hl5 "~{line5}" \
-        --hl6 "~{line6}"
+        -hl1 "~{line1}"\
+        -hl2 "~{line2}" \
+        -hl3 "~{line3}" \
+        -hl4 "~{line4}" \
+        -hl5 "~{line5}" \
+        -hl6 "~{line6}"
       else
         echo "No labid is provided!"
       fi

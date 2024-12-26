@@ -215,7 +215,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--organism', type=str, help='Predicted organism', required=True)
     parser.add_argument('-p', '--percent',  type=str, help='Predicted organism percent match', required=True)
     parser.add_argument('-a', '--amr_report', type=str, help='Amrfinder report file', required=True) 
-    parser.add_argument('-n', '--disclaimer',  type=str, help='disclaimer or additional notes')  
+    parser.add_argument('-n', '--disclaimer', nargs='?', const='', type=str, help='disclaimer or additional notes')  
     parser.add_argument('-l', '--logo1',  type=str, help='header logo left')    
     parser.add_argument('-r', '--logo2',  type=str, help='header logo right')
     parser.add_argument('-hl1', '--line1', nargs='?', const='', type=str, help='header text line 1') 

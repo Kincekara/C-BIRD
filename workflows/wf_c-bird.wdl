@@ -28,7 +28,7 @@ workflow cbird_workflow {
     String samplename
     File? adapters
     File kraken2_database
-    File mash_reference 
+    File? mash_reference 
     File checkm2_db  
     File? target_genes_fasta
     Int minimum_total_reads = 30000

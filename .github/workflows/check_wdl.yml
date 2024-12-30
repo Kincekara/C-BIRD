@@ -18,11 +18,11 @@ jobs:
 
     - name: Install Cromwell
       run: |
-        wget https://github.com/broadinstitute/cromwell/releases/download/58/cromwell-58.jar -O cromwell.jar
+        wget https://github.com/broadinstitute/cromwell/releases/download/87/womtool-87.jar -O womtool.jar
 
     - name: Validate WDL with Cromwell
       run: |
-        java -jar cromwell.jar validate workflows/wf_c-bird.wdl
+        java -jar womtool.jar validate workflows/wf_c-bird.wdl
 
     - name: Set up Python
       uses: actions/setup-python@v2

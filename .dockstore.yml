@@ -6,7 +6,7 @@ workflows:
    testParameterFiles:
     - /misc/empty.json
    authors:
-    - orchid: 0000-0001-7915-9847
+    - orcid: 0000-0001-7915-9847
    topic: CT-PHL Bacterial Ideintification and Resistance Detection (C-BIRD) workflow
 
  - name: C-BIRD Inserts
@@ -15,5 +15,5 @@ workflows:
    testParameterFiles:
     - /misc/empty.json
    authors:
-    - orchid: 0000-0001-7915-9847
+    - orcid: 0000-0001-7915-9847
    topic: C-BIRD auxiliary workflow for estimating insert size distribution

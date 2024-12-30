@@ -1,0 +1,38 @@
+name: Check WDL Workflow
+
+on: [push, pull_request]
+
+jobs:
+  validate-wdl:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Install Cromwell
+      run: |
+        wget https://github.com/broadinstitute/cromwell/releases/download/58/cromwell-58.jar -O cromwell.jar
+
+    - name: Validate WDL with Cromwell
+      run: |
+        java -jar cromwell.jar validate workflows/wf_c-bird.wdl
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install MiniWDL
+      run: |
+        pip install miniwdl
+
+    - name: Validate WDL with MiniWDL
+      run: |
+        miniwdl check workflows/wf_c-bird.wdl

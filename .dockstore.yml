@@ -9,7 +9,7 @@ workflows:
     - orcid: 0000-0001-7915-9847
    topic: CT-PHL Bacterial Ideintification and Resistance Detection (C-BIRD) workflow
 
- - name: C-BIRD Inserts
+ - name: C-BIRD_Inserts
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_insert_size.wdl
    testParameterFiles:

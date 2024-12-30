@@ -19,7 +19,9 @@ import "../tasks/task_json.wdl" as json
 workflow cbird_workflow {
   
   meta {
-  description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
+    author: "Kutluhan Incekara"
+    email: "kutluhan.incekara@ct.gov"
+    description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
   }
 
   input {

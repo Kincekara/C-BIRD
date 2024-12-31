@@ -4,11 +4,11 @@ import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_bbtools.wdl" as bbtools
 import "../tasks/task_spades.wdl" as spades
-import "../tasks/task_quast.wdl" as quast
-import "../tasks/task_mlst.wdl" as mlst
+import "../tasks/task_quast.wdl" as quast_asm
+import "../tasks/task_mlst.wdl" as st
 import "../tasks/task_amrfinderplus.wdl" as amrplus
 import "../tasks/task_plasmidfinder.wdl" as plasmid
-import "../tasks/task_checkm2.wdl" as checkm2
+import "../tasks/task_checkm2.wdl" as check_asm
 import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_mash.wdl" as mash
 import "../tasks/task_blast.wdl" as blast
@@ -108,20 +108,20 @@ workflow cbird_workflow {
       }
     }
 
-    call quast.quast {
+    call quast_asm.quast {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim  
     }
 
-    call checkm2.checkm2 {
+    call check_asm.checkm2 {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,
       checkm2_db = checkm2_db
     }
 
-    call mlst.ts_mlst {
+    call st.ts_mlst {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim

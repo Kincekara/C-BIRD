@@ -21,13 +21,13 @@ task qc {
         echo "WARN:Trimmed Coverage<30X, " | tee -a QC_EVAL
     fi
     # contamination
-     if [ $(echo "~{contamination} > 1" | bc) -eq 1 ]; then
+    if [ $(echo "~{contamination} > 1" | bc) -eq 1 ]; then
         echo "FAIL:contamination>1%" | tee -a QC_EVAL
     fi
     # completeness
-     if [ $(echo "~{completeness} < 95" | bc) -eq 1 ]; then
+    if [ $(echo "~{completeness} < 95" | bc) -eq 1 ]; then
         echo "FAIL:genome_completeness<95%" | tee -a QC_EVAL
-    elif [ $(echo "$comp < 97" | bc) -eq 1 ]; then
+    elif [ $(echo "~{completeness} < 97" | bc) -eq 1 ]; then
         echo "WARN:genome_completeness<97%" | tee -a QC_EVAL
     fi
     # q30

@@ -8,7 +8,7 @@ task ts_mlst {
     File assembly
     String samplename
     String docker = "staphb/mlst:2.23.0-2024-12-01"
-    Int? cpu = 4
+    Int cpu = 4
     # Parameters
     # --nopath          Strip filename paths from FILE column (default OFF)
     # --scheme [X]      Don't autodetect, force this scheme on all inputs (default '')
@@ -22,7 +22,7 @@ task ts_mlst {
     Float? minscore
   }
   command <<<
-    echo $(mlst --version 2>&1) | sed 's/mlst //' | tee VERSION
+    mlst --version 2>&1 | sed 's/mlst //' | tee VERSION
     
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
@@ -54,8 +54,8 @@ task ts_mlst {
         fi  
     fi
     
-    echo $predicted_mlst | tee PREDICTED_MLST
-    echo $pubmlst_scheme | tee PUBMLST_SCHEME
+    echo "$predicted_mlst" | tee PREDICTED_MLST
+    echo "$pubmlst_scheme" | tee PUBMLST_SCHEME
   >>>
   output {
     File ts_mlst_results = "~{samplename}_ts_mlst.tsv"

@@ -237,10 +237,10 @@ workflow cbird_workflow {
     Int total_reads_trim = fastp_trim.total_reads_trim
     Int r1_reads =  fastp_trim.r1_reads
     Int r2_reads = fastp_trim.r2_reads
-    Float? r1_q30_raw = fastp_trim.r1_q30_raw
-    Float? r2_q30_raw = fastp_trim.r2_q30_raw
-    Float? r1_q30_trim = fastp_trim.r1_q30_trim
-    Float? r2_q30_trim = fastp_trim.r2_q30_trim
+    Float r1_q30_raw = fastp_trim.r1_q30_raw
+    Float r2_q30_raw = fastp_trim.r2_q30_raw
+    Float r1_q30_trim = fastp_trim.r1_q30_trim
+    Float r2_q30_trim = fastp_trim.r2_q30_trim
     # BBtools
     File? phiX_stats = assembly_prep.phiX_stats
     String? bbtools_docker = assembly_prep.bbtools_docker

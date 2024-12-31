@@ -17,7 +17,7 @@ task assembly_prep {
 
   command <<<
     # version control
-    echo "$(java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1)" | grep version > VERSION
+    java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1 | grep version > VERSION
     
     # PhiX cleaning   
     bbduk.sh \
@@ -85,7 +85,7 @@ task insert_size_dist {
 
   command <<<
     # version control
-    echo "$(java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1)" | grep version > VERSION
+    java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1 | grep version > VERSION
     # map reads and create histogram
     bbmap.sh \
       ref=~{reference} \
@@ -96,12 +96,12 @@ task insert_size_dist {
       maxindel=~{max_indel} \
       fast
     #parse histogram file
-    cat ~{samplename}.ihist.txt | sed '6,1006!d' > ~{samplename}.hist.txt
+    sed '6,1006!d' ~{samplename}.ihist.txt > ~{samplename}.hist.txt
     mean=$(awk -F "\t" 'NR==1 {print $2}' ~{samplename}.ihist.txt)
     median=$(awk -F "\t" 'NR==2 {print $2}' ~{samplename}.ihist.txt)
     mode=$(awk -F "\t" 'NR==3 {print $2}' ~{samplename}.ihist.txt)
     stdev=$(awk -F "\t" 'NR==4 {print $2}' ~{samplename}.ihist.txt)
-    echo $median > MEDIAN
+    echo "$median" > MEDIAN
     # create a html plot
     touch ~{samplename}.hist.html
     x=$(awk -vORS=, 'NR>1 {print $1}' "~{samplename}.hist.txt" | sed 's/,$/\n/')

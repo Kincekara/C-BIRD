@@ -11,10 +11,10 @@ task write_json {
     Int total_reads_trim 
     Int r1_reads 
     Int r2_reads 
-    Float? r1_q30_raw 
-    Float? r2_q30_raw 
-    Float? r1_q30_trim 
-    Float? r2_q30_trim 
+    Float r1_q30_raw 
+    Float r2_q30_raw 
+    Float r1_q30_trim 
+    Float r2_q30_trim 
     # BBtools
     String? phiX_ratio 
     # Bracken

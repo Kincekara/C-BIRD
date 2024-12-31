@@ -31,7 +31,7 @@ task tblastn {
     then
       echo "No blast hit!" > GENES
     else
-      echo $hits > GENES
+      echo "$hits" > GENES
     fi
   >>>
 

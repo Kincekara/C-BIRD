@@ -6,8 +6,8 @@ task checkm2 {
     File checkm2_db   
     String samplename
     String docker = "staphb/checkm2:1.0.2"
-    Int? memory = 16
-    Int? cpu = 4
+    Int memory = 16
+    Int cpu = 4
   }
 
   command <<<

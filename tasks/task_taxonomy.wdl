@@ -7,16 +7,16 @@ task profile {
     File kraken2_db
     String samplename
     String docker = "staphb/bracken:2.9"
-    Int? bracken_read_len = 100
-    Int? bracken_threshold = 10
-    String? min_hit_groups = 3
-    Int? memory = 32
-    Int? cpu = 4
+    Int bracken_read_len = 100
+    Int bracken_threshold = 10
+    Int min_hit_groups = 3
+    Int memory = 32
+    Int cpu = 4
   }
   
   command <<<
     # version
-    echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
+    kraken2 --version 2>&1 | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
     basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
     
     # Decompress the Kraken2 database

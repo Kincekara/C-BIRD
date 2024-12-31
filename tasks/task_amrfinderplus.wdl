@@ -16,13 +16,6 @@ task amrfinderplus_nuc {
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
 
-    # check prodigal files
-    if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then
-      protein=true
-    else
-      protein=false
-    fi
-
     # select mash organism if avalible
     if [[ "~{mash_organism}" != "" ]]; then
       organism="~{mash_organism}"
@@ -151,7 +144,7 @@ task amrfinderplus_nuc {
     fi
 
     # checking bash variable
-    echo "amrfinder_organism is set to:" ${amrfinder_organism}
+    echo "amrfinder_organism is set to: ${amrfinder_organism}"
     
     # protein + nucleotide (activate HMM)
     if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then

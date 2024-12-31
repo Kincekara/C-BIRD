@@ -6,8 +6,8 @@ task predict_taxon {
     File? reference
     String samplename
     String docker = "kincekara/mash:2.3-cbird-v2.0"
-    Int? memory = 16
-    Int? cpu = 4
+    Int memory = 16
+    Int cpu = 4
   }
 
   command <<<
@@ -35,11 +35,11 @@ task predict_taxon {
     else
       taxon=$(echo "$candidate" | cut -d ' ' -f 1,2)
     fi
-    echo $taxon > TAXON
+    echo "$taxon" > TAXON
     # find ratio
     ratio=$(awk -F "\t" 'NR==1 {printf "%.2f\n",$1*100}' ~{samplename}.mash.sorted.tsv)
-    echo $ratio > RATIO
-    printf "$taxon\t$ratio\n" > ~{samplename}.top_taxon.tsv
+    echo "$ratio" > RATIO
+    printf '%s\t%s\n' "$taxon" "$ratio" > ~{samplename}.top_taxon.tsv
   >>>
 
   output {

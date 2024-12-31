@@ -16,7 +16,7 @@ task profile {
   
   command <<<
     # version
-    kraken2 --version 2>&1 | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
+    kraken2 --version 2>&1 | grep 'Kraken version' | awk '{print $3}' | tee KVERSION
     basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
     
     # Decompress the Kraken2 database

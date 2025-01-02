@@ -33,6 +33,9 @@ task checkm2 {
     
     # (bonus) run prodigal to get protein data
     prodigal -m -i ~{assembly} -f gff -o ~{samplename}.prodigal.gff -a ~{samplename}.prodigal.faa
+
+    # clean up
+    rm -rf ./CheckM2_database
   >>>
 
   output {

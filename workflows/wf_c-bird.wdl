@@ -24,6 +24,87 @@ workflow cbird_workflow {
     description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
   }
 
+  parameter_meta {
+    read1: {
+        description: "File path to the first read",
+        patterns: ["*.fastq.gz", "*_R1_*.fastq.gz"]
+    }
+    read2: {
+        description: "File path to the second read",
+        patterns: ["*.fastq.gz", "*_R2_*.fastq.gz"]
+    }
+    samplename: {
+        description: "Name of the sample"
+    }
+    adapters: {
+        description: "File path to the adapters for trimming",
+        optional: "true",
+        patterns: ["*.fasta", "*.fa"]
+    }
+    kraken2_database: {
+        description: "File path to the Kraken2/Bracken database",
+        patterns: ["*.tar.gz"]
+    }
+    mash_reference: {
+        description: "File path to the Mash reference",
+        optional: "true",
+        patterns: "*.msh"
+    }
+    checkm2_db: {
+        description: "File path to the CheckM2 DIAMOND database",
+        patterns: ["*.tar.gz"]
+    }
+    target_genes_fasta: {
+        description: "File path to the target genes fasta file",
+        optional: "true"
+        patterns: ["*.fasta", "*.fa"]
+    }
+    minimum_total_reads: {
+        description: "Minimum total reads required for the analysis",
+        default: "30000"
+    }
+    labid: {
+        description: "Laboratory id or other identifier. Required for the plain report. Optional for analysis",
+        optional: "true"
+    }
+    report_logo1: {
+        description: "File path to the plain report logo for the left side",
+        optional: "true"
+    }
+    report_logo2: {
+        description: "File path to the plain report logo for the right side",
+        optional: "true"
+    }
+    report_disclaimer: {
+        description: "File path to the plain report disclaimer",
+        optional: "true"
+    }
+    header_line1: {
+        description: "First line of the plain report header",
+        optional: "true"
+    }
+    header_line2: {
+        description: "Second line of the plain report header",
+        optional: "true"
+    }
+    header_line3: {
+        description: "Third line of the plain report header",
+        optional: "true"
+    }
+    header_line4: {
+        description: "Fourth line of the plain report header",
+        optional: "true"
+    }
+    header_line5: {
+        description: "Fifth line of the plain report header",
+        optional: "true"
+    }
+    header_line6: {
+        description: "Sixth line of the plain report header",
+        optional: "true"
+    }
+  }
+
   input {
     File read1
     File read2

@@ -56,7 +56,7 @@ workflow cbird_workflow {
     }
     target_genes_fasta: {
         description: "File path to the target genes fasta file",
-        optional: "true"
+        optional: "true",
         patterns: ["*.fasta", "*.fa"]
     }
     minimum_total_reads: {

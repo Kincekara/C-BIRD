@@ -9,12 +9,6 @@ task ts_mlst {
     String samplename
     String docker = "staphb/mlst:2.23.0-2024-12-01"
     Int cpu = 4
-    # Parameters
-    # --nopath          Strip filename paths from FILE column (default OFF)
-    # --scheme [X]      Don't autodetect, force this scheme on all inputs (default '')
-    # --minid [n.n]     DNA %identity of full allelle to consider 'similar' [~] (default '95')
-    # --mincov [n.n]    DNA %cov to report partial allele at all [?] (default '10')
-    # --minscore [n.n]  Minumum score out of 100 to match a scheme (when auto --scheme) (default '50')
     Boolean nopath = true
     String? scheme
     Float? minid
@@ -38,17 +32,17 @@ task ts_mlst {
       >> ~{samplename}_ts_mlst.tsv
       
     # parse ts mlst tsv for relevant outputs
-    if [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 1 ]; then
+    if [ $(tail -n +2 ~{samplename}_ts_mlst.tsv | wc -l) -eq 0 ]; then
       predicted_mlst="No ST predicted"
       pubmlst_scheme="NA"
     else
       pubmlst_scheme="$(cut -f2 ~{samplename}_ts_mlst.tsv | tail -n 1)"
       predicted_mlst="ST$(cut -f3 ~{samplename}_ts_mlst.tsv | tail -n 1)"
-        if [ "$pubmlst_scheme" == "-" ]; then
+        if [ "$pubmlst_scheme" = "-" ]; then
           predicted_mlst="No ST predicted"
           pubmlst_scheme="NA"
         else
-          if [ "$predicted_mlst" == "ST-" ]; then
+          if [ "$predicted_mlst" = "ST-" ]; then
           predicted_mlst="No ST predicted"
           fi
         fi  
@@ -66,8 +60,8 @@ task ts_mlst {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: "2 GB"
+    cpu: cpu
     disks: "local-disk 50 SSD"
     preemptible: 0
   }

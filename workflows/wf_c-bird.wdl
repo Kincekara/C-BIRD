@@ -14,7 +14,6 @@ import "../tasks/task_mash.wdl" as mash
 import "../tasks/task_blast.wdl" as blast
 import "../tasks/task_report.wdl" as report
 import "../tasks/task_qc_check.wdl" as qc_check
-import "../tasks/task_json.wdl" as json
 
 workflow cbird_workflow {
   
@@ -266,44 +265,6 @@ workflow cbird_workflow {
       completeness =  checkm2.completeness,
       genome_ratio = generate_report.genome_ratio
     }
-
-    call json.write_json {
-      input:
-      samplename = samplename,
-      cbird_version = version_capture.cbird_version,
-      cbird_analysis_date = version_capture.date,
-      total_reads = fastp_trim.total_reads,
-      total_reads_trim = fastp_trim.total_reads_trim,
-      r1_reads =  fastp_trim.r1_reads,
-      r2_reads = fastp_trim.r2_reads,
-      r1_q30_raw = fastp_trim.r1_q30_raw,
-      r2_q30_raw = fastp_trim.r2_q30_raw,
-      r1_q30_trim = fastp_trim.r1_q30_trim,
-      r2_q30_trim = fastp_trim.r2_q30_trim,
-      phiX_ratio = assembly_prep.phix_ratio,
-      bracken_taxon = profile.bracken_taxon,
-      bracken_taxon_ratio = profile.top_taxon_ratio,
-      predicted_organism = predict_taxon.taxon,
-      percent_identity = predict_taxon.ratio,
-      genome_length = quast.genome_length,
-      number_of_contigs = quast.number_contigs,
-      n50_value = quast.n50_value,
-      gc_content = quast.gc_content,
-      contamination = checkm2.contamination,
-      completeness =  checkm2.completeness,
-      mlst = ts_mlst.ts_mlst_predicted_st,
-      pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
-      amr_genes = amrfinder.amrfinderplus_amr_genes,
-      amr_stress_genes = amrfinder.amrfinderplus_stress_genes,
-      amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes,
-      amr_subclass = amrfinder.amrfinderplus_amr_subclass,
-      plasmidfinder_plasmids = plasmidfinder.plasmids,
-      blast_genes = tblastn.genes,
-      est_sequencing_depth = generate_report.sequencing_depth,
-      est_sequencing_depth_trim = generate_report.sequencing_depth_trim,
-      est_genome_ratio = generate_report.genome_ratio,
-      qc_eval = qc.qc_eval
-    }    
   }
 
   output {
@@ -400,7 +361,5 @@ workflow cbird_workflow {
     String? cbird_util_docker = generate_report.cbird_util_docker
     # QC Eval
     String? qc_eval = qc.qc_eval
-    # Json
-    File? json_report = write_json.json_report
     }
 }

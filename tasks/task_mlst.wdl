@@ -32,7 +32,7 @@ task ts_mlst {
       >> ~{samplename}_ts_mlst.tsv
       
     # parse ts mlst tsv for relevant outputs
-    if [ $(tail -n +2 ~{samplename}_ts_mlst.tsv | wc -l) -eq 0 ]; then
+    if [ "$(tail -n +2 ~{samplename}_ts_mlst.tsv | wc -l)" -eq 0 ]; then
       predicted_mlst="No ST predicted"
       pubmlst_scheme="NA"
     else

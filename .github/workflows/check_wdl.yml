@@ -20,7 +20,7 @@ jobs:
       run: |
         wget https://github.com/broadinstitute/cromwell/releases/download/87/womtool-87.jar -O womtool.jar
 
-    - name: Validate WDL with Cromwell
+    - name: Validate C-BIRD with Cromwell
       run: |
         java -jar womtool.jar validate workflows/wf_c-bird.wdl
 
@@ -33,6 +33,10 @@ jobs:
       run: |
         pip install miniwdl
 
-    - name: Validate WDL with MiniWDL
+    - name: Validate C-BIRD with MiniWDL
       run: |
         miniwdl check workflows/wf_c-bird.wdl
+
+    - name: Validate multiBIRD with MiniWDL
+      run: |
+        miniwdl check workflows/wf_multibird.wdl

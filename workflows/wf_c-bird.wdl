@@ -26,11 +26,11 @@ workflow cbird_workflow {
   parameter_meta {
     read1: {
         description: "File path to the first read",
-        patterns: ["*.fastq.gz", "*_R1_*.fastq.gz"]
+        patterns: ["*_1.fastq.gz", "*_R1_*.fastq.gz"]
     }
     read2: {
         description: "File path to the second read",
-        patterns: ["*.fastq.gz", "*_R2_*.fastq.gz"]
+        patterns: ["*_2.fastq.gz", "*_R2_*.fastq.gz"]
     }
     samplename: {
         description: "Name of the sample"

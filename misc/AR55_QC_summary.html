@@ -1,0 +1,404 @@
+
+        <!DOCTYPE html>
+        <html lang="en-us">
+        <head>
+            <meta charset="UTF-8">
+            <title>AR55</title>
+            <style>
+            h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            text-align: center;
+            color: #1e5c85
+            }
+
+            h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1em;
+            margin-top: 1em;
+            margin-bottom: 0.4em;
+            text-align: left;
+            color: #D6672E 
+            }
+
+            table {
+            border-collapse: collapse;
+            border: none;                                       
+            }
+            
+            th, td {
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            border: none;
+            }
+            
+            table.dataframe tr:nth-child(even) {background-color: #f2f2f2;}
+            
+            table.dataframe th {
+            background-color: #1e5c85;
+            color: white;
+            }
+            
+            table.custom tr:nth-child(odd) {background-color: #f2f2f2;}
+            
+            table.custom th {
+            background-color: #1e5c85;
+            color: white;
+            }
+            </style>
+        </head>
+        <body>
+        <header>
+        <h1>QC Summary</h1>
+        </header>
+        <hr>
+        <article>
+        <h2>Sample Information</h2>
+        <table class="custom">
+        <tr>
+            <td>Report date:</td>
+            <td>2025-01-06</td>
+        </tr>
+        <tr>
+            <td>Laboratory ID:</td>
+            <td>AR55</td>
+        </tr>
+        <tr>
+            <td>Pipeline:</td>
+            <td>C-BIRD v2.0.0</td>
+        </tr>
+        </table>
+        <h2>Sequencing Statistics</h2>
+
+        <table class="custom">
+        <tr>
+        <td>Sequencing depth:</td>
+        <td>97.42</td>
+        </tr>
+        <tr>
+        <td>PhiX ratio:</td>
+        <td>0.14016%</td>
+        </tr>
+        <tr>
+        <td>Assembly completeness:</td>
+        <td>100.0</td>
+        </tr>
+        <tr>
+        <td>Assembly contamination:</td>
+        <td>1.58</td>
+        </tr>
+        <tr>
+        <td>Estimated genome ratio:</td>
+        <td>1.05</td>
+        </tr>
+        </table>
+        <h2>Quality Trimming & Filtering</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>General</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sequencing:</td>
+      <td>paired end (251 cycles + 251 cycles)</td>
+    </tr>
+    <tr>
+      <td>mean length before filtering:</td>
+      <td>230bp, 230bp</td>
+    </tr>
+    <tr>
+      <td>mean length after filtering:</td>
+      <td>211bp, 183bp</td>
+    </tr>
+    <tr>
+      <td>duplication rate:</td>
+      <td>0.032498%</td>
+    </tr>
+    <tr>
+      <td>Insert size peak:</td>
+      <td>251</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th></th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>total reads:</td>
+      <td>2.178604 M</td>
+      <td>1.972008 M</td>
+    </tr>
+    <tr>
+      <td>total bases:</td>
+      <td>501.715513 M</td>
+      <td>389.874600 M</td>
+    </tr>
+    <tr>
+      <td>Q20 bases:</td>
+      <td>451.357380 M (89.962811%)</td>
+      <td>380.184125 M (97.514464%)</td>
+    </tr>
+    <tr>
+      <td>Q30 bases:</td>
+      <td>428.190628 M (85.345304%)</td>
+      <td>374.824656 M (96.139799%)</td>
+    </tr>
+    <tr>
+      <td>GC content:</td>
+      <td>51.289094%</td>
+      <td>51.168880%</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Quality Filtering</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>reads passed filters:</td>
+      <td>1.972008 M (90.517047%)</td>
+    </tr>
+    <tr>
+      <td>reads with low quality:</td>
+      <td>89.354000 K (4.101434%)</td>
+    </tr>
+    <tr>
+      <td>reads with too many N:</td>
+      <td>0 (0.000000%)</td>
+    </tr>
+    <tr>
+      <td>reads too short:</td>
+      <td>117.242000 K (5.381520%)</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Adapter or bad ligation of read1</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sequence</td>
+      <td>Occurrences</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>other adapter sequences</td>
+      <td>212</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Adapter or bad ligation of read2</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sequence</td>
+      <td>Occurrences</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>126</td>
+    </tr>
+    <tr>
+      <td>AG</td>
+      <td>73</td>
+    </tr>
+    <tr>
+      <td>AGA</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <td>AGAT</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <td>AGATC</td>
+      <td>51</td>
+    </tr>
+    <tr>
+      <td>AGATCG</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <td>AGATCGG</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <td>AGATCGGA</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <td>AGATCGGAA</td>
+      <td>55</td>
+    </tr>
+    <tr>
+      <td>other adapter sequences</td>
+      <td>3062</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <h2>Taxonomy Report</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>name</th>
+      <th>taxonomy_id</th>
+      <th>taxonomy_lvl</th>
+      <th>kraken_assigned_reads</th>
+      <th>added_reads</th>
+      <th>new_est_reads</th>
+      <th>fraction_total_reads</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Escherichia coli</td>
+      <td>562</td>
+      <td>S</td>
+      <td>296740</td>
+      <td>643880</td>
+      <td>940620</td>
+      <td>0.98355</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>Assembly Statistics</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Assembly</th>
+      <th>AR55_scaffolds_trim</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td># contigs (&gt;= 0 bp)</td>
+      <td>78.00</td>
+    </tr>
+    <tr>
+      <td># contigs (&gt;= 1000 bp)</td>
+      <td>58.00</td>
+    </tr>
+    <tr>
+      <td># contigs (&gt;= 5000 bp)</td>
+      <td>34.00</td>
+    </tr>
+    <tr>
+      <td># contigs (&gt;= 10000 bp)</td>
+      <td>30.00</td>
+    </tr>
+    <tr>
+      <td># contigs (&gt;= 25000 bp)</td>
+      <td>23.00</td>
+    </tr>
+    <tr>
+      <td># contigs (&gt;= 50000 bp)</td>
+      <td>19.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 0 bp)</td>
+      <td>5414160.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 1000 bp)</td>
+      <td>5401192.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 5000 bp)</td>
+      <td>5347649.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 10000 bp)</td>
+      <td>5324286.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 25000 bp)</td>
+      <td>5205585.00</td>
+    </tr>
+    <tr>
+      <td>Total length (&gt;= 50000 bp)</td>
+      <td>5075449.00</td>
+    </tr>
+    <tr>
+      <td># contigs</td>
+      <td>75.00</td>
+    </tr>
+    <tr>
+      <td>Largest contig</td>
+      <td>709923.00</td>
+    </tr>
+    <tr>
+      <td>Total length</td>
+      <td>5412706.00</td>
+    </tr>
+    <tr>
+      <td>GC (%)</td>
+      <td>50.81</td>
+    </tr>
+    <tr>
+      <td>N50</td>
+      <td>468813.00</td>
+    </tr>
+    <tr>
+      <td>N90</td>
+      <td>85495.00</td>
+    </tr>
+    <tr>
+      <td>auN</td>
+      <td>394213.80</td>
+    </tr>
+    <tr>
+      <td>L50</td>
+      <td>5.00</td>
+    </tr>
+    <tr>
+      <td>L90</td>
+      <td>17.00</td>
+    </tr>
+    <tr>
+      <td># N's per 100 kbp</td>
+      <td>7.13</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        </article>
+        <hr>
+        <footer>
+        <p><i>This QC summary is created by <a href="https://github.com/Kincekara/C-BIRD">C-BIRD v2.0.0</a> bioinformatics pipeline.</i></p>
+        </footer>
+    </body>
+    </html>
+    

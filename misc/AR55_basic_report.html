@@ -1,0 +1,313 @@
+
+    <!DOCTYPE html>
+    <html lang="en-us">
+        <head>
+            <meta charset="UTF-8">
+            <title>AR55</title>
+            <style>
+            h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            text-align: center;
+            color: #1e5c85
+            }
+
+            h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1em;
+            margin-top: 1em;
+            margin-bottom: 0.4em;
+            text-align: left;
+            color: #D6672E 
+            }
+
+            table {
+            border-collapse: collapse;
+            border: none;
+            }
+            
+            th, td {
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            border: none;
+            }
+            
+            table.dataframe tr:nth-child(even) {background-color: #f2f2f2;}
+            
+            table.dataframe th {
+            background-color: #1e5c85;
+            color: white;
+            
+            }
+            footer {
+                    font-size: 0.8em
+                }      
+            </style>
+        </head>
+        <body>
+        <header>
+        <h1>Whole Genome Sequencing Analysis Report</h1>
+        </header>
+        <hr>
+        <article>
+        <h2>Sample Information</h2>
+        <table>
+        <tr>
+        <td>Report date:</td>
+        <td>2025-01-06</td>
+        </tr>
+        <tr>
+        <td>Laboratory ID:</td>
+        <td>AR55</td>
+        </tr>
+        </table>
+        <h2>Predicted Organism</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Microorganism</th>
+      <th>Identity(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Escherichia coli</td>
+      <td>99.72</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>Resistance Genes</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Gene</th>
+      <th>Description</th>
+      <th>Resistance / Mechanism</th>
+      <th>Coverage(%)</th>
+      <th>Identity(%)</th>
+      <th>Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>aac(6')-Ib</td>
+      <td>AAC(6')-Ib family aminoglycoside 6'-N-acetyltransferase</td>
+      <td>AMIKACIN/KANAMYCIN/TOBRAMYCIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <td>rmtC</td>
+      <td>RmtC family 16S rRNA (guanine(1405)-N(7))-methyltransferase</td>
+      <td>AMINOGLYCOSIDE</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>mph(A)</td>
+      <td>Mph(A) family macrolide 2'-phosphotransferase</td>
+      <td>AZITHROMYCIN/ERYTHROMYCIN/SPIRAMYCIN/TELITHROMYCIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>blaEC</td>
+      <td>BlaEC family class C beta-lactamase</td>
+      <td>BETA-LACTAM</td>
+      <td>88.59</td>
+      <td>99.10</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>ble</td>
+      <td>bleomycin binding protein Ble-MBL</td>
+      <td>BLEOMYCIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>blaNDM-1</td>
+      <td>subclass B1 metallo-beta-lactamase NDM-1</td>
+      <td>CARBAPENEM</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>blaCMY-6</td>
+      <td>class C beta-lactamase CMY-6</td>
+      <td>CEPHALOSPORIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>blaOXA-1</td>
+      <td>oxacillin-hydrolyzing class D beta-lactamase OXA-1</td>
+      <td>CEPHALOSPORIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>catB3</td>
+      <td>type B-3 chloramphenicol O-acetyltransferase CatB3</td>
+      <td>CHLORAMPHENICOL</td>
+      <td>70.00</td>
+      <td>100.00</td>
+      <td>Low (Partial)</td>
+    </tr>
+    <tr>
+      <td>acrF</td>
+      <td>multidrug efflux RND transporter permease subunit AcrF</td>
+      <td>EFFLUX</td>
+      <td>100.00</td>
+      <td>99.52</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>mdtM</td>
+      <td>multidrug efflux MFS transporter MdtM</td>
+      <td>EFFLUX</td>
+      <td>99.76</td>
+      <td>97.31</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>aac(3)-IIe</td>
+      <td>aminoglycoside N-acetyltransferase AAC(3)-IIe</td>
+      <td>GENTAMICIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>aadA5</td>
+      <td>ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA5</td>
+      <td>STREPTOMYCIN</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>sul1</td>
+      <td>sulfonamide-resistant dihydropteroate synthase Sul1</td>
+      <td>SULFONAMIDE</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>tet(A)</td>
+      <td>tetracycline efflux MFS transporter Tet(A)</td>
+      <td>TETRACYCLINE</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>dfrA17</td>
+      <td>trimethoprim-resistant dihydrofolate reductase DfrA17</td>
+      <td>TRIMETHOPRIM</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>Point Mutations</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Gene</th>
+      <th>Description</th>
+      <th>Resistance / Mechanism</th>
+      <th>Coverage(%)</th>
+      <th>Identity(%)</th>
+      <th>Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>glpT_E448K</td>
+      <td>Escherichia fosfomycin resistant GlpT</td>
+      <td>FOSFOMYCIN</td>
+      <td>100.00</td>
+      <td>99.78</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>ptsI_V25I</td>
+      <td>Escherichia fosfomycin resistant PtsI</td>
+      <td>FOSFOMYCIN</td>
+      <td>100.00</td>
+      <td>99.65</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>uhpT_E350Q</td>
+      <td>Escherichia fosfomycin resistant UhpT</td>
+      <td>FOSFOMYCIN</td>
+      <td>100.00</td>
+      <td>99.78</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>gyrA_D87N</td>
+      <td>Escherichia quinolone resistant GyrA</td>
+      <td>QUINOLONE</td>
+      <td>99.66</td>
+      <td>98.86</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>gyrA_S83L</td>
+      <td>Escherichia quinolone resistant GyrA</td>
+      <td>QUINOLONE</td>
+      <td>99.66</td>
+      <td>98.86</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>parC_E84V</td>
+      <td>Escherichia quinolone resistant ParC</td>
+      <td>QUINOLONE</td>
+      <td>100.00</td>
+      <td>99.20</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>parC_S80I</td>
+      <td>Escherichia quinolone resistant ParC</td>
+      <td>QUINOLONE</td>
+      <td>100.00</td>
+      <td>99.20</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>parE_I529L</td>
+      <td>Escherichia quinolone resistant ParE</td>
+      <td>QUINOLONE</td>
+      <td>100.00</td>
+      <td>99.52</td>
+      <td>Very High</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        </article>
+        <hr>
+        <footer>
+        <p><i>This report is created by <a href="https://github.com/Kincekara/C-BIRD">C-BIRD v2.0.0</a> bioinformatics pipeline.</br>
+        </i></p>
+        </footer>
+    </body>
+    </html>
+    

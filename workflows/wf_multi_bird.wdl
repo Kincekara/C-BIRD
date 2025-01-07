@@ -7,8 +7,8 @@ workflow multibird {
     File inputSamplesFile
     Array[Array[String]] inputSamples = read_tsv(inputSamplesFile)
     File? adapters
-    File kraken2_database
-    File checkm2_database
+    File kraken2_db
+    File checkm2_db
     File? mash_reference   
     File? target_genes_fasta
     Int minimum_total_reads = 30000
@@ -31,8 +31,8 @@ workflow multibird {
             read1 = sample[1],
             read2 = sample[2],            
             adapters = adapters,
-            kraken2_database = kraken2_database,
-            checkm2_db = checkm2_database,
+            kraken2_db = kraken2_db,
+            checkm2_db = checkm2_db,
             mash_reference = mash_reference,
             minimum_total_reads = minimum_total_reads,
             target_genes_fasta = target_genes_fasta,

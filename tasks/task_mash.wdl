@@ -3,25 +3,43 @@ version 1.0
 task predict_taxon {
   input {
     File assembly   
-    File reference
+    File? reference
     String samplename
-    String docker = "kincekara/mash:2.3"
-    Int? memory = 8
-    Int? cpu = 4
+    String docker = "kincekara/mash:2.3-cbird-v2.0"
+    Int memory = 16
+    Int cpu = 4
   }
 
   command <<<
     # version
     mash --version > VERSION
+
     # screen assembly
-    mash screen -p ~{cpu} ~{reference} ~{assembly} > ~{samplename}.mash.tsv
+    if [ -f "~{reference}" ]; then
+      mash screen -p ~{cpu} ~{reference} ~{assembly} > ~{samplename}.mash.tsv
+    else
+      mash screen -p ~{cpu} /cbird-v2.0-lite.msh ~{assembly} > ~{samplename}.mash.tsv
+    fi    
+
     # parse results
     sort -gr ~{samplename}.mash.tsv > ~{samplename}.mash.sorted.tsv
-    taxon=$(awk -F "\t" 'NR==1 {print $6}' ~{samplename}.mash.sorted.tsv | sed 's/[^ ]* seqs] //' | sed 's/ \[.*//')
-    echo $taxon > TAXON
+    top=$(awk -F "\t" 'NR==1 {print $6}' ~{samplename}.mash.sorted.tsv)
+    if [[ "$top" =~ ^\[[0-9]+[[:space:]]seqs\]+ ]]; then
+      candidate=$(echo "$top" | cut -d ' ' -f 4,5,6,7)
+    else
+      candidate=$(echo "$top" | cut -d ' ' -f 2,3,4,5)
+    fi
+    # check subspecies
+    if [[ $(echo "$candidate" | awk '{print $3}') == "subsp." ]]; then
+      taxon="$candidate"
+    else
+      taxon=$(echo "$candidate" | cut -d ' ' -f 1,2)
+    fi
+    echo "$taxon" > TAXON
+    # find ratio
     ratio=$(awk -F "\t" 'NR==1 {printf "%.2f\n",$1*100}' ~{samplename}.mash.sorted.tsv)
-    echo $ratio > RATIO
-    printf "$taxon\t$ratio\n" > ~{samplename}.top_taxon.tsv
+    echo "$ratio" > RATIO
+    printf '%s\t%s\n' "$taxon" "$ratio" > ~{samplename}.top_taxon.tsv
   >>>
 
   output {

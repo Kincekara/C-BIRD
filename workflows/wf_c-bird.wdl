@@ -4,22 +4,104 @@ import "../tasks/task_version.wdl" as version
 import "../tasks/task_fastp.wdl" as fastp
 import "../tasks/task_bbtools.wdl" as bbtools
 import "../tasks/task_spades.wdl" as spades
-import "../tasks/task_quast.wdl" as quast
-import "../tasks/task_mlst.wdl" as mlst
+import "../tasks/task_quast.wdl" as quast_asm
+import "../tasks/task_mlst.wdl" as st
 import "../tasks/task_amrfinderplus.wdl" as amrplus
 import "../tasks/task_plasmidfinder.wdl" as plasmid
-import "../tasks/task_busco.wdl" as busco
+import "../tasks/task_checkm2.wdl" as check_asm
 import "../tasks/task_taxonomy.wdl" as taxon
 import "../tasks/task_mash.wdl" as mash
 import "../tasks/task_blast.wdl" as blast
 import "../tasks/task_report.wdl" as report
 import "../tasks/task_qc_check.wdl" as qc_check
-import "../tasks/task_json.wdl" as json
 
 workflow cbird_workflow {
   
   meta {
-  description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
+    author: "Kutluhan Incekara"
+    email: "kutluhan.incekara@ct.gov"
+    description: "CT-PHL Bacterial Identification and Resistance Detection pipeline"
+  }
+
+  parameter_meta {
+    read1: {
+        description: "File path to the first read",
+        patterns: ["*_1.fastq.gz", "*_R1_*.fastq.gz"]
+    }
+    read2: {
+        description: "File path to the second read",
+        patterns: ["*_2.fastq.gz", "*_R2_*.fastq.gz"]
+    }
+    samplename: {
+        description: "Name of the sample"
+    }
+    adapters: {
+        description: "File path to the adapters for trimming",
+        optional: "true",
+        patterns: ["*.fasta", "*.fa"]
+    }
+    kraken2_db: {
+        description: "File path to the Kraken2/Bracken database",
+        patterns: ["*.tar.gz"]
+    }
+    mash_reference: {
+        description: "File path to the Mash reference",
+        optional: "true",
+        patterns: "*.msh"
+    }
+    checkm2_db: {
+        description: "File path to the CheckM2 DIAMOND database",
+        patterns: ["*.tar.gz"]
+    }
+    target_genes_fasta: {
+        description: "File path to the target genes fasta file",
+        optional: "true",
+        patterns: ["*.fasta", "*.fa"]
+    }
+    minimum_total_reads: {
+        description: "Minimum total reads required for the analysis",
+        default: "30000"
+    }
+    labid: {
+        description: "Laboratory id or other identifier. Required for the plain report. Optional for analysis",
+        optional: "true"
+    }
+    report_logo1: {
+        description: "File path to the plain report logo for the left side",
+        optional: "true"
+    }
+    report_logo2: {
+        description: "File path to the plain report logo for the right side",
+        optional: "true"
+    }
+    report_disclaimer: {
+        description: "File path to the plain report disclaimer",
+        optional: "true"
+    }
+    header_line1: {
+        description: "First line of the plain report header",
+        optional: "true"
+    }
+    header_line2: {
+        description: "Second line of the plain report header",
+        optional: "true"
+    }
+    header_line3: {
+        description: "Third line of the plain report header",
+        optional: "true"
+    }
+    header_line4: {
+        description: "Fourth line of the plain report header",
+        optional: "true"
+    }
+    header_line5: {
+        description: "Fifth line of the plain report header",
+        optional: "true"
+    }
+    header_line6: {
+        description: "Sixth line of the plain report header",
+        optional: "true"
+    }
   }
 
   input {
@@ -27,10 +109,21 @@ workflow cbird_workflow {
     File read2
     String samplename
     File? adapters
-    File kraken2_database
-    File mash_reference   
+    File kraken2_db
+    File? mash_reference 
+    File checkm2_db  
     File? target_genes_fasta
     Int minimum_total_reads = 30000
+    String? labid
+    File? report_logo1
+    File? report_logo2
+    File? report_disclaimer
+    String? header_line1
+    String? header_line2
+    String? header_line3
+    String? header_line4
+    String? header_line5
+    String? header_line6
   }
  
   call version.version_capture {
@@ -60,7 +153,7 @@ workflow cbird_workflow {
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm,    
-      kraken2_db = kraken2_database
+      kraken2_db = kraken2_db
     }
     
     call spades.spades_pe as assembly {
@@ -80,10 +173,12 @@ workflow cbird_workflow {
       }
     }
 
-    if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Citrobacter" || profile.bracken_genus == "Enterobacter" ||
-    profile.bracken_genus == "Escherichia" || profile.bracken_genus == "Klebsiella" || profile.bracken_genus == "Morganella" ||
-    profile.bracken_genus == "Proteus" || profile.bracken_genus == "Providencia" || profile.bracken_genus == "Pseudomonas" ||
-    profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Serratia" || profile.bracken_genus == "Salmonella" || profile.bracken_genus == "Kluyvera") {
+    if ( profile.bracken_genus == "Acinetobacter" || profile.bracken_genus == "Burkholderia" || profile.bracken_genus == "Citrobacter" || 
+    profile.bracken_genus == "Enterobacter" || profile.bracken_genus == "Escherichia" || profile.bracken_genus == "Klebsiella" || 
+    profile.bracken_genus == "Kluyvera" || profile.bracken_genus == "Metapseudomonas" || profile.bracken_genus == "Morganella" || 
+    profile.bracken_genus == "Neisseria" || profile.bracken_genus == "Proteus" || profile.bracken_genus == "Providencia" || 
+    profile.bracken_genus == "Pseudomonas" || profile.bracken_genus == "Raoultella" || profile.bracken_genus == "Salmonella" || 
+    profile.bracken_genus == "Serratia" || profile.bracken_genus == "Streptococcus") {
 
       call mash.predict_taxon {
         input:
@@ -93,19 +188,20 @@ workflow cbird_workflow {
       }
     }
 
-    call quast.quast {
+    call quast_asm.quast {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim  
     }
 
-    call busco.busco {
+    call check_asm.checkm2 {
       input:
       samplename = samplename,
-      assembly = assembly.scaffolds_trim
+      assembly = assembly.scaffolds_trim,
+      checkm2_db = checkm2_db
     }
 
-    call mlst.ts_mlst {
+    call st.ts_mlst {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim
@@ -117,8 +213,8 @@ workflow cbird_workflow {
       assembly = assembly.scaffolds_trim,
       bracken_organism = profile.bracken_taxon,
       mash_organism = predict_taxon.taxon,
-      prodigal_faa = busco.prodigal_faa,
-      prodigal_gff = busco.prodigal_gff
+      prodigal_faa = checkm2.prodigal_faa,
+      prodigal_gff = checkm2.prodigal_gff
     }
 
     call plasmid.plasmidfinder {
@@ -141,9 +237,20 @@ workflow cbird_workflow {
       phix_ratio = assembly_prep.phix_ratio,
       genome_length = quast.genome_length,
       quast_report = quast.quast_report,
-      busco_report = busco.busco_json,
+      checkm2_report = checkm2.report,
       mash_result = predict_taxon.top_taxon,
-      blast_result = tblastn.blast_results
+      blast_result = tblastn.blast_results,
+      labid = labid,
+      analysis_date = version_capture.date,
+      logo1 = report_logo1,
+      logo2 = report_logo2,
+      disclaimer = report_disclaimer,
+      line1 = header_line1,
+      line2 = header_line2,
+      line3 = header_line3,
+      line4 = header_line4,
+      line5 = header_line5,
+      line6 = header_line6
     }
 
     call qc_check.qc {
@@ -154,46 +261,10 @@ workflow cbird_workflow {
       coverage = generate_report.sequencing_depth,
       coverage_trim = generate_report.sequencing_depth_trim,
       number_of_scaffolds = quast.number_contigs,
-      busco_summary = busco.busco_summary,
+      contamination = checkm2.contamination,
+      completeness =  checkm2.completeness,
       genome_ratio = generate_report.genome_ratio
     }
-
-    call json.write_json {
-      input:
-      samplename = samplename,
-      cbird_version = version_capture.cbird_version,
-      cbird_analysis_date = version_capture.date,
-      total_reads = fastp_trim.total_reads,
-      total_reads_trim = fastp_trim.total_reads_trim,
-      r1_reads =  fastp_trim.r1_reads,
-      r2_reads = fastp_trim.r2_reads,
-      r1_q30_raw = fastp_trim.r1_q30_raw,
-      r2_q30_raw = fastp_trim.r2_q30_raw,
-      r1_q30_trim = fastp_trim.r1_q30_trim,
-      r2_q30_trim = fastp_trim.r2_q30_trim,
-      phiX_ratio = assembly_prep.phix_ratio,
-      bracken_taxon = profile.bracken_taxon,
-      bracken_taxon_ratio = profile.top_taxon_ratio,
-      predicted_organism = predict_taxon.taxon,
-      percent_identity = predict_taxon.ratio,
-      genome_length = quast.genome_length,
-      number_of_contigs = quast.number_contigs,
-      n50_value = quast.n50_value,
-      gc_content = quast.gc_content,
-      busco_summary = busco.busco_summary,
-      mlst = ts_mlst.ts_mlst_predicted_st,
-      pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
-      amr_genes = amrfinder.amrfinderplus_amr_genes,
-      amr_stress_genes = amrfinder.amrfinderplus_stress_genes,
-      amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes,
-      amr_subclass = amrfinder.amrfinderplus_amr_subclass,
-      plasmidfinder_plasmids = plasmidfinder.plasmids,
-      blast_genes = tblastn.genes,
-      est_sequencing_depth = generate_report.sequencing_depth,
-      est_sequencing_depth_trim = generate_report.sequencing_depth_trim,
-      est_genome_ratio = generate_report.genome_ratio,
-      qc_eval = qc.qc_eval
-    }    
   }
 
   output {
@@ -208,15 +279,20 @@ workflow cbird_workflow {
     Int total_reads_trim = fastp_trim.total_reads_trim
     Int r1_reads =  fastp_trim.r1_reads
     Int r2_reads = fastp_trim.r2_reads
-    Float? r1_q30_raw = fastp_trim.r1_q30_raw
-    Float? r2_q30_raw = fastp_trim.r2_q30_raw
-    Float? r1_q30_trim = fastp_trim.r1_q30_trim
-    Float? r2_q30_trim = fastp_trim.r2_q30_trim
+    Float r1_q30_raw = fastp_trim.r1_q30_raw
+    Float r2_q30_raw = fastp_trim.r2_q30_raw
+    Float r1_q30_trim = fastp_trim.r1_q30_trim
+    Float r2_q30_trim = fastp_trim.r2_q30_trim
     # BBtools
     File? phiX_stats = assembly_prep.phiX_stats
     String? bbtools_docker = assembly_prep.bbtools_docker
     String? bbtools_version = assembly_prep.bbmap_version
     String? phiX_ratio = assembly_prep.phix_ratio
+    # CheckM2 
+    File? checkm2_report = checkm2.report
+    String? checkm2_docker = checkm2.checkm2_docker
+    String? completeness = checkm2.completeness
+    String? contamination = checkm2.contamination
     # Kraken2
     String? kraken2_version = profile.kraken2_version
     String? kraken2_db_version = profile.kraken2_db_version
@@ -248,13 +324,6 @@ workflow cbird_workflow {
     Int? number_of_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     Float? gc_content = quast.gc_content
-    # BUSCO
-    String? busco_version = busco.busco_version
-    String? busco_docker = busco.busco_docker
-    File? busco_results = busco.busco_report 
-    String? busco_summary = busco.busco_summary
-    String? busco_lineage = busco.busco_db_name
-    String? busco_db_date = busco.busco_db_date
     # MLST
     String? mlst_version = ts_mlst.ts_mlst_version
     String? mlst_docker = ts_mlst.ts_mlst_docker
@@ -282,8 +351,9 @@ workflow cbird_workflow {
     String? blast_docker = tblastn.blast_docker
     String? blast_version = tblastn.blast_version
     # Report
-    File? clia_report = generate_report.clia_report
-    File? summary_html_report = generate_report.html_report
+    File? plain_report = generate_report.plain_report
+    File? basic_report = generate_report.basic_report
+    File? extended_report = generate_report.extended_report
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim
@@ -291,7 +361,5 @@ workflow cbird_workflow {
     String? cbird_util_docker = generate_report.cbird_util_docker
     # QC Eval
     String? qc_eval = qc.qc_eval
-    # Json
-    File? json_report = write_json.json_report
     }
 }

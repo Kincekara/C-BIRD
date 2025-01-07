@@ -9,7 +9,7 @@ task generate_report {
     File amr_report
     File plasmid_report
     File fastp_report
-    File busco_report
+    File checkm2_report
     File quast_report
     File taxid 
     File? mash_result
@@ -18,7 +18,18 @@ task generate_report {
     String version
     String phix_ratio
     String footer_note = ""
-    String docker = "kincekara/cbird-util:alpine-v1.2"    
+    String? labid
+    String analysis_date
+    File? logo1
+    File? logo2
+    File? disclaimer
+    String? line1
+    String? line2
+    String? line3
+    String? line4
+    String? line5
+    String? line6
+    String docker = "kincekara/cbird-util:2.0"    
   }
 
   command <<<
@@ -27,13 +38,36 @@ task generate_report {
     then
       # catch taxon & find genome size
       taxon=$(awk '{print $1,$2}' ~{mash_result})
+      percent=$(awk '{print $3}' ~{mash_result})
       datasets summary genome taxon "$taxon" --reference > gs.json
+
+      #  create plain report
+      if [ -n "~{labid}" ]
+      then
+        plain_report.py \
+        -d "~{analysis_date}" \
+        -i "~{labid}" \
+        -o "$taxon" \
+        -p "$percent" \
+        -a ~{amr_report} \
+        -n ~{disclaimer} \
+        -l ~{logo1} \
+        -r ~{logo2} \
+        -hl1 "~{line1}"\
+        -hl2 "~{line2}" \
+        -hl3 "~{line3}" \
+        -hl4 "~{line4}" \
+        -hl5 "~{line5}" \
+        -hl6 "~{line6}"
+      else
+        echo "No labid is provided!"
+      fi
 
       # create summary report with mash
       if [ -f "~{blast_result}" ]
       # with blast
       then
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -45,7 +79,7 @@ task generate_report {
         -f "~{footer_note}"
       # mash only
       else
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -64,7 +98,7 @@ task generate_report {
       if [ -f "~{blast_result}" ]
       # blast only
       then
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -75,7 +109,7 @@ task generate_report {
         -f "~{footer_note}"
       # no mash or blast
       else
-        report_gen.py \
+        html_report.py \
         -s ~{samplename} \
         -t ~{taxon_report} \
         -st ~{mlst_report} \
@@ -103,7 +137,7 @@ task generate_report {
     ~{fastp_report} \
     ~{taxon_report} \
     ~{quast_report} \
-    ~{busco_report} \
+    ~{checkm2_report} \
     "~{version}" \
     "~{phix_ratio}" \
     "COVERAGE" \
@@ -111,8 +145,9 @@ task generate_report {
   >>>
 
   output {
-    File? clia_report = "~{samplename}_clia_report.html"
-    File html_report = "~{samplename}_html_report.html"
+    File? plain_report = "~{labid}_report.docx"
+    File basic_report = "~{samplename}_basic_report.html"
+    File extended_report = "~{samplename}_extended_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float sequencing_depth = read_float("COVERAGE")
     Float sequencing_depth_trim = read_float("COVERAGE_TRIM")

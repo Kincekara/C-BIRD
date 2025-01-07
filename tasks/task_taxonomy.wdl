@@ -7,19 +7,18 @@ task profile {
     File kraken2_db
     String samplename
     String docker = "staphb/bracken:2.9"
-    Int? bracken_read_len = 100
-    Int? bracken_threshold = 10
-    String? min_hit_groups = 3
-    Int? memory = 32
-    Int? cpu = 4
-    String? kraken2_db_version = "Standard-8 2024-01-12"
+    Int bracken_read_len = 100
+    Int bracken_threshold = 10
+    Int min_hit_groups = 3
+    Int memory = 32
+    Int cpu = 4
   }
   
   command <<<
-    echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KVERSION
-    date | tee DATE
-    echo ~{kraken2_db_version} > KDBVERSION
-
+    # version
+    kraken2 --version 2>&1 | grep 'Kraken version' | awk '{print $3}' | tee KVERSION
+    basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
+    
     # Decompress the Kraken2 database
     mkdir db
     tar -I pigz -C ./db/ -xvf ~{kraken2_db} 
@@ -53,11 +52,13 @@ task profile {
     awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk -F "\t" 'NR==1 {print $2}' > ~{samplename}.taxid.txt 
     awk '{print $NF,$0}' ~{samplename}.bracken.txt | sort -nr | cut -f2- -d' ' | awk 'NR==1 {print $1}' > GENUS
 
+    # clean up
+    rm -rf db
   >>>
 
   output {
     String kraken2_version = read_string("KVERSION")
-    String kraken2_db_version = read_string("KDBVERSION")
+    String kraken2_db_version = read_string("K2DB")
     String kraken2_docker = docker
     File kraken2_report = "~{samplename}.kraken.report.txt"
     File bracken_report = "~{samplename}.bracken.txt"

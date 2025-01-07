@@ -1,13 +1,19 @@
 version: 1.2
 workflows:
- - name: cbird-workflow
+ - name: C-BIRDv2
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_c-bird.wdl
    testParameterFiles:
-    - /files/empty.json
+    - /misc/empty.json
+   authors:
+    - orcid: 0000-0001-7915-9847
+   topic: CT-PHL Bacterial Ideintification and Resistance Detection (C-BIRD) workflow
 
- - name: cbird-insert_size_dist
+ - name: C-BIRD_Inserts
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_insert_size.wdl
    testParameterFiles:
-    - /files/empty.json
+    - /misc/empty.json
+   authors:
+    - orcid: 0000-0001-7915-9847
+   topic: C-BIRD auxiliary workflow for estimating insert size distribution

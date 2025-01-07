@@ -9,19 +9,12 @@ task amrfinderplus_nuc {
     File? prodigal_faa
     File? prodigal_gff
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1"
+    String docker = "staphb/ncbi-amrfinderplus:4.0.3-2024-10-22.1"
   }
   command <<<
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
-
-    # check prodigal files
-    if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then
-      protein=true
-    else
-      protein=false
-    fi
 
     # select mash organism if avalible
     if [[ "~{mash_organism}" != "" ]]; then
@@ -89,7 +82,8 @@ task amrfinderplus_nuc {
       "Clostridioides difficile"
       "Enterobacter asburiae"
       "Enterobacter cloacae"
-      "Enterococcus faecalis"    
+      "Enterococcus faecalis"
+      "Haemophilus influenzae"    
       "Klebsiella oxytoca"
       "Neisseria meningitidis"
       "Neisseria gonorrhoeae"
@@ -150,7 +144,7 @@ task amrfinderplus_nuc {
     fi
 
     # checking bash variable
-    echo "amrfinder_organism is set to:" ${amrfinder_organism}
+    echo "amrfinder_organism is set to: ${amrfinder_organism}"
     
     # protein + nucleotide (activate HMM)
     if [[ -f "~{prodigal_faa}" ]] && [[ -f "~{prodigal_gff}" ]]; then
@@ -212,7 +206,7 @@ task amrfinderplus_nuc {
     amr_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
-    amr_subclass=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | awk '!seen[$0]++' | tr '\n' ', ' | sed 's/.$//')
+    amr_subclass=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_genes}" ]; then

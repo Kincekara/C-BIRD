@@ -5,17 +5,17 @@ task fastp_pe {
     File read1
     File read2
     File? adapters
-    String docker = "kincekara/fastp:0.23.4"
+    String docker = "staphb/fastp:0.24.0"
     String samplename
-    Int? leading = 1
-    Int? front_mean_quality = 10
-    Int? trailing = 1
-    Int? tail_mean_quality = 10
-    Int? minlen = 50
-    Int? window_size = 4
-    Int? right_mean_quality = 20
-    Int? thread = 4
-    Int? read_quality = 30
+    Int leading = 1
+    Int front_mean_quality = 10
+    Int trailing = 1
+    Int tail_mean_quality = 10
+    Int minlen = 50
+    Int window_size = 4
+    Int right_mean_quality = 20
+    Int thread = 4
+    Int read_quality = 30
     }
 
 command <<<

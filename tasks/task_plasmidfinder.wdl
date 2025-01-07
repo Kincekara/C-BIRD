@@ -5,8 +5,8 @@ task plasmidfinder {
     File assembly
     String samplename
     String docker = "kincekara/plasmidfinder:2.1.6-db_2023-03-17"
-    Float? min_coverage = 0.6
-    Float? threshold = 0.9
+    Float min_coverage = 0.6
+    Float threshold = 0.9
     }
 
   command <<<

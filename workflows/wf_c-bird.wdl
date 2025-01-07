@@ -40,7 +40,7 @@ workflow cbird_workflow {
         optional: "true",
         patterns: ["*.fasta", "*.fa"]
     }
-    kraken2_database: {
+    kraken2_db: {
         description: "File path to the Kraken2/Bracken database",
         patterns: ["*.tar.gz"]
     }
@@ -109,7 +109,7 @@ workflow cbird_workflow {
     File read2
     String samplename
     File? adapters
-    File kraken2_database
+    File kraken2_db
     File? mash_reference 
     File checkm2_db  
     File? target_genes_fasta
@@ -153,7 +153,7 @@ workflow cbird_workflow {
       samplename = samplename,
       read1 = assembly_prep.read1_clean_norm,
       read2 = assembly_prep.read2_clean_norm,    
-      kraken2_db = kraken2_database
+      kraken2_db = kraken2_db
     }
     
     call spades.spades_pe as assembly {

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
 Report generating script for C-BIRD workflow
-2024-05-21
+2025-01-09
 @author: Kutluhan Incekara
 email: kutluhan.incekara@ct.gov
 """
+from datetime import date
 import argparse
 import pandas as pd
 import numpy as np
-from datetime import date
 
 # Define functions
 def read_bracken_report(taxon_report):
@@ -22,7 +22,7 @@ def read_bracken_report(taxon_report):
         f.write(str(taxid))
 
     # Species
-    df2 = df[["name", "fraction_total_reads" ]].copy()
+    df2 = df.loc[:, ["name", "fraction_total_reads" ]].copy()
     df2['fraction_total_reads'] = df2['fraction_total_reads'].apply(lambda x: round(x*100, 2))
     df2 = df2.rename(columns={"name": "Microorganism", "fraction_total_reads": "Abundance(%)"})
     return df2
@@ -42,7 +42,7 @@ def read_mlst_report(mlst_report):
 def read_amr_report(amr_report):
 
     df =  pd.read_csv(amr_report, sep = '\t')    
-    df2 = df[['Element symbol','Element name','Scope','Subclass','% Coverage of reference','% Identity to reference', 'Type', 'Subtype','Method']].copy()
+    df2 = df.loc[:, ['Element symbol','Element name','Scope','Subclass','% Coverage of reference','% Identity to reference', 'Type', 'Subtype','Method']].copy()
     df2 = df2.rename(columns={'Element symbol':'Gene','Element name':'Description',
                                     'Subclass':'Resistance / Mechanism','% Coverage of reference':'Coverage(%)',
                                     '% Identity to reference':'Identity(%)'})
@@ -62,22 +62,22 @@ def read_amr_report(amr_report):
     df2['Confidence'] = np.select(conditions, values, default='Uncertain')
     df2 = df2.drop(columns=['Method'])
 
-    amr_df = df2.loc[df2['Subtype'] == "AMR"]
+    amr_df = df2.loc[df2['Subtype'] == "AMR"].copy()
     amr_df.loc[amr_df['Scope']=='plus', 'Confidence'] = 'Uncertain'
     amr_df = amr_df.drop(columns={'Type', 'Subtype', 'Scope'})
     amr_df = amr_df.sort_values(by=['Resistance / Mechanism'], ascending=True)
 
-    point_df = df2.loc[df2['Subtype'] == "POINT"]
+    point_df = df2.loc[df2['Subtype'] == "POINT"].copy()
     point_df = point_df.drop(columns={'Type', 'Subtype','Scope'})
     point_df = point_df.sort_values(by=['Resistance / Mechanism'], ascending=True)
 
-    stress_df = df2.loc[df2['Type'] == "STRESS"]
+    stress_df = df2.loc[df2['Type'] == "STRESS"].copy()
     stress_df.loc[stress_df['Scope']=='plus', 'Confidence'] = 'Uncertain'
     stress_df = stress_df.drop(columns={'Type', 'Subtype','Scope'})
     stress_df = stress_df.sort_values(by=['Resistance / Mechanism'], ascending=True)
     stress_df = stress_df.fillna("")
 
-    vir_df = df2.loc[df2['Type'] == "VIRULENCE"]
+    vir_df = df2.loc[df2['Type'] == "VIRULENCE"].copy()
     vir_df.loc[vir_df['Scope']=='plus', 'Confidence'] = 'Uncertain'
     vir_df = vir_df.drop(columns={'Type', 'Subtype','Scope', 'Resistance / Mechanism'})
 
@@ -86,7 +86,7 @@ def read_amr_report(amr_report):
 
 def read_plasmidfinder_report(plasmid_report):
     df = pd.read_csv(plasmid_report, sep = '\t')
-    df2 = df[['Plasmid','Identity','Query / Template length', 'Accession number']].copy()
+    df2 = df.loc[:, ['Plasmid','Identity','Query / Template length','Accession number']].copy()
     df2 = df2.sort_values(by=['Identity','Plasmid'], ascending=False)
     df2 = df2.rename(columns={'Identity':'Identity(%)'})
     return df2 

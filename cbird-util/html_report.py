@@ -358,7 +358,7 @@ def main(args):
         # write clia report
         basic_report(samplename, mash, amr, point, version, footer)
     else:
-        print("No mash result. Clia report won't be created!")
+        print("No mash result. Basic report won't be created!")
         # create empty dataframe
         mash = pd.DataFrame(columns=['Microorganism', 'Identity(%)'])
         

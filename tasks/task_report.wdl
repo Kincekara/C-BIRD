@@ -60,7 +60,7 @@ task generate_report {
         -hl5 "~{line5}" \
         -hl6 "~{line6}"
       else
-        echo "No labid is provided!"
+        echo "No labid is provided. Skipping plain report generation."
       fi
 
       # create summary report with mash

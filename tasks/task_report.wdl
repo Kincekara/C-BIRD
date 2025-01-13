@@ -146,7 +146,7 @@ task generate_report {
 
   output {
     File? plain_report = "~{labid}_report.docx"
-    File basic_report = "~{samplename}_basic_report.html"
+    File? basic_report = "~{samplename}_basic_report.html"
     File extended_report = "~{samplename}_extended_report.html"
     File qc_report = "~{samplename}_QC_summary.html"
     Float sequencing_depth = read_float("COVERAGE")

@@ -29,8 +29,8 @@ task qc {
     # completeness
     if awk "BEGIN {exit !(~{completeness} < 95)}"; then
         echo "FAIL:genome_completeness<95%" | tee -a QC_EVAL
-    elif awk "BEGIN {exit !(~{completeness} < 97)}"; then
-        echo "WARN:genome_completeness<97%" | tee -a QC_EVAL
+    elif awk "BEGIN {exit !(~{completeness} < 97.9)}"; then
+        echo "WARN:genome_completeness<97.9%" | tee -a QC_EVAL
     fi
     # q30
     if awk "BEGIN {exit !(~{r1_q30_trim} < 90)}"; then

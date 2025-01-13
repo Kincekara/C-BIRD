@@ -21,8 +21,10 @@ task qc {
         echo "WARN:Trimmed Coverage<30X, " | tee -a QC_EVAL
     fi
     # contamination
-    if awk "BEGIN {exit !(~{contamination} > 1)}"; then
-        echo "FAIL:contamination>1%" | tee -a QC_EVAL
+    if awk "BEGIN {exit !(~{contamination} > 2.5)}"; then
+        echo "FAIL:contamination>2.5%" | tee -a QC_EVAL
+    elif awk "BEGIN {exit !(~{contamination} > 1.2)}"; then
+        echo "WARN:contamination>1.2%, " | tee -a QC_EVAL
     fi
     # completeness
     if awk "BEGIN {exit !(~{completeness} < 95)}"; then

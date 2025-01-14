@@ -27,7 +27,7 @@ Detection of AMR genes depends on NCBI's AMRFinderPlus program and its database.
 #### Example Outputs ####
 [Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_basic_report.html)  
 [Extended report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_extended_report.html)  
-[QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/files/AR55_QC_summary.html)</br>
+[QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_QC_summary.html)</br>
 [Plain report](./misc/AR55_report.docx)
 
 

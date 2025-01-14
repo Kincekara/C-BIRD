@@ -323,6 +323,7 @@ workflow cbird_workflow {
     Int? genome_length = quast.genome_length
     Int? number_of_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
+    Int? l90_value = quast.l90_value
     Float? gc_content = quast.gc_content
     # MLST
     String? mlst_version = ts_mlst.ts_mlst_version

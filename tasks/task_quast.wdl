@@ -28,6 +28,9 @@ task quast {
           if "N50" in line[0]:
             with open("N50_VALUE", 'wt') as n50_value:
               n50_value.write(line[1])
+          if "L90" in line[0]:
+            with open("L90_VALUE", 'wt') as l90_value:
+              l50_value.write(line[1])
           if "GC (%)" in line[0]:
             with open("GC_CONTENT", 'wt') as gc_content:
               gc_content.write(line[1])
@@ -40,14 +43,15 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
+    Int l90_value = read_int("L90_VALUE")
     String quast_docker = docker
     Float gc_content = read_float("GC_CONTENT")
   }
   
   runtime {
     docker:  "~{docker}"
-    memory:  "2 GB"
-    cpu:   2
+    memory:  "1 GB"
+    cpu:   1
     disks: "local-disk 100 SSD"
     preemptible:  0
   }

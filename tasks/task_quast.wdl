@@ -30,7 +30,7 @@ task quast {
               n50_value.write(line[1])
           if "L90" in line[0]:
             with open("L90_VALUE", 'wt') as l90_value:
-              l50_value.write(line[1])
+              l90_value.write(line[1])
           if "GC (%)" in line[0]:
             with open("GC_CONTENT", 'wt') as gc_content:
               gc_content.write(line[1])

@@ -5,7 +5,7 @@ task predict_taxon {
     File assembly   
     File? reference
     String samplename
-    String docker = "kincekara/mash:2.3-cbird-v2.0"
+    String docker = "staphb/mash:2.3-CBIRDv2"
     Int memory = 16
     Int cpu = 4
   }
@@ -18,7 +18,7 @@ task predict_taxon {
     if [ -f "~{reference}" ]; then
       mash screen -p ~{cpu} ~{reference} ~{assembly} > ~{samplename}.mash.tsv
     else
-      mash screen -p ~{cpu} /cbird-v2.0-lite.msh ~{assembly} > ~{samplename}.mash.tsv
+      mash screen -p ~{cpu} /db/cbird-v2.0-lite.msh ~{assembly} > ~{samplename}.mash.tsv
     fi    
 
     # parse results

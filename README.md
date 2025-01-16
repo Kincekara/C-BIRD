@@ -47,7 +47,7 @@ The current programs and tools are used in the C-BIRD pipeline.
 | [AMRFinderPlus](https://github.com/ncbi/amr) | 4.0.3 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.15.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| Cbird-Util | 2.0 | Scripts for summary report generation |
+| [Cbird-Util](./cbird-util/) | 2.0 | Scripts for summary report generation |
 
 ## Quick Start ##
 C-BIRD is available in [Dockstore](https://dockstore.org/workflows/github.com/Kincekara/C-BIRD/C-BIRDv2:main?tab=info) for Terra. The following inputs are required to run the C-BIRD pipeline.

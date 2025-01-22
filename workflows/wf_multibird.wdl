@@ -12,7 +12,6 @@ workflow multibird {
     File? mash_reference   
     File? target_genes_fasta
     Int minimum_total_reads = 30000
-    String? labid
     File? report_logo1
     File? report_logo2
     File? report_disclaimer
@@ -36,7 +35,7 @@ workflow multibird {
             mash_reference = mash_reference,
             minimum_total_reads = minimum_total_reads,
             target_genes_fasta = target_genes_fasta,
-            labid = labid,
+            labid = sample[0],
             report_logo1 = report_logo1,
             report_logo2 = report_logo2,
             report_disclaimer = report_disclaimer,

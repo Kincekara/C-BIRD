@@ -9,7 +9,7 @@ task amrfinderplus_nuc {
     File? prodigal_faa
     File? prodigal_gff
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:4.0.3-2024-12-18.1"
+    String docker = "staphb/ncbi-amrfinderplus:4.0.15-2024-12-18.1"
   }
   command <<<
     # logging info

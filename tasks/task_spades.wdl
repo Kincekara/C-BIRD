@@ -21,10 +21,11 @@ task spades_pe {
     mv out/contigs.fasta ~{samplename}_contigs.fasta
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
 
-    # remove short contigs
-    echo "removing contigs shorter than ~{contig_threshold}"
+    # remove short scaffolds
+    echo "Removing scaffolds shorter than ~{contig_threshold}"
     python <<CODE
     import re
+    # Copy lines from the input file to the output file until a scaffold shorter than the threshold is found
     with open("~{samplename}_scaffolds.fasta", "r") as input:
         with open("~{samplename}_scaffolds_trim.fasta", "w") as output:
             for line in input:
@@ -36,6 +37,20 @@ task spades_pe {
                         output.write(line)
                 else:
                     output.write(line)
+    # Count the number of scaffolds before and after trimming
+    pre_trim_num = 0
+    post_trim_num = 0
+    with open("~{samplename}_scaffolds.fasta", "r") as input:
+        for line in input:
+            if line.startswith('>'):
+                pre_trim_num += 1
+    with open("~{samplename}_scaffolds_trim.fasta", "r") as input:
+        for line in input:
+            if line.startswith('>'):
+                post_trim_num += 1
+    print("Number of scaffolds before trimming:", pre_trim_num)
+    print("Number of scaffolds after trimming:", post_trim_num)
+    print("Number of scaffolds removed:", pre_trim_num - post_trim_num)
     CODE
   >>>
 

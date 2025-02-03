@@ -37,8 +37,8 @@ task generate_report {
     if [ -f "~{mash_result}" ]
     then
       # catch taxon & find genome size
-      taxon=$(awk '{print $1,$2}' ~{mash_result})
-      percent=$(awk '{print $3}' ~{mash_result})
+      taxon=$(awk -F '\t' '{print $1,$2}' ~{mash_result})
+      percent=$(awk -F '\t' '{print $3}' ~{mash_result})
       datasets summary genome taxon "$taxon" --reference > gs.json
 
       #  create plain report

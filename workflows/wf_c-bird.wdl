@@ -322,9 +322,9 @@ workflow cbird_workflow {
     File? quast_report = quast.quast_report    
     Int? genome_length = quast.genome_length
     Int? number_of_contigs = quast.number_contigs
-    Int? N50_value = quast.n50_value
-    Int? L90_value = quast.l90_value
-    Float? GC_content = quast.gc_content
+    Int? n50_value = quast.n50_value
+    Int? l90_value = quast.l90_value
+    Float? gc_content = quast.gc_content
     # MLST
     String? mlst_version = ts_mlst.ts_mlst_version
     String? mlst_docker = ts_mlst.ts_mlst_docker
@@ -358,9 +358,9 @@ workflow cbird_workflow {
     File? summary_qc_report = generate_report.qc_report
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim
-    Float? est_genome_ratio = generate_report.genome_ratio
+    Float? est_genome_length_ratio = generate_report.genome_ratio
     String? cbird_util_docker = generate_report.cbird_util_docker
-    # QC Eval
+    # QC Evaluation
     String? qc_eval = qc.qc_eval
     }
 }

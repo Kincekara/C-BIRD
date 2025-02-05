@@ -29,7 +29,7 @@ task generate_report {
     String? line4
     String? line5
     String? line6
-    String docker = "kincekara/cbird-util:2.0"    
+    String docker = "staphb/cbird-util:2.0"    
   }
 
   command <<<

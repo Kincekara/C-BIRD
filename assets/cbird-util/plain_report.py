@@ -114,7 +114,7 @@ def report(date, labid, taxon, percent, amr_df, point_df, disclaimer, logo1, log
 
     info_table = doc.add_table(rows=3, cols=2)
     for cell in info_table.columns[0].cells:
-        cell.width = Inches(2.5)
+        cell.width = Inches(3)
     for row in info_table.rows:
         row.height_rule = WD_ROW_HEIGHT_RULE.EXACTLY
         row.height = Inches(0.2)
@@ -131,7 +131,7 @@ def report(date, labid, taxon, percent, amr_df, point_df, disclaimer, logo1, log
 
     org_table = doc.add_table(rows=1, cols=2)
     for cell in org_table.columns[0].cells:
-        cell.width = Inches(2.5)
+        cell.width = Inches(3)
     for row in org_table.rows:
         row.height_rule = WD_ROW_HEIGHT_RULE.EXACTLY
         row.height = Inches(0.2)

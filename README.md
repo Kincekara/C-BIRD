@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./misc/cbird_logo.png" width=200>
+<img src="./assets/cbird_logo.png" width=200>
 </p>
 
 # C-BIRD 
@@ -25,10 +25,10 @@ Kraken2 and Braken will still be used for taxonomic profiling of reads and the o
 Detection of AMR genes depends on NCBI's AMRFinderPlus program and its database. 
 
 #### Example Outputs ####
-[Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_basic_report.html)  
-[Extended report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_extended_report.html)  
-[QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/misc/AR55_QC_summary.html)</br>
-[Plain report](./misc/AR55_report.docx)
+[Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR55_basic_report.html)  
+[Extended report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR55_extended_report.html)  
+[QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR55_QC_summary.html)</br>
+[Plain report](./assets/AR55_report.docx)
 
 
 
@@ -44,10 +44,10 @@ The current programs and tools are used in the C-BIRD pipeline.
 | [QUAST](https://github.com/ablab/quast) | 5.3.0 | Genome assembly evaluation |
 | [CheckM2](https://github.com/chklovski/CheckM2) | 1.0.2 | Completeness and contamination |
 | [mlst](https://github.com/tseemann/mlst) | 2.23.0 | MLST typing |
-| [AMRFinderPlus](https://github.com/ncbi/amr) | 4.0.3 | AMR gene identification |
+| [AMRFinderPlus](https://github.com/ncbi/amr) | 4.0.15 | AMR gene identification |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)| 2.15.0 | Target gene search |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/) | 2.1.6 | Plasmid detection |
-| [Cbird-Util](./cbird-util/) | 2.0 | Scripts for summary report generation |
+| [Cbird-Util](./assets/cbird-util/) | 2.0 | Scripts for summary report generation |
 
 ## Quick Start ##
 C-BIRD is available in [Dockstore](https://dockstore.org/workflows/github.com/Kincekara/C-BIRD/C-BIRDv2:main?tab=info) for Terra. The following inputs are required to run the C-BIRD pipeline.

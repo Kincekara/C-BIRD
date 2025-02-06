@@ -8,10 +8,9 @@ task spades_pe {
     String samplename
     Int cpu = 4
     Int memory = 16
-    String docker = "staphb/spades:4.0.0"
-    
-
+    String docker = "staphb/spades:4.0.0"    
   }
+  
   command <<<
     # date and version control
     date | tee DATE
@@ -19,8 +18,6 @@ task spades_pe {
 
     # assembly
     spades.py \
-      --threads ~{cpu} \
-      --memory ~{memory} \
       --careful \
       --only-assembler \
       --pe1-1 ~{read1} \

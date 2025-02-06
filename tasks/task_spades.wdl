@@ -6,6 +6,7 @@ task spades_pe {
     File read2
     Int contig_threshold
     String samplename
+    Int cpu = 4
     Int memory = 16
     String docker = "staphb/spades:4.0.0"
     
@@ -17,7 +18,14 @@ task spades_pe {
     spades.py -v > VERSION 
 
     # assembly
-    spades.py --careful --only-assembler --pe1-1 ~{read1} --pe1-2 ~{read2} -o out
+    spades.py \
+      --threads ~{cpu} \
+      --memory ~{memory} \
+      --careful \
+      --only-assembler \
+      --pe1-1 ~{read1} \
+      --pe1-2 ~{read2} \
+      -o out
 
     # get & rename output   
     mv out/contigs.fasta ~{samplename}_contigs.fasta
@@ -67,7 +75,7 @@ task spades_pe {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: 4
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible:  0
   }

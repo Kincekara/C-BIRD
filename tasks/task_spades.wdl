@@ -7,7 +7,7 @@ task spades_pe {
     Int contig_threshold
     String samplename
     Int cpu = 4
-    Int memory = 16
+    Int memory = 32
     String docker = "staphb/spades:4.0.0"    
   }
   

@@ -8,7 +8,7 @@ task ts_mlst {
     File assembly
     String samplename
     String docker = "staphb/mlst:2.23.0-2024-12-01"
-    Int cpu = 4
+    Int cpu = 2
     Boolean nopath = true
     String? scheme
     Float? minid

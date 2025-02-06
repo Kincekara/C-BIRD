@@ -14,7 +14,7 @@ task fastp_pe {
     Int minlen = 50
     Int window_size = 4
     Int right_mean_quality = 20
-    Int thread = 4
+    Int cpu = 4
     Int read_quality = 30
     }
 
@@ -37,7 +37,7 @@ command <<<
         --cut_right_window_size ~{window_size} \
         --cut_right_mean_quality ~{right_mean_quality} \
         --adapter_fasta ~{adapters} \
-        --thread ~{thread} \
+        --thread ~{cpu} \
         -h ~{samplename}_fastp.html
     else
         fastp \
@@ -56,7 +56,7 @@ command <<<
         --cut_right_window_size ~{window_size} \
         --cut_right_mean_quality ~{right_mean_quality} \
         --detect_adapter_for_pe \
-        --thread ~{thread} \
+        --thread ~{cpu} \
         -h ~{samplename}_fastp.html
     fi
 
@@ -122,7 +122,7 @@ output {
 runtime {
     docker: "~{docker}"
     memory: "8 GB"
-    cpu: 4
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible:  0
     }

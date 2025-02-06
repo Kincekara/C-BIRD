@@ -46,8 +46,8 @@ task plasmidfinder {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: "4 GB"
+    cpu: 2
     disks: "local-disk 50 SSD"
     preemptible: 0
   }

@@ -10,7 +10,7 @@ task profile {
     Int bracken_read_len = 100
     Int bracken_threshold = 10
     Int min_hit_groups = 3
-    Int memory = 32
+    Int memory = 16
     Int cpu = 4
   }
   
@@ -72,7 +72,7 @@ task profile {
   }
   
   runtime {
-    docker: "staphb/bracken:2.9"
+    docker: "~{docker}"
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk 100 SSD"

@@ -6,8 +6,8 @@ task predict_taxon {
     File? reference
     String samplename
     String docker = "staphb/mash:2.3-CBIRDv2"
-    Int memory = 16
-    Int cpu = 4
+    Int memory = 8
+    Int cpu = 2
   }
 
   command <<<

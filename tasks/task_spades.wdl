@@ -6,7 +6,9 @@ task spades_pe {
     File read2
     Int contig_threshold
     String samplename
+    Int memory = 16
     String docker = "staphb/spades:4.0.0"
+    
 
   }
   command <<<
@@ -64,7 +66,7 @@ task spades_pe {
 
   runtime {
     docker: "~{docker}"
-    memory: "32 GB"
+    memory: "~{memory} GB"
     cpu: 4
     disks: "local-disk 100 SSD"
     preemptible:  0

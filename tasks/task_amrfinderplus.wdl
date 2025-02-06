@@ -1,6 +1,6 @@
 version 1.0
 
-task amrfinderplus_nuc {
+task amrfinderplus {
   input {
     File assembly
     String samplename 
@@ -244,7 +244,7 @@ task amrfinderplus_nuc {
   runtime {
     memory: "8 GB"
     cpu: cpu
-    docker: docker
+    docker: "~{docker}"
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3

@@ -64,7 +64,7 @@ task assembly_prep {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: "~{cpu}"
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3

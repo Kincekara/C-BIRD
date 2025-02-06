@@ -6,7 +6,7 @@ import "../tasks/task_bbtools.wdl" as bbtools
 import "../tasks/task_spades.wdl" as spades
 import "../tasks/task_quast.wdl" as quast_asm
 import "../tasks/task_mlst.wdl" as st
-import "../tasks/task_amrfinderplus.wdl" as amrplus
+import "../tasks/task_amrfinderplus.wdl" as amr
 import "../tasks/task_plasmidfinder.wdl" as plasmid
 import "../tasks/task_checkm2.wdl" as check_asm
 import "../tasks/task_taxonomy.wdl" as taxon
@@ -207,7 +207,7 @@ workflow cbird_workflow {
       assembly = assembly.scaffolds_trim
     }
 
-    call amrplus.amrfinderplus_nuc as amrfinder {
+    call amr.amrfinderplus as amrfinder {
       input:
       samplename = samplename,
       assembly = assembly.scaffolds_trim,

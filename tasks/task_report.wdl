@@ -157,8 +157,8 @@ task generate_report {
 
   runtime {
       docker: "~{docker}"
-      memory: "8 GB"
-      cpu: 4
+      memory: "1 GB"
+      cpu: 1
       disks: "local-disk 100 SSD"
       preemptible:  0
   }

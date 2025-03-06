@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "staphb/mlst:2.23.0-2024-12-01"
+    String docker = "staphb/mlst:2.23.0-2024-12-31"
     Int cpu = 2
     Boolean nopath = true
     String? scheme

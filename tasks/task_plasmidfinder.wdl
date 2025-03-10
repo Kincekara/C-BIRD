@@ -4,7 +4,7 @@ task plasmidfinder {
   input {
     File assembly
     String samplename
-    String docker = "kincekara/plasmidfinder:2.1.6-db_2023-03-17"
+    String docker = "kincekara/plasmidfinder:2.1.6-db_2024-11-14"
     Float min_coverage = 0.6
     Float threshold = 0.9
     }
@@ -17,7 +17,7 @@ task plasmidfinder {
     # Run plasmidfinder
     plasmidfinder.py \
     -i ~{assembly} \
-    -p /plasmidfinder_db/ \
+    -p /database/ \
     -l ~{min_coverage} \
     -t ~{threshold} \
     -x 

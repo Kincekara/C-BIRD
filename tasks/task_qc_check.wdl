@@ -55,7 +55,10 @@ task qc {
     fi
 
     # write pass if no fail
-    if [ ! -f QC_EVAL ]; then
+    if [ -f QC_EVAL ]; then
+        # remove trailing comma
+        sed -i 's/,*$//' QC_EVAL
+    else
         echo "PASS" | tee QC_EVAL    
     fi
   >>>

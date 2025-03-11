@@ -22,15 +22,15 @@ task qc {
     fi
     # contamination
     if awk "BEGIN {exit !(~{contamination} > 2.5)}"; then
-        echo "FAIL:contamination>2.5%," | tee -a QC_EVAL
+        echo "FAIL:contamination>2.5%, " | tee -a QC_EVAL
     elif awk "BEGIN {exit !(~{contamination} > 1.2)}"; then
         echo "WARN:contamination>1.2%, " | tee -a QC_EVAL
     fi
     # completeness
     if awk "BEGIN {exit !(~{completeness} < 95)}"; then
-        echo "FAIL:genome_completeness<95%," | tee -a QC_EVAL
+        echo "FAIL:genome_completeness<95%, " | tee -a QC_EVAL
     elif awk "BEGIN {exit !(~{completeness} < 97.9)}"; then
-        echo "WARN:genome_completeness<97.9%," | tee -a QC_EVAL
+        echo "WARN:genome_completeness<97.9%, " | tee -a QC_EVAL
     fi
     # q30
     if awk "BEGIN {exit !(~{r1_q30_trim} < 90)}"; then
@@ -57,7 +57,7 @@ task qc {
     # write pass if no fail
     if [ -f QC_EVAL ]; then
         # remove trailing comma
-        sed -i 's/,*$//' QC_EVAL
+        sed -i '$ s/, $//' QC_EVAL
     else
         echo "PASS" | tee QC_EVAL    
     fi

@@ -8,7 +8,7 @@ task spades_pe {
     String samplename
     Int cpu = 4
     Int memory = 32
-    String docker = "staphb/spades:4.1.0"    
+    String docker = "staphb/spades:4.0.0"    
   }
   
   command <<<

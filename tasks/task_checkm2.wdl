@@ -5,7 +5,7 @@ task checkm2 {
     File assembly
     File checkm2_db   
     String samplename
-    String docker = "staphb/checkm2:1.0.2"
+    String docker = "staphb/checkm2:1.1.0"
     Int memory = 16
     Int cpu = 8
   }

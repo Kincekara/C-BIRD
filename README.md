@@ -59,7 +59,7 @@ C-BIRD is available in [Dockstore](https://dockstore.org/workflows/github.com/Ki
 | `read2`      | second FASTQ file (paired-end)                                                                            |
 | `samplename` | Name of the sample being processed                                                                        |
 | `kraken2_db` | Kraken2/Bracken database ([Download](https://benlangmead.github.io/aws-indexes/k2) )                         |
-| `checkm2_db` | CheckM2 database ([Download](https://zenodo.org/api/records/5571251/files/checkm2_database.tar.gz/content) ) |
+| `checkm2_db` | CheckM2 database V3 ([Download](https://zenodo.org/records/14897628/files/checkm2_database.tar.gz?download=1) ) |
 
 Please check wiki for optional inputs, additional details and reports.
 
@@ -70,11 +70,11 @@ You can obtain C-BIRD via `git` but it is advised to download a release version 
 ```bash
 # Download a C-BIRD release
 wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.0.0.tar.gz
-tar -xvf 2.0.0.tar.gz
+tar -xvf 2.1.0.tar.gz
 
 # Download required databases
-wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20240904.tar.gz
-wget https://zenodo.org/api/records/5571251/files/checkm2_database.tar.gz/content
+wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20250402.tar.gz
+wget https://zenodo.org/records/14897628/files/checkm2_database.tar.gz
 ```
 
 ## Running C-BIRD

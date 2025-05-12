@@ -18,11 +18,16 @@ task assembly_prep {
   command <<<
     set -euxo pipefail
 
+    # max memory argument    
+    memory="-Xmx$((~{memory}-1))g"
+
     # version control
     bbversion.sh > VERSION
     
     # PhiX cleaning   
     bbduk.sh \
+      "$memory" \
+      threads=~{cpu} \
       in1=~{read1_trimmed} \
       in2=~{read2_trimmed} \
       out1=~{samplename}_1.clean.fastq.gz \
@@ -40,6 +45,7 @@ task assembly_prep {
       then
         echo "normalizing reads..."
         bbnorm.sh \
+          "$memory" \
           threads=~{cpu} \
           in=~{samplename}_1.clean.fastq.gz \
           in2=~{samplename}_2.clean.fastq.gz \
@@ -108,7 +114,7 @@ task insert_size_dist {
     mode=$(awk -F "\t" 'NR==3 {print $2}' ~{samplename}.ihist.txt)
     stdev=$(awk -F "\t" 'NR==4 {print $2}' ~{samplename}.ihist.txt)
     echo "$median" > MEDIAN
-    
+
     # create a html plot
     touch ~{samplename}.hist.html
     x=$(awk -vORS=, 'NR>1 {print $1}' "~{samplename}.hist.txt" | sed 's/,$/\n/')

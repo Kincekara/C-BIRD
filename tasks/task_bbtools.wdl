@@ -12,7 +12,7 @@ task assembly_prep {
     Int read_threshold = 8000000
     Int memory = 8
     Int cpu = 4
-    String docker = "staphb/bbtools:39.23"
+    String docker = "staphb/bbtools:39.13"
   }
 
   command <<<
@@ -26,8 +26,6 @@ task assembly_prep {
     
     # PhiX cleaning   
     bbduk.sh \
-      "$memory" \
-      threads=~{cpu} \
       in1=~{read1_trimmed} \
       in2=~{read2_trimmed} \
       out1=~{samplename}_1.clean.fastq.gz \

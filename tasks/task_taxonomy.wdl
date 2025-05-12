@@ -33,9 +33,8 @@ task profile {
     --paired \
     --minimum-hit-groups ~{min_hit_groups} \
     --report-minimizer-data \
-    ~{read1} ~{read2} > k2_output.txt 2> k2_error.txt
+    ~{read1} ~{read2} > ./k2_output.txt 2> ./k2_error.txt
     
-
     
     # run bracken
     bracken -v > BVERSION

@@ -12,12 +12,14 @@ task assembly_prep {
     Int read_threshold = 8000000
     Int memory = 8
     Int cpu = 4
-    String docker = "staphb/bbtools:39.13"
+    String docker = "staphb/bbtools:39.23"
   }
 
   command <<<
+    set -euxo pipefail
+
     # version control
-    java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1 | grep version > VERSION
+    bbversion.sh > VERSION
     
     # PhiX cleaning   
     bbduk.sh \
@@ -80,12 +82,15 @@ task insert_size_dist {
     Int max_reads = 1000000
     Int max_indel = 16000
     Int memory = 8
-    String docker = "staphb/bbtools:39.10"
+    String docker = "staphb/bbtools:39.23"
   }
 
   command <<<
+    set -euxo pipefail
+
     # version control
-    java -ea -Xmx31715m -Xms31715m -cp /bbmap/current/ jgi.BBDuk 2>&1 | grep version > VERSION
+    bbversion.sh > VERSION
+
     # map reads and create histogram
     bbmap.sh \
       ref=~{reference} \
@@ -95,6 +100,7 @@ task insert_size_dist {
       reads=~{max_reads} \
       maxindel=~{max_indel} \
       fast
+
     #parse histogram file
     sed '6,1006!d' ~{samplename}.ihist.txt > ~{samplename}.hist.txt
     mean=$(awk -F "\t" 'NR==1 {print $2}' ~{samplename}.ihist.txt)
@@ -102,6 +108,7 @@ task insert_size_dist {
     mode=$(awk -F "\t" 'NR==3 {print $2}' ~{samplename}.ihist.txt)
     stdev=$(awk -F "\t" 'NR==4 {print $2}' ~{samplename}.ihist.txt)
     echo "$median" > MEDIAN
+    
     # create a html plot
     touch ~{samplename}.hist.html
     x=$(awk -vORS=, 'NR>1 {print $1}' "~{samplename}.hist.txt" | sed 's/,$/\n/')

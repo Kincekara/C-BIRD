@@ -10,9 +10,9 @@ task assembly_prep {
     Int norm_target = 100
     Int min_depth = 5
     Int read_threshold = 8000000
-    Int memory = 8
+    Int memory = 16
     Int cpu = 4
-    String docker = "staphb/bbtools:39.13"
+    String docker = "staphb/bbtools:39.23"
   }
 
   command <<<
@@ -50,7 +50,8 @@ task assembly_prep {
           out=~{samplename}_1.clean.norm.fastq.gz \
           out2=~{samplename}_2.clean.norm.fastq.gz \
           target=~{norm_target} \
-          min=~{min_depth}
+          min=~{min_depth} \
+          bits=16 
       else
         echo "skipping normalization..."
         mv ~{samplename}_1.clean.fastq.gz ~{samplename}_1.clean.norm.fastq.gz

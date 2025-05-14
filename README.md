@@ -36,15 +36,15 @@ The current programs and tools are used in the C-BIRD pipeline.
 
 | Tools                                                                                             | Version     | Comments                                               |
 | ------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
-| [FastP](https://github.com/OpenGene/fastp)                                                           | 0.24.0      | QC, adapter removal, quality filtering and trimming    |
-| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.13       | phiX removal & normalization (non-random downsampling) |
+| [FastP](https://github.com/OpenGene/fastp)                                                           | 0.24.1      | QC, adapter removal, quality filtering and trimming    |
+| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.25       | phiX removal & normalization (non-random downsampling) |
 | [Kraken2](https://github.com/DerrickWood/kraken2) / [Bracken](https://github.com/jenniferlu717/Bracken) | 2.1.3 / 2.9 | Taxonomic profiling and abundance estimation of reads  |
-| [SPAdes](https://github.com/ablab/spades)                                                            | 4.1.0       | *De novo* assembly                                   |
+| [SPAdes](https://github.com/ablab/spades)                                                            | 4.2.0       | *De novo* assembly                                   |
 | [Mash](https://github.com/marbl/Mash)                                                                | 2.3         | Bacterial identification                               |
 | [QUAST](https://github.com/ablab/quast)                                                              | 5.3.0       | Genome assembly evaluation                             |
-| [CheckM2](https://github.com/chklovski/CheckM2)                                                      | 1.0.2       | Completeness and contamination                         |
+| [CheckM2](https://github.com/chklovski/CheckM2)                                                      | 1.1.0       | Completeness and contamination                         |
 | [mlst](https://github.com/tseemann/mlst)                                                             | 2.23.0      | MLST typing                                            |
-| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.0.15      | AMR gene identification                                |
+| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.0.22      | AMR gene identification                                |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)                       | 2.15.0      | Target gene search                                     |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 2.1.6       | Plasmid detection                                      |
 | [Cbird-Util](./assets/cbird-util/)                                                                   | 2.0         | Scripts for summary report generation                  |
@@ -59,7 +59,7 @@ C-BIRD is available in [Dockstore](https://dockstore.org/workflows/github.com/Ki
 | `read2`      | second FASTQ file (paired-end)                                                                            |
 | `samplename` | Name of the sample being processed                                                                        |
 | `kraken2_db` | Kraken2/Bracken database ([Download](https://benlangmead.github.io/aws-indexes/k2) )                         |
-| `checkm2_db` | CheckM2 database ([Download](https://zenodo.org/api/records/5571251/files/checkm2_database.tar.gz/content) ) |
+| `checkm2_db` | CheckM2 database V3 ([Download](https://zenodo.org/records/14897628/files/checkm2_database.tar.gz?download=1) ) |
 
 Please check wiki for optional inputs, additional details and reports.
 
@@ -70,11 +70,11 @@ You can obtain C-BIRD via `git` but it is advised to download a release version 
 ```bash
 # Download a C-BIRD release
 wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.0.0.tar.gz
-tar -xvf 2.0.0.tar.gz
+tar -xvf 2.1.0.tar.gz
 
 # Download required databases
-wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_20240904.tar.gz
-wget https://zenodo.org/api/records/5571251/files/checkm2_database.tar.gz/content
+wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20250402.tar.gz
+wget https://zenodo.org/records/14897628/files/checkm2_database.tar.gz
 ```
 
 ## Running C-BIRD

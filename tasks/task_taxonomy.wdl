@@ -15,6 +15,7 @@ task profile {
   }
   
   command <<<
+    set -euxo pipefail
     # version
     kraken2 --version 2>&1 | grep 'Kraken version' | awk '{print $3}' | tee KVERSION
     basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
@@ -32,7 +33,8 @@ task profile {
     --paired \
     --minimum-hit-groups ~{min_hit_groups} \
     --report-minimizer-data \
-    ~{read1} ~{read2}
+    ~{read1} ~{read2} > ./k2_output.txt 2> ./k2_error.txt
+    
     
     # run bracken
     bracken -v > BVERSION
@@ -76,6 +78,7 @@ task profile {
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk 100 SSD"
+    disk: "100 GB"
     preemptible: 0
   }
 }

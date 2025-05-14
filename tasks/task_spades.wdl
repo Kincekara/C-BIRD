@@ -8,12 +8,11 @@ task spades_pe {
     String samplename
     Int cpu = 4
     Int memory = 32
-    String docker = "staphb/spades:4.1.0"    
+    String docker = "staphb/spades:4.2.0"    
   }
   
   command <<<
-    # date and version control
-    date | tee DATE
+    # version control
     spades.py -v > VERSION 
 
     # assembly

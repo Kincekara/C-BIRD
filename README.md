@@ -44,7 +44,7 @@ The current programs and tools are used in the C-BIRD pipeline.
 | [QUAST](https://github.com/ablab/quast)                                                              | 5.3.0       | Genome assembly evaluation                             |
 | [CheckM2](https://github.com/chklovski/CheckM2)                                                      | 1.1.0       | Completeness and contamination                         |
 | [mlst](https://github.com/tseemann/mlst)                                                             | 2.23.0      | MLST typing                                            |
-| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.0.22      | AMR gene identification                                |
+| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.0.23      | AMR gene identification                                |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)                       | 2.15.0      | Target gene search                                     |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 2.1.6       | Plasmid detection                                      |
 | [Cbird-Util](./assets/cbird-util/)                                                                   | 2.0         | Scripts for summary report generation                  |

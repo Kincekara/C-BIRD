@@ -17,7 +17,7 @@ task checkm2 {
     tar -C . -xvf ~{checkm2_db}     
     mkdir bins
     cp ~{assembly} ./bins/
-    # run chekm2    
+    # run checkm2    
     export TMPDIR=/tmp # -> https://github.com/broadinstitute/cromwell/issues/3647    
     checkm2 predict \
     --threads ~{cpu} \
@@ -27,7 +27,7 @@ task checkm2 {
     --output-directory ./out \
     --database_path ./CheckM2_database/uniref100.KO.1.dmnd
     # parse results
-    cp ./out/quality_report.tsv ./~{samplename}.chekm2.report.tsv
+    cp ./out/quality_report.tsv ./~{samplename}.checkm2.report.tsv
     awk -F '\t' 'NR==2 { print $2 }' out/quality_report.tsv > COMPLETENESS
     awk -F '\t' 'NR==2 { print $3 }' out/quality_report.tsv > CONTAMINATION
     
@@ -43,7 +43,7 @@ task checkm2 {
     String checkm2_docker = docker
     String completeness = read_string("COMPLETENESS")
     String contamination = read_string("CONTAMINATION")
-    File report = "~{samplename}.chekm2.report.tsv"
+    File report = "~{samplename}.checkm2.report.tsv"
     File prodigal_faa = "~{samplename}.prodigal.faa"
     File prodigal_gff = "~{samplename}.prodigal.gff"
   }

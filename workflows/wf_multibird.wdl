@@ -14,6 +14,7 @@ workflow multibird {
     Int minimum_total_reads = 30000
     File? report_logo1
     File? report_logo2
+    File? report_notes
     File? report_disclaimer
     String? header_line1
     String? header_line2
@@ -38,6 +39,7 @@ workflow multibird {
             labid = sample[0],
             report_logo1 = report_logo1,
             report_logo2 = report_logo2,
+            report_notes = report_notes,
             report_disclaimer = report_disclaimer,
             header_line1 = header_line1,
             header_line2 = header_line2,

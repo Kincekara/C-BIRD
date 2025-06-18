@@ -74,6 +74,10 @@ workflow cbird_workflow {
         description: "File path to the plain report logo for the right side",
         optional: "true"
     }
+    report_notes: {
+        description: "File path to the plain report notes",
+        optional: "true"
+    }
     report_disclaimer: {
         description: "File path to the plain report disclaimer",
         optional: "true"
@@ -117,6 +121,7 @@ workflow cbird_workflow {
     String? labid
     File? report_logo1
     File? report_logo2
+    File? report_notes
     File? report_disclaimer
     String? header_line1
     String? header_line2
@@ -244,6 +249,7 @@ workflow cbird_workflow {
       analysis_date = version_capture.date,
       logo1 = report_logo1,
       logo2 = report_logo2,
+      notes = report_notes,
       disclaimer = report_disclaimer,
       line1 = header_line1,
       line2 = header_line2,

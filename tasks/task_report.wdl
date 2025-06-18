@@ -23,13 +23,14 @@ task generate_report {
     File? logo1
     File? logo2
     File? disclaimer
+    File? notes
     String? line1
     String? line2
     String? line3
     String? line4
     String? line5
     String? line6
-    String docker = "staphb/cbird-util:2.0"    
+    String docker = "kincekara/cbird-util:2.1"    
   }
 
   command <<<
@@ -38,7 +39,6 @@ task generate_report {
     then
       # catch taxon & find genome size
       taxon=$(awk -F '\t' '{print $1}' ~{mash_result})
-      percent=$(awk -F '\t' '{print $2}' ~{mash_result})
       datasets summary genome taxon "$taxon" --reference > gs.json
 
       #  create plain report
@@ -48,9 +48,9 @@ task generate_report {
         -d "~{analysis_date}" \
         -i "~{labid}" \
         -o "$taxon" \
-        -p "$percent" \
         -a ~{amr_report} \
-        -n ~{disclaimer} \
+        -c ~{disclaimer} \
+        -n ~{notes} \
         -l ~{logo1} \
         -r ~{logo2} \
         -hl1 "~{line1}"\

@@ -9,7 +9,6 @@ phix_ratio="0.00000%"
 
 # catch taxon & find genome size
 taxon=$(awk -F '\t' '{print $1}' top_taxon.tsv)
-percent=$(awk -F '\t' '{print $2}' top_taxon.tsv)
 datasets summary genome taxon "$taxon" --reference > gs.json
 
 # test plain_report.py
@@ -17,8 +16,8 @@ plain_report.py \
 -d "$analysis_date" \
 -i "$labid" \
 -o "$taxon" \
--p "$percent" \
 -a amrfinder_all.tsv \
+-c  \
 -n  \
 -l  \
 -r  \

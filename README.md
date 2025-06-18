@@ -47,7 +47,7 @@ The current programs and tools are used in the C-BIRD pipeline.
 | [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.0.23      | AMR gene identification                                |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)                       | 2.15.0      | Target gene search                                     |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 2.1.6       | Plasmid detection                                      |
-| [Cbird-Util](./assets/cbird-util/)                                                                   | 2.0         | Scripts for summary report generation                  |
+| [Cbird-Util](./assets/cbird-util/)                                                                   | 2.1         | Scripts for summary report generation                  |
 
 ## Quick Start
 
@@ -69,8 +69,8 @@ You can obtain C-BIRD via `git` but it is advised to download a release version 
 
 ```bash
 # Download a C-BIRD release
-wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.0.0.tar.gz
-tar -xvf 2.1.0.tar.gz
+wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.2.1.tar.gz
+tar -xvf 2.2.1.tar.gz
 
 # Download required databases
 wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20250402.tar.gz

@@ -88,7 +88,7 @@ Plese see the [miniwdl repo](https://github.com/chanzuckerberg/miniwdl/) for fur
 
 ```bash
 # single sample
-miniwdl run ~/C-BIRD-2.0.0/workflows/wf_c-bird.wdl samplename="samplename" read1="read1.fastq.gz" read2="read2.fastq.gz" kraken2_db="k2_standard_20240904.tar.gz" checkm2_db="checkm2_database.tar.gz"
+miniwdl run ~/C-BIRD-2.2.1/workflows/wf_c-bird.wdl samplename="samplename" read1="read1.fastq.gz" read2="read2.fastq.gz" kraken2_db="k2_standard_20240904.tar.gz" checkm2_db="checkm2_database.tar.gz"
 ```
 
 ## multiBIRD

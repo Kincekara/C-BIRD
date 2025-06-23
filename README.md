@@ -118,7 +118,7 @@ After preparing samples.tsv and inputs.json file, you can run multiple samples a
 
 ```bash
 # multiple samples
-miniwdl run ~/C-BIRD-2.0.0/workflows/wf_multibird.wdl -i inputs.json
+miniwdl run ~/C-BIRD-2.2.1/workflows/wf_multibird.wdl -i inputs.json
 ```
 
 ## Disclaimer

@@ -149,23 +149,32 @@ def report(date, labid, taxon, amr_df, point_df, other_df, notes, disclaimer, lo
     txn.paragraph_format.space_after = Pt(0)
 
     # AMR
-    if not amr_df.empty:
-        amr = doc.add_paragraph('\nResistance Genes Detected')
-        amr.paragraph_format.space_after = Pt(2)
-        amr.runs[0].bold = True
+    amr = doc.add_paragraph('\nResistance Genes Detected')
+    amr.paragraph_format.space_after = Pt(2)
+    amr.runs[0].bold = True
+    if not amr_df.empty:      
         add_df_to_docx_table(doc, amr_df)
+    else:
+        no_amr = doc.add_paragraph('No antimicrobial resistance genes were identified.')
+        no_amr.paragraph_format.space_after = Pt(0)
 
-    if not point_df.empty:
-        point = doc.add_paragraph('\nPoint Mutations')
-        point.paragraph_format.space_after = Pt(2)
-        point.runs[0].bold = True
+    point = doc.add_paragraph('\nPoint Mutations')
+    point.paragraph_format.space_after = Pt(2)
+    point.runs[0].bold = True
+    if not point_df.empty:    
         add_df_to_docx_table(doc, point_df)
+    else:
+        no_point = doc.add_paragraph('No clinically relevant mutations were found.')
+        no_point.paragraph_format.space_after = Pt(0)
 
+    other = doc.add_paragraph('\nOther Possible Resistance Mechanisms')
+    other.paragraph_format.space_after = Pt(2)
+    other.runs[0].bold = True
     if not other_df.empty:
-        other = doc.add_paragraph('\nOther Possible Resistance Mechanisms')
-        other.paragraph_format.space_after = Pt(2)
-        other.runs[0].bold = True
         add_df_to_docx_table(doc, other_df)
+    else:
+        no_other = doc.add_paragraph('No other possible resistance mechanisms or genes were identified.')
+        no_other.paragraph_format.space_after = Pt(0)
 
     # Notes
     if notes != None:        

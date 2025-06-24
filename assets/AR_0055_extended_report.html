@@ -3,7 +3,7 @@
     <html lang="en-us">
         <head>
             <meta charset="UTF-8">
-            <title>AR55</title>
+            <title>AR_0055</title>
             <style>
             h1 {
             font-family: Arial, Helvetica, sans-serif;
@@ -57,13 +57,28 @@
         <table>
         <tr>
         <td>Report date:</td>
-        <td>2025-01-06</td>
+        <td>2025-06-24</td>
         </tr>
         <tr>
         <td>Laboratory ID:</td>
-        <td>AR55</td>
+        <td>AR_0055</td>
         </tr>
         </table>
+        <h2>Taxonomic Profile of Reads</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Microorganism</th>
+      <th>Abundance(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Escherichia coli</td>
+      <td>98.32</td>
+    </tr>
+  </tbody>
+</table>
         <h2>Predicted Organism</h2>
         <table border="1" class="dataframe">
   <thead>
@@ -79,6 +94,37 @@
     </tr>
   </tbody>
 </table>
+        <h2>MLST Typing</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Scheme</th>
+      <th>Type (ST)</th>
+      <th>Alleles</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ecoli_achtman_4</td>
+      <td>131</td>
+      <td>adk(53)</td>
+      <td>fumC(40)</td>
+      <td>gyrB(47)</td>
+      <td>icd(13)</td>
+      <td>mdh(36)</td>
+      <td>purA(28)</td>
+      <td>recA(29)</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
+        <hr>
         <h2>Resistance Genes</h2>
         <table border="1" class="dataframe">
   <thead>
@@ -236,14 +282,6 @@
   </thead>
   <tbody>
     <tr>
-      <td>glpT_E448K</td>
-      <td>Escherichia fosfomycin resistant GlpT</td>
-      <td>FOSFOMYCIN</td>
-      <td>100.00</td>
-      <td>99.78</td>
-      <td>Very High</td>
-    </tr>
-    <tr>
       <td>ptsI_V25I</td>
       <td>Escherichia fosfomycin resistant PtsI</td>
       <td>FOSFOMYCIN</td>
@@ -302,11 +340,232 @@
   </tbody>
 </table>
         <p></p>
+        <hr>
+        <h2>Stress Genes</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Gene</th>
+      <th>Description</th>
+      <th>Resistance / Mechanism</th>
+      <th>Coverage(%)</th>
+      <th>Identity(%)</th>
+      <th>Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>emrE</td>
+      <td>multidrug efflux SMR transporter EmrE</td>
+      <td>EFFLUX</td>
+      <td>100.0</td>
+      <td>98.18</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>qacEdelta1</td>
+      <td>quaternary ammonium compound efflux SMR transporter QacE delta 1</td>
+      <td>QUATERNARY AMMONIUM</td>
+      <td>100.0</td>
+      <td>100.00</td>
+      <td>Very High</td>
+    </tr>
+    <tr>
+      <td>ariR</td>
+      <td>biofilm/acid-resistance regulator AriR</td>
+      <td></td>
+      <td>100.0</td>
+      <td>97.73</td>
+      <td>Uncertain</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>Hypervirulance Genes</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Gene</th>
+      <th>Description</th>
+      <th>Coverage(%)</th>
+      <th>Identity(%)</th>
+      <th>Confidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ybtQ</td>
+      <td>yersiniabactin ABC transporter ATP-binding/permease protein YbtQ</td>
+      <td>100.00</td>
+      <td>99.50</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>ybtP</td>
+      <td>yersiniabactin ABC transporter ATP-binding/permease protein YbtP</td>
+      <td>95.00</td>
+      <td>99.47</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>fdeC</td>
+      <td>inverse autotransporter adhesin FdeC</td>
+      <td>100.00</td>
+      <td>96.75</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>papA</td>
+      <td>P fimbria major subunit PapA</td>
+      <td>51.89</td>
+      <td>87.50</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iucA</td>
+      <td>aerobactin synthase IucA</td>
+      <td>100.00</td>
+      <td>98.61</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iucB</td>
+      <td>N(6)-hydroxylysine O-acetyltransferase IucB</td>
+      <td>100.00</td>
+      <td>99.37</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iucC</td>
+      <td>NIS family aerobactin synthetase IucC</td>
+      <td>100.00</td>
+      <td>99.14</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iucD</td>
+      <td>NADPH-dependent L-lysine N(6)-monooxygenase IucD</td>
+      <td>95.51</td>
+      <td>97.65</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iutA</td>
+      <td>ferric aerobactin receptor IutA</td>
+      <td>99.73</td>
+      <td>89.85</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>sat</td>
+      <td>serine protease autotransporter toxin Sat</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iha</td>
+      <td>bifunctional siderophore receptor/adhesin Iha</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>sinH</td>
+      <td>intimin-like inverse autotransporter SinH</td>
+      <td>99.86</td>
+      <td>72.60</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>iss</td>
+      <td>increased serum survival lipoprotein Iss</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>sslE</td>
+      <td>lipoprotein metalloprotease SslE</td>
+      <td>100.00</td>
+      <td>87.98</td>
+      <td>Uncertain</td>
+    </tr>
+  </tbody>
+</table>
+        <h2>Target Gene Search</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Gene</th>
+      <th>Length</th>
+      <th>Identity(%)</th>
+      <th>Coverage(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+        <h2>Plasmids Detected</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Plasmid</th>
+      <th>Identity(%)</th>
+      <th>Query / Template length</th>
+      <th>Accession number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IncFII</td>
+      <td>100.00</td>
+      <td>261 / 261</td>
+      <td>AY458016</td>
+    </tr>
+    <tr>
+      <td>IncC</td>
+      <td>100.00</td>
+      <td>417 / 417</td>
+      <td>JN157804</td>
+    </tr>
+    <tr>
+      <td>IncFIA</td>
+      <td>99.74</td>
+      <td>388 / 388</td>
+      <td>AP001918</td>
+    </tr>
+    <tr>
+      <td>ColpEC648</td>
+      <td>99.14</td>
+      <td>700 / 701</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Col156</td>
+      <td>94.81</td>
+      <td>154 / 154</td>
+      <td>NC009781</td>
+    </tr>
+    <tr>
+      <td>IncFII(pSE11)</td>
+      <td>94.72</td>
+      <td>265 / 264</td>
+      <td>AP009242</td>
+    </tr>
+    <tr>
+      <td>Col(MG828)</td>
+      <td>91.98</td>
+      <td>262 / 262</td>
+      <td>NC008486</td>
+    </tr>
+  </tbody>
+</table>
+        <p></p>
         </article>
         <hr>
         <footer>
-        <p><i>This report is created by <a href="https://github.com/Kincekara/C-BIRD">C-BIRD v2.0.0</a> bioinformatics pipeline.</br>
-        </i></p>
+        <p><i>This report is created by <a href="https://github.com/Kincekara/C-BIRD">C-BIRD v2.2.1</a> bioinformatics pipeline.</br>
+        Research use only.</i></p>
         </footer>
     </body>
     </html>

@@ -27,10 +27,10 @@ Detection of AMR genes depends on NCBI's AMRFinderPlus program and its database.
 
 #### Example Outputs
 
-- [Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR0055_basic_report.html)
-- [Extended report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR0055_extended_report.html)
-- [QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR0055_QC_summary.html)
-- [Plain report](./assets/AR0055_report.docx)
+- [Basic report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR_0055_basic_report.html)
+- [Extended report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR_0055_extended_report.html)
+- [QC report](https://htmlpreview.github.io/?https://github.com/Kincekara/C-BIRD/blob/main/assets/AR_0055_QC_summary.html)
+- [Plain report](./assets/AR_0055_report.docx)
 
 The current programs and tools are used in the C-BIRD pipeline.
 

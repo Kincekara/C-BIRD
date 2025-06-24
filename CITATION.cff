@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Incekara"
   given-names: "Kutluhan"
-  orcid: "https://orcid.org/0000-0001-7915-9847'
+  orcid: "https://orcid.org/0000-0001-7915-9847"
 title: "C-BIRD: CT-PHL Bacterial Identification and Resistance Detection Pipeline"
 version: 2.2.1
 doi: 10.5281/zenodo.15013024

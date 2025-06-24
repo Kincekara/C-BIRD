@@ -1,10 +1,20 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+type: software
 authors:
 - family-names: "Incekara"
   given-names: "Kutluhan"
   orcid: "https://orcid.org/0000-0001-7915-9847"
 title: "C-BIRD: CT-PHL Bacterial Identification and Resistance Detection Pipeline"
+abstract: "C-BIRD is a bioinformatics pipeline designed for the identification of bacterial species and
+  detection of antibiotic resistance genes in clinical samples. The pipeline is optimized for clinical settings, providing rapid and reliable results for
+  healthcare professionals."
+keywords:
+- "bacterial identification"
+- "antibiotic resistance"
+- "bioinformatics pipeline"
+license: "AGLP-3.0"
+repository-code: "https://github.com/Kincekara/C-BIRD"
 version: 2.2.1
 doi: 10.5281/zenodo.15013024
 date-released: 2025-06-24

@@ -56,8 +56,9 @@ task qc {
 
     # write pass if no fail
     if [ -f QC_EVAL ]; then
-        # remove trailing comma
+        # remove lines & trailing comma
         sed -i '$ s/, $//' QC_EVAL
+        sed -i -z 's/\n//g' QC_EVAL 
     else
         echo "PASS" | tee QC_EVAL    
     fi
@@ -70,7 +71,7 @@ task qc {
   runtime {
     memory: "256 MB"
     cpu: 1
-    docker: "ubuntu:jammy-20240911.1"
+    docker: "ubuntu:jammy-20251013"
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }

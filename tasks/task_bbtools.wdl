@@ -12,7 +12,7 @@ task assembly_prep {
     Int read_threshold = 8000000
     Int memory = 8
     Int cpu = 4
-    String docker = "staphb/bbtools:39.25"
+    String docker = "staphb/bbtools:39.49"
   }
 
   command <<<

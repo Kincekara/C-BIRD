@@ -1,7 +1,7 @@
 FROM ubuntu:jammy AS app
 
-ARG CBIRD_UTIL_VER="2.0"
-ARG DATASETS_VER="v16.40.1"
+ARG CBIRD_UTIL_VER="2.2"
+ARG DATASETS_VER="v18.9.0"
 
 LABEL base.image="ubuntu:jammy"
 LABEL dockerfile.version="1"

@@ -26,7 +26,8 @@ def read_amr_report(amr_report):
     amr_df = amr_df.drop(columns={'Subtype', 'Scope'})
     amr_df = amr_df.sort_values(by=['AR Class', 'AR Subclass'], ascending=True)
 
-    point_df = df2.loc[df2['Subtype'] == "POINT"]
+    #point_df = df2.loc[df2['Subtype'] == "POINT"]
+    point_df = df2.loc[(df2['Subtype'] == "POINT") | (df2['Subtype'] == "POINT_DISRUPT")].copy()
     point_df = point_df.drop(columns={'Subtype', 'Scope'})
     point_df = point_df.sort_values(by=['AR Class', 'AR Subclass'], ascending=True)
 

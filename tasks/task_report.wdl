@@ -30,7 +30,7 @@ task generate_report {
     String? line4
     String? line5
     String? line6
-    String docker = "staphb/cbird-util:2.1"    
+    String docker = "kincekara/cbird-util:2.2"    
   }
 
   command <<<
@@ -39,6 +39,7 @@ task generate_report {
     then
       # catch taxon & find genome size
       taxon=$(awk -F '\t' '{print $1}' ~{mash_result})
+      species=$(echo "$taxon" | cut -d " " -f1,2)
       datasets summary genome taxon "$taxon" --reference > gs.json
 
       #  create plain report
@@ -47,7 +48,7 @@ task generate_report {
         plain_report.py \
         -d "~{analysis_date}" \
         -i "~{labid}" \
-        -o "$taxon" \
+        -o "$species" \
         -a ~{amr_report} \
         -c ~{disclaimer} \
         -n ~{notes} \

@@ -40,9 +40,9 @@ def main(args):
         f1_f2 = pd.merge(f1, f2, on="")
         f3 = df_list[3]
         f3.columns = ["Quality Filtering", ""]
-        f4 = df_list[4]
+        f4 = df_list[5]
         f4.columns = ["Adapter or bad ligation of read1", ""]
-        f5 = df_list[5]
+        f5 = df_list[6]
         f5.columns = ["Adapter or bad ligation of read2", ""]
 
     # get bracken report

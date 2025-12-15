@@ -67,7 +67,8 @@ def read_amr_report(amr_report):
     amr_df = amr_df.drop(columns={'Type', 'Subtype', 'Scope'})
     amr_df = amr_df.sort_values(by=['Resistance / Mechanism'], ascending=True)
 
-    point_df = df2.loc[df2['Subtype'] == "POINT"].copy()
+    #point_df = df2.loc[df2['Subtype'] == "POINT"].copy()
+    point_df = df2.loc[(df2['Subtype'] == "POINT") | (df2['Subtype'] == "POINT_DISRUPT")].copy()
     point_df = point_df.drop(columns={'Type', 'Subtype','Scope'})
     point_df = point_df.sort_values(by=['Resistance / Mechanism'], ascending=True)
 

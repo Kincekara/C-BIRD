@@ -9,7 +9,7 @@ task version_capture {
   }
 
   command <<<
-    cbird_version="C-BIRD v2.2.1"
+    cbird_version="C-BIRD v2.3.0"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$cbird_version" > CBIRD_VERSION
@@ -23,7 +23,7 @@ task version_capture {
   runtime {
     memory: "256 MB"
     cpu: 1
-    docker: "ubuntu:jammy-20240911.1"
+    docker: "ubuntu:jammy-20251013"
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }

@@ -26,6 +26,7 @@ task spades_pe {
     # get & rename output   
     mv out/contigs.fasta ~{samplename}_contigs.fasta
     mv out/scaffolds.fasta ~{samplename}_scaffolds.fasta
+    mv out/assembly_graph_with_scaffolds.gfa ~{samplename}_scaffolds.gfa
 
     # remove short scaffolds
     echo "Removing scaffolds shorter than ~{contig_threshold}"
@@ -62,6 +63,7 @@ task spades_pe {
 
   output {
 	  File scaffolds = "~{samplename}_scaffolds.fasta"
+    File assembly_graph = "~{samplename}_scaffolds.gfa"
 	  File contigs = "~{samplename}_contigs.fasta"
     File scaffolds_trim  = "~{samplename}_scaffolds_trim.fasta"
     String spades_version = read_string("VERSION")

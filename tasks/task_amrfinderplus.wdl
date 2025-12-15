@@ -9,7 +9,7 @@ task amrfinderplus {
     File? prodigal_faa
     File? prodigal_gff
     Int cpu = 4
-    String docker = "staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1"
+    String docker = "staphb/ncbi-amrfinderplus:4.2.5-2025-12-03.1"
   }
   command <<<
     # logging info
@@ -197,36 +197,40 @@ task amrfinderplus {
     # create headers for 3 output files; tee to 3 files and redirect STDOUT to dev null so it doesn't print to log file
     head -n 1 ~{samplename}_amrfinder_all.tsv | tee ~{samplename}_amrfinder_stress.tsv ~{samplename}_amrfinder_virulence.tsv ~{samplename}_amrfinder_amr.tsv >/dev/null
     # looks for all rows with STRESS, AMR, or VIRULENCE and append to TSVs
-    grep 'STRESS' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_stress.tsv
-    grep 'VIRULENCE' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_virulence.tsv
+    grep 'STRESS' ~{samplename}_amrfinder_all.tsv | sort -t $'\t' -k12,12 -k13,13 >> ~{samplename}_amrfinder_stress.tsv
+    grep 'VIRULENCE' ~{samplename}_amrfinder_all.tsv | sort -t $'\t' -k12,12 -k13,13 >> ~{samplename}_amrfinder_virulence.tsv
     # || true is so that the final grep exits with code 0, preventing failures
-    grep 'AMR' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_amr.tsv || true
+    grep 'AMR' ~{samplename}_amrfinder_all.tsv | sort -t $'\t' -k12,12 -k13,13 >> ~{samplename}_amrfinder_amr.tsv || true
 
     # create string outputs for all genes identified in AMR, STRESS, VIRULENCE
     amr_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    amr_class=$(awk -F '\t' '{ print $12 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     amr_subclass=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_genes}" ]; then
-       amr_genes="No AMR genes detected by NCBI-AMRFinderPlus"
+      amr_genes="No AMR genes detected by NCBI-AMRFinderPlus"
     fi 
     if [ -z "${stress_genes}" ]; then
-       stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
+      stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
     fi 
     if [ -z "${virulence_genes}" ]; then
-       virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
+      virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
     fi
     if [ -z "${amr_subclass}" ]; then
-       amr_subclass="No AMR detected by NCBI-AMRFinderPlus"
+      amr_subclass="No AMR detected by NCBI-AMRFinderPlus"
     fi
 
     # create final output strings
     echo "${amr_genes}" > AMR_GENES
     echo "${stress_genes}" > STRESS_GENES
     echo "${virulence_genes}" > VIRULENCE_GENES
-    echo "${amr_subclass}" > AMR_SUBCLASS
+    echo "${amr_class}" > AMR_CLASS
+    echo "${amr_subclass}" > AMR_SUBCLASS    
+    awk -F '\t' 'NR==1{next} {if ($11=="POINT" || $11=="POINT_DISRUPT") $9="point"; print $9}' ~{samplename}_amrfinder_amr.tsv | paste -sd, - > AMR_TYPE
+
   >>>
   output {
     File amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
@@ -238,7 +242,9 @@ task amrfinderplus {
     String amrfinderplus_virulence_genes = read_string("VIRULENCE_GENES")
     String amrfinderplus_version = read_string("AMRFINDER_VERSION")
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
+    String amrfinderplus_amr_class = read_string("AMR_CLASS")
     String amrfinderplus_amr_subclass = read_string("AMR_SUBCLASS")
+    String amrfinderplus_amr_type = read_string("AMR_TYPE")
     String amrfinderplus_docker = docker
   }
   runtime {

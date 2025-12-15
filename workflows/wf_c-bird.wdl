@@ -294,7 +294,8 @@ workflow cbird_workflow {
     String? bbtools_docker = assembly_prep.bbtools_docker
     String? bbtools_version = assembly_prep.bbmap_version
     String? phiX_ratio = assembly_prep.phix_ratio
-    # CheckM2 
+    # CheckM2
+    String? checkm2_version = checkm2.version 
     File? checkm2_report = checkm2.report
     String? checkm2_docker = checkm2.checkm2_docker
     String? completeness = checkm2.completeness
@@ -314,6 +315,7 @@ workflow cbird_workflow {
     String? spades_version = assembly.spades_version
     String? spades_docker = assembly.spades_docker
     File? scaffolds = assembly.scaffolds
+    File? assembly_graph = assembly.assembly_graph
     File? contigs = assembly.contigs
     File? scaffolds_trimmed = assembly.scaffolds_trim
     # Mash
@@ -344,11 +346,13 @@ workflow cbird_workflow {
     String? amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes
     String? amrfinderplus_version = amrfinder.amrfinderplus_version
     String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
+    String? amr_class = amrfinder.amrfinderplus_amr_class
     String? amr_subclass = amrfinder.amrfinderplus_amr_subclass
+    String? amr_type = amrfinder.amrfinderplus_amr_type
     String? amrfinderplus_docker = amrfinder.amrfinderplus_docker
     # PlasmidFinder
     String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
-    String? plasmidfinder_db_date = plasmidfinder.plasmidfinder_db_date
+    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_plasmids = plasmidfinder.plasmids
     File? plasmidfinder_report = plasmidfinder.plasmid_report

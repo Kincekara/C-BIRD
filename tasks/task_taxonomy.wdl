@@ -6,7 +6,7 @@ task profile {
     File read2
     File kraken2_db
     String samplename
-    String docker = "staphb/bracken:2.9"
+    String docker = "staphb/bracken:3.1"
     Int bracken_read_len = 100
     Int bracken_threshold = 10
     Int min_hit_groups = 3
@@ -18,7 +18,7 @@ task profile {
     set -euxo pipefail
     # version
     kraken2 --version 2>&1 | grep 'Kraken version' | awk '{print $3}' | tee KVERSION
-    basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4 | tee K2DB
+    basename -s .tar.gz ~{kraken2_db} | cut -d "_" -f2,3,4,5 | tee K2DB
     
     # Decompress the Kraken2 database
     mkdir db

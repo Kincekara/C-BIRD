@@ -1,6 +1,4 @@
-<p align="center">
-<img src="./assets/cbird_logo.png" width=200>
-</p>
+<p align="center"><img src="./assets/cbird_logo.png" width=200></p>
 
 # C-BIRD
 
@@ -19,8 +17,8 @@ C-BIRD can run on [Terra.Bio](https://terra.bio/) platform as well as any Linux 
 Producing clinically meaningful results and generating individual reports for each sample is within this project's scope.
 So, auto-update of any tool or database is deliberately avoided for strict control and validation purposes.
 
-C-BIRD now uses machine learning models (CheckM2) to asses completeness and contamination of the assembly.
-A new custom sketch was created to identfy bacteria for selected genera via Mash.
+C-BIRD uses machine learning models (CheckM2) to asses completeness and contamination of the assembly.
+A custom sketch was created to identfy bacteria for selected genera via Mash.
 It includes all the species of `Acinetobacter, Burkholderia, Citrobacter, Enterobacter, Escherichia, Klebsiella, Kluyvera, Metapseudomonas, Morganella, Neisseria, Proteus, Providencia, Pseudomonas, Raoultella, Salmonella, Serratia, Streptococcus`.
 Kraken2 and Braken will still be used for taxonomic profiling of reads and the organism that are out of the scope.
 Detection of AMR genes depends on NCBI's AMRFinderPlus program and its database.
@@ -38,7 +36,7 @@ The current programs and tools are used in the C-BIRD pipeline.
 | ------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
 | [FastP](https://github.com/OpenGene/fastp)                                                           | 1.0.1      | QC, adapter removal, quality filtering and trimming    |
 | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.49       | phiX removal & normalization (non-random downsampling) |
-| [Kraken2](https://github.com/DerrickWood/kraken2) / [Bracken](https://github.com/jenniferlu717/Bracken) | 2.1.3 / 2.9 | Taxonomic profiling and abundance estimation of reads  |
+| [Kraken2](https://github.com/DerrickWood/kraken2) / [Bracken](https://github.com/jenniferlu717/Bracken) | 2.1.3 / 3.0.1 | Taxonomic profiling and abundance estimation of reads  |
 | [SPAdes](https://github.com/ablab/spades)                                                            | 4.2.0       | *De novo* assembly                                   |
 | [Mash](https://github.com/marbl/Mash)                                                                | 2.3         | Bacterial identification                               |
 | [QUAST](https://github.com/ablab/quast)                                                              | 5.3.0       | Genome assembly evaluation                             |
@@ -47,7 +45,7 @@ The current programs and tools are used in the C-BIRD pipeline.
 | [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.2.5       | AMR gene identification                                |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)                       | 2.17.0      | Target gene search                                     |
 | [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 3.0.1       | Plasmid detection                                      |
-| [Cbird-Util](./assets/cbird-util/)                                                                   | 2.1         | Scripts for summary report generation                  |
+| [Cbird-Util](./assets/cbird-util/)                                                                   | 2.2         | Scripts for summary report generation                  |
 
 ## Quick Start
 
@@ -73,7 +71,7 @@ wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.3.0.tar.gz
 tar -xvf 2.3.0.tar.gz
 
 # Download required databases
-wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20250402.tar.gz
+wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08_GB_20251015.tar.gz
 wget https://zenodo.org/records/14897628/files/checkm2_database.tar.gz
 ```
 
@@ -109,7 +107,7 @@ samplename3 /path/to/sample3_read1.fastq.gz /path/to/sample3_read2.fastq.gz
 ```
 {
   "multibird.inputSamplesFile": "/path/to/samples.tsv",
-  "multibird.kraken2_db": "/path/to/k2_standard_20240904.tar.gz",
+  "multibird.kraken2_db": "/path/to/k2_standard_08_GB_20251015.tar.gz",
   "multibird.checkm2_db": "/path/to/checkm2_database.tar.gz"
 }
 ```

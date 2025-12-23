@@ -31,6 +31,8 @@ task assembly_prep {
       ref=/bbmap/resources/phix174_ill.ref.fa.gz \
       k=31 \
       hdist=1 \
+      bgzip=f \
+      unbgzip=f \
       stats=~{samplename}.phix.stats.txt
 
     grep Matched ~{samplename}.phix.stats.txt | awk '{print $3}' > PHIX_RATIO

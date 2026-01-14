@@ -33,7 +33,7 @@ task ts_mlst {
 
     # rerun for abumannii oxford scheme
     scheme=$(awk -F'\t' 'NR==2 {print $2}' ~{samplename}.mlst.tsv)
-    if [ "$scheme" == "abaumannii2" ]; then
+    if [ "$scheme" == "abaumannii_2" ]; then
       mlst \
       --full \
       --threads ~{cpu} \
@@ -65,7 +65,7 @@ task ts_mlst {
     String ts_mlst_version = read_string("VERSION")
     String ts_mlst_docker = docker
   }
-  
+
   runtime {
     docker: "~{docker}"
     memory: "2 GB"

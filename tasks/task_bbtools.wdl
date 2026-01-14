@@ -84,7 +84,7 @@ task insert_size_dist {
     Int max_reads = 1000000
     Int max_indel = 16000
     Int memory = 8
-    String docker = "staphb/bbtools:39.25"
+    String docker = "staphb/bbtools:39.60"
   }
 
   command <<<

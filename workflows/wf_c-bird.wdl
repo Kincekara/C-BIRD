@@ -233,7 +233,7 @@ workflow cbird_workflow {
       samplename = samplename,
       total_bases = fastp_trim.total_bases,
       taxon_report = profile.bracken_report_filter,
-      mlst_report = ts_mlst.ts_mlst_results,
+      mlst_report = ts_mlst.ts_legacy_mlst_results,
       amr_report = amrfinder.amrfinderplus_all_report,
       plasmid_report = plasmidfinder.plasmid_report,
       fastp_report = fastp_trim.fastp_report,

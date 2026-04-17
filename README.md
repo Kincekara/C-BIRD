@@ -35,16 +35,16 @@ The current programs and tools are used in the C-BIRD pipeline.
 | Tools                                                                                             | Version     | Comments                                               |
 | ------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
 | [FastP](https://github.com/OpenGene/fastp)                                                           | 1.0.1      | QC, adapter removal, quality filtering and trimming    |
-| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.60       | phiX removal & normalization (non-random downsampling) |
+| [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.49       | phiX removal & normalization (non-random downsampling) |
 | [Kraken2](https://github.com/DerrickWood/kraken2) / [Bracken](https://github.com/jenniferlu717/Bracken) | 2.1.3 / 3.0.1 | Taxonomic profiling and abundance estimation of reads  |
 | [SPAdes](https://github.com/ablab/spades)                                                            | 4.2.0       | *De novo* assembly                                   |
 | [Mash](https://github.com/marbl/Mash)                                                                | 2.3         | Bacterial identification                               |
 | [QUAST](https://github.com/ablab/quast)                                                              | 5.3.0       | Genome assembly evaluation                             |
 | [CheckM2](https://github.com/chklovski/CheckM2)                                                      | 1.1.0       | Completeness and contamination                         |
 | [mlst](https://github.com/tseemann/mlst)                                                             | 2.32.2      | MLST typing                                            |
-| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.2.5       | AMR gene identification                                |
+| [AMRFinderPlus](https://github.com/ncbi/amr)                                                         | 4.2.7       | AMR gene identification                                |
 | [BLAST+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html)                       | 2.17.0      | Target gene search                                     |
-| [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 3.0.1       | Plasmid detection                                      |
+| [PlasmidFinder](https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/)                 | 3.0.3       | Plasmid detection                                      |
 | [Cbird-Util](./assets/cbird-util/)                                                                   | 2.2         | Scripts for summary report generation                  |
 
 ## Quick Start
@@ -67,8 +67,8 @@ You can obtain C-BIRD via `git` but it is advised to download a release version 
 
 ```bash
 # Download a C-BIRD release
-wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.4.0.tar.gz
-tar -xvf 2.4.0.tar.gz
+wget https://github.com/Kincekara/C-BIRD/archive/refs/tags/2.5.0.tar.gz
+tar -xvf 2.5.0.tar.gz
 
 # Download required databases
 wget https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08_GB_20251015.tar.gz
@@ -86,7 +86,7 @@ Plese see the [miniwdl repo](https://github.com/chanzuckerberg/miniwdl/) for fur
 
 ```bash
 # single sample
-miniwdl run ~/C-BIRD-2.4.0/workflows/wf_c-bird.wdl samplename="samplename" read1="read1.fastq.gz" read2="read2.fastq.gz" kraken2_db="k2_standard_08_GB_20251015" checkm2_db="checkm2_database.tar.gz"
+miniwdl run ~/C-BIRD-2.5.0/workflows/wf_c-bird.wdl samplename="samplename" read1="read1.fastq.gz" read2="read2.fastq.gz" kraken2_db="k2_standard_08_GB_20251015" checkm2_db="checkm2_database.tar.gz"
 ```
 
 ## multiBIRD

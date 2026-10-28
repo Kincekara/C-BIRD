@@ -278,8 +278,6 @@ workflow cbird_workflow {
     String cbird_version = version_capture.cbird_version
     String cbird_analysis_date = version_capture.date    
     # FastP
-    String fastp_version = fastp_trim.fastp_version
-    String fastp_docker = fastp_trim.fastp_docker
     File fastp_report = fastp_trim.fastp_report
     Int total_reads = fastp_trim.total_reads
     Int total_reads_trim = fastp_trim.total_reads_trim
@@ -291,42 +289,27 @@ workflow cbird_workflow {
     Float r2_q30_trim = fastp_trim.r2_q30_trim
     # BBtools
     File? phiX_stats = assembly_prep.phiX_stats
-    String? bbtools_docker = assembly_prep.bbtools_docker
-    String? bbtools_version = assembly_prep.bbmap_version
     String? phiX_ratio = assembly_prep.phix_ratio
     # CheckM2
-    String? checkm2_version = checkm2.version 
     File? checkm2_report = checkm2.report
-    String? checkm2_docker = checkm2.checkm2_docker
     String? completeness = checkm2.completeness
     String? contamination = checkm2.contamination
     # Kraken2
-    String? kraken2_version = profile.kraken2_version
-    String? kraken2_db_version = profile.kraken2_db_version
-    String? kraken2_docker = profile.kraken2_docker
     File? kraken2_report = profile.kraken2_report
     # Bracken
-    String? bracken_version = profile.bracken_version
-    String? bracken_docker = profile.bracken_docker
     File? bracken_report = profile.bracken_report_filter
     String? bracken_taxon = profile.bracken_taxon
     Float? bracken_taxon_ratio = profile.top_taxon_ratio
     # Spades
-    String? spades_version = assembly.spades_version
-    String? spades_docker = assembly.spades_docker
     File? scaffolds = assembly.scaffolds
     File? assembly_graph = assembly.assembly_graph
     File? contigs = assembly.contigs
     File? scaffolds_trimmed = assembly.scaffolds_trim
     # Mash
-    String? mash_version = predict_taxon.version
     File? mash_results = predict_taxon.screen
     String? predicted_organism = predict_taxon.taxon
     Float? percent_identity = predict_taxon.ratio
-    String? mash_docker = predict_taxon.mash_docker
     # Quast 
-    String? quast_version = quast.version
-    String? quast_docker = quast.quast_docker
     File? quast_report = quast.quast_report    
     Int? genome_length = quast.genome_length
     Int? number_of_contigs = quast.number_contigs
@@ -334,8 +317,6 @@ workflow cbird_workflow {
     Int? l90_value = quast.l90_value
     Float? gc_content = quast.gc_content
     # MLST
-    String? mlst_version = ts_mlst.ts_mlst_version
-    String? mlst_docker = ts_mlst.ts_mlst_docker
     String? mlst = ts_mlst.ts_mlst_predicted_st
     String? pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     File? mlst_results = ts_mlst.ts_mlst_results
@@ -344,23 +325,15 @@ workflow cbird_workflow {
     String? amr_genes = amrfinder.amrfinderplus_amr_genes
     String? amr_stress_genes = amrfinder.amrfinderplus_stress_genes
     String? amr_virulance_genes = amrfinder.amrfinderplus_virulence_genes
-    String? amrfinderplus_version = amrfinder.amrfinderplus_version
-    String? amrfinderplus_db_version = amrfinder.amrfinderplus_db_version
     String? amr_class = amrfinder.amrfinderplus_amr_class
     String? amr_subclass = amrfinder.amrfinderplus_amr_subclass
     String? amr_type = amrfinder.amrfinderplus_amr_type
-    String? amrfinderplus_docker = amrfinder.amrfinderplus_docker
     # PlasmidFinder
-    String? plasmidfinder_version = plasmidfinder.plasmidfinder_version
-    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
-    String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_plasmids = plasmidfinder.plasmids
     File? plasmidfinder_report = plasmidfinder.plasmid_report
     # Blast
     File? blast_results = tblastn.blast_results
     String? blast_genes = tblastn.genes
-    String? blast_docker = tblastn.blast_docker
-    String? blast_version = tblastn.blast_version
     # Report
     File? plain_report = generate_report.plain_report
     File? basic_report = generate_report.basic_report
@@ -369,8 +342,25 @@ workflow cbird_workflow {
     Float? est_sequencing_depth = generate_report.sequencing_depth
     Float? est_sequencing_depth_trim = generate_report.sequencing_depth_trim
     Float? est_genome_length_ratio = generate_report.genome_ratio
-    String? cbird_util_docker = generate_report.cbird_util_docker
     # QC Evaluation
     String? qc_eval = qc.qc_eval
+    # Program versions & contianers
+    Array[String] program_versions = ["fastp: " + fastp_trim.fastp_version + " (" + fastp_trim.fastp_docker + ")",
+                                      "bbtools: " + select_first([assembly_prep.bbmap_version,"NA"]) + " (" + select_first([assembly_prep.bbtools_docker,"NA"]) + ")",
+                                      "checkm2: " + select_first([checkm2.version, "NA"]) + " (" + select_first([checkm2.checkm2_docker,"NA"]) + ")",
+                                      "kraken2: " + select_first([profile.kraken2_version,"NA"]) + " (" + select_first([profile.kraken2_docker,"NA"]) + ")",
+                                      "kraken2_db: " + select_first([profile.kraken2_db_version,"NA"]),
+                                      "bracken: " + select_first([profile.bracken_version,"NA"]) + " (" + select_first([profile.kraken2_docker,"NA"]) + ")",
+                                      "spades: " + select_first([assembly.spades_version,"NA"]) + " (" + select_first([assembly.spades_docker,"NA"]) + ")",
+                                      "mash: " + select_first([predict_taxon.version,"NA"]) + " (" + select_first([predict_taxon.mash_docker,"NA"]) + ")",
+                                      "quast: " + select_first([quast.version,"NA"]) + " (" + select_first([quast.quast_docker,"NA"]) + ")",
+                                      "mlst: " + select_first([ts_mlst.ts_mlst_version,"NA"]) + " (" + select_first([ts_mlst.ts_mlst_docker,"NA"]) + ")",
+                                      "amrfinderplus: " + select_first([amrfinder.amrfinderplus_version,"NA"]) + " (" + select_first([amrfinder.amrfinderplus_docker,"NA"]) + ")",
+                                      "amrfinderplus_db: " + select_first([amrfinder.amrfinderplus_db_version,"NA"]) + " (" + select_first([amrfinder.amrfinderplus_docker,"NA"]) + ")",
+                                      "plasmidfinder: " + select_first([plasmidfinder.plasmidfinder_version,"NA"]) + " (" + select_first([plasmidfinder.plasmidfinder_docker,"NA"]) + ")",
+                                      "plasmidfinder_db: " + select_first([plasmidfinder.plasmidfinder_db_version,"NA"]) + " (" + select_first([plasmidfinder.plasmidfinder_docker,"NA"]) + ")",
+                                      "blast: " + select_first([tblastn.blast_version,"NA"]) + " (" + select_first([tblastn.blast_docker,"NA"]) + ")",
+                                      "cbird-util: " + "2.2" + " (" + select_first([generate_report.cbird_util_docker,"NA"]) + ")"
+                                      ]                             
     }
 }

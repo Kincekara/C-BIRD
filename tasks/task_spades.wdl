@@ -8,12 +8,12 @@ task spades_pe {
     String samplename
     Int cpu = 4
     Int memory = 32
-    String docker = "staphb/spades:4.2.0"    
+    String docker = "staphb/spades:4.3.0"    
   }
   
   command <<<
     # version control
-    spades.py -v > VERSION 
+    spades.py --version | sed -n 's/^.*SPAdes genome assembler v//p' > VERSION 
 
     # assembly
     spades.py \
@@ -30,7 +30,7 @@ task spades_pe {
 
     # remove short scaffolds
     echo "Removing scaffolds shorter than ~{contig_threshold}"
-    python <<CODE
+    python3 <<CODE
     import re
     # Copy lines from the input file to the output file until a scaffold shorter than the threshold is found
     with open("~{samplename}_scaffolds.fasta", "r") as input:

@@ -8,7 +8,7 @@ task quast {
   }
   command <<<
     # version
-    quast.py --version | cut -d "," -f 1 | tee VERSION
+    quast.py --version | cut -d "," -f 1 | cut -d "v" -f2 | tee VERSION
 
     quast.py ~{assembly} -o .
     mv report.tsv ~{samplename}_report.tsv

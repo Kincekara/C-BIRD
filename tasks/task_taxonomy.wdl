@@ -37,7 +37,7 @@ task profile {
     
     
     # run bracken
-    bracken -v > BVERSION
+    bracken -v | cut -f2 -d'v' > BVERSION
 
     bracken \
     -d ./db/ \

@@ -34,10 +34,10 @@ The current programs and tools are used in the C-BIRD pipeline.
 
 | Tools                                                                                             | Version     | Comments                                               |
 | ------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
-| [FastP](https://github.com/OpenGene/fastp)                                                           | 1.3.3      | QC, adapter removal, quality filtering and trimming    |
+| [FastP](https://github.com/OpenGene/fastp)                                                           | 1.4.0      | QC, adapter removal, quality filtering and trimming    |
 | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)                                | 39.49       | phiX removal & normalization (non-random downsampling) |
 | [Kraken2](https://github.com/DerrickWood/kraken2) / [Bracken](https://github.com/jenniferlu717/Bracken) | 2.1.3 / 3.0.1 | Taxonomic profiling and abundance estimation of reads  |
-| [SPAdes](https://github.com/ablab/spades)                                                            | 4.2.0       | *De novo* assembly                                   |
+| [SPAdes](https://github.com/ablab/spades)                                                            | 4.3.0       | *De novo* assembly                                   |
 | [Mash](https://github.com/marbl/Mash)                                                                | 2.3         | Bacterial identification                               |
 | [QUAST](https://github.com/ablab/quast)                                                              | 5.3.0       | Genome assembly evaluation                             |
 | [CheckM2](https://github.com/chklovski/CheckM2)                                                      | 1.1.0       | Completeness and contamination                         |
